@@ -13,25 +13,25 @@ function App() {
   const movingRef = useRef<number>(-1)
   const startEWRef = useRef<number>(0)
   const startESWRef = useRef<number>(0)
+  const MIN_W = 192;
 
   useEffect(() => {
     const onMouseMove = (e: globalThis.MouseEvent) => {
       if (isResizing) {
 
         if (movingRef.current == 0) {
-          if (editorAndSetAreaW - (startEWRef.current + (e.clientX - startXRef.current)) < 192) {
-            setEditorAndSetAreaW(Math.max(193, startEWRef.current + (e.clientX - startXRef.current)) + 193);
-            console.log("!!", editorAndSetAreaW)
+          if (editorAndSetAreaW - (startEWRef.current + (e.clientX - startXRef.current)) < MIN_W) {
+            setEditorAndSetAreaW(Math.max(MIN_W, startEWRef.current + (e.clientX - startXRef.current)) + MIN_W);
           }
-          setEditorAreaW(Math.max(193, startEWRef.current + (e.clientX - startXRef.current)));
+          setEditorAreaW(Math.max(MIN_W, startEWRef.current + (e.clientX - startXRef.current)));
         } else if (movingRef.current == 1) {
-          if (startESWRef.current + (e.clientX - startXRef.current) < 384) {
+          if (startESWRef.current + (e.clientX - startXRef.current) < (2 * MIN_W)) {
             return
           }
-          if (startESWRef.current + (e.clientX - startXRef.current) - editorAreaW < 192) {
-            setEditorAreaW(startESWRef.current + (e.clientX - startXRef.current) - 193);
+          if (startESWRef.current + (e.clientX - startXRef.current) - editorAreaW < MIN_W) {
+            setEditorAreaW(startESWRef.current + (e.clientX - startXRef.current) - MIN_W);
           }
-          setEditorAndSetAreaW(Math.min((document.documentElement.clientWidth - 193), Math.max(386, startESWRef.current + (e.clientX - startXRef.current))));
+          setEditorAndSetAreaW(Math.min((document.documentElement.clientWidth - MIN_W), Math.max(386, startESWRef.current + (e.clientX - startXRef.current))));
         }
       }
     };
@@ -71,7 +71,7 @@ function App() {
         {/* <div className=' bg-red-600 z-30 absolute h-2' style={{ width: editorAreaW }}></div> */}
       </header>
 
-      <main className={`flex h-full flex-grow relative ${isResizing?" pointer-events-none ":" pointer-events-auto "}`}>
+      <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none " : " pointer-events-auto "}`}>
         <EditorArea width={editorAreaW}></EditorArea>
         <div onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-red-300 resize-col flex-grow-0 flex-shrink-0'></div>
         <SetArea width={editorAndSetAreaW - editorAreaW}></SetArea>
