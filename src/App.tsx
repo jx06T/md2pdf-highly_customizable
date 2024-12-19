@@ -35,12 +35,6 @@ function App() {
         return
       }
       setMaxW(newW)
-      if (newW < minW + editorAndSetAreaW) {
-        setEditorAndSetAreaW(newW - minW)
-      }
-      if (newW < 2 * minW + editorAreaW) {
-        setEditorAreaW(newW - (2 * minW))
-      }
     }
 
     window.addEventListener('resize', handleResize);
@@ -48,27 +42,41 @@ function App() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [editorAndSetAreaW, editorAreaW])
+  }, [])
+
+  useEffect(() => {
+    if (maxW < minW + editorAndSetAreaW) {
+      setEditorAndSetAreaW(maxW - minW)
+    }
+    if (maxW < expandLevel * minW + editorAreaW) {
+      setEditorAreaW(maxW - (expandLevel * minW))
+    }
+  }, [maxW, editorAndSetAreaW, editorAreaW])
+
+  const handleMove = (clientX: number) => {
+    if (isResizing) {
+
+      if (movingRef.current == 0) {
+        if (editorAndSetAreaW - (startEWRef.current + (clientX - startXRef.current)) < minW && expandLevel > 1) {
+          setEditorAndSetAreaW(Math.min(maxW - minW, Math.max(minW, startEWRef.current + (clientX - startXRef.current) + minW)));
+        }
+        setEditorAreaW(Math.min(maxW - (expandLevel * minW), Math.max(minW, startEWRef.current + (clientX - startXRef.current))));
+      } else if (movingRef.current == 1) {
+        if (startESWRef.current + (clientX - startXRef.current) < (2 * minW)) {
+          return
+        }
+        if (startESWRef.current + (clientX - startXRef.current) - editorAreaW < minW) {
+          setEditorAreaW(startESWRef.current + (clientX - startXRef.current) - minW);
+        }
+        setEditorAndSetAreaW(Math.min((maxW - minW), Math.max(386, startESWRef.current + (clientX - startXRef.current))));
+      }
+    }
+  };
 
   useEffect(() => {
     const onMouseMove = (e: globalThis.MouseEvent) => {
       if (isResizing) {
-
-        if (movingRef.current == 0) {
-          if (editorAndSetAreaW - (startEWRef.current + (e.clientX - startXRef.current)) < minW) {
-            setEditorAndSetAreaW(Math.min(maxW - minW, Math.max(minW, startEWRef.current + (e.clientX - startXRef.current) + minW)));
-          }
-          setEditorAreaW(Math.min(maxW - (2 * minW), Math.max(minW, startEWRef.current + (e.clientX - startXRef.current))));
-
-        } else if (movingRef.current == 1) {
-          if (startESWRef.current + (e.clientX - startXRef.current) < (2 * minW)) {
-            return
-          }
-          if (startESWRef.current + (e.clientX - startXRef.current) - editorAreaW < minW) {
-            setEditorAreaW(startESWRef.current + (e.clientX - startXRef.current) - minW);
-          }
-          setEditorAndSetAreaW(Math.min((maxW - minW), Math.max(386, startESWRef.current + (e.clientX - startXRef.current))));
-        }
+        handleMove(e.clientX)
       }
     };
 
@@ -92,13 +100,51 @@ function App() {
     };
   }, [isResizing]);
 
-  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>, target: number) => {
+  useEffect(() => {
+    const onTouchMove = (e: globalThis.TouchEvent) => {
+      if (isResizing) {
+        const moceTouch = e.changedTouches[0];
+        handleMove(moceTouch.clientX)
+      }
+    };
+
+    const onTouchEnd = () => {
+      setIsResizing(false);
+      startEWRef.current = editorAreaW;
+      startESWRef.current = editorAndSetAreaW;
+      movingRef.current = -1;
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", onTouchEnd);
+    };
+
+    if (isResizing) {
+      document.addEventListener('touchmove', onTouchMove);
+      document.addEventListener('touchend', onTouchEnd);
+    }
+
+    return () => {
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [isResizing]);
+
+  const handleMoveStart = (clientX: number) => {
     setIsResizing(true);
-    movingRef.current = target;
-    startXRef.current = e.clientX;
+    startXRef.current = clientX;
     startEWRef.current = editorAreaW;
     startESWRef.current = editorAndSetAreaW;
+  }
+
+  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>, target: number) => {
+    movingRef.current = target;
+    handleMoveStart(e.clientX)
   };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>, target: number) => {
+    movingRef.current = target;
+    const touch = e.changedTouches[0];
+    handleMoveStart(touch.clientX)
+  }
 
   return (
     <div className='App h-[100dvh] overflow-y-hidden flex flex-col overflow-x-hidden'>
@@ -111,11 +157,11 @@ function App() {
       <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""}`}>
         <EditorArea expandLevel={expandLevel} width={editorAreaW}></EditorArea>
         {expandLevel > 0 &&
-          <div onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 resize-col flex-grow-0 flex-shrink-0'></div>
+          <div onTouchStart={(e) => handleTouchStart(e, 0)} onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
         }
         <SetArea displayId={displayId} expandLevel={expandLevel} width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : editorAreaW}></SetArea>
         {expandLevel > 1 &&
-          <div onMouseDown={(e) => onMouseDown(e, 1)} className=' cursor-col-resize w-2 bg-stone-300 resize-col flex-grow-0 flex-shrink-0'></div>
+          <div onTouchStart={(e) => handleTouchStart(e, 1)} onMouseDown={(e) => onMouseDown(e, 1)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
         }
         <PreviewArea expandLevel={expandLevel} displayId={displayId}></PreviewArea>
       </main>

@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 .max-w-full-12 {
-  max-width: calc(100vw - 12rem);
+  max-width: calc(100vw - 192px);
 }
 
 .max-w-full-24 {
-  max-width: calc(100vw - 24rem);
+  max-width: calc(100vw - 384px);
 }
 .set-area input {
   @apply bg-blue-50;

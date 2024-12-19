@@ -16,7 +16,7 @@ ddd
 
 function PreviewArea({ displayId, expandLevel }: { displayId: number, expandLevel: number }) {
     return (
-        <div className={`preview-area bg-stone-100 min-w-0 lg:min-w-48 w-full h-full  ${expandLevel > 0 ? "flex-grow " : " absolute left-0 " + (displayId == 2 ? "" : " opacity-0 pointer-events-none ")} `} >
+        <div className={`preview-area bg-stone-100 min-w-0 lg:min-w-48 w-full h-full  ${expandLevel > 0 ? "flex-grow flex-shrink " : " absolute left-0 " + (displayId == 2 ? "" : " opacity-0 pointer-events-none ")} `} >
             <div className=" p-2">
                 <h1>Markdown-to-JSX Example</h1>
                 <ReactMarkdown>{markdownContent}</ReactMarkdown>
