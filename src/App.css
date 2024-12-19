@@ -6,21 +6,31 @@
   .set-area {
     @apply min-w-56 static flex-grow-0 p-1 h-full;
   }
+
   .max-w-full-12 {
     max-width: calc(100vw - 12rem);
   }
+
   .max-w-full-24 {
     max-width: calc(100vw - 24rem);
   }
 }
+
 @media (max-width: 768px) {
   .set-area.hide-j {
     @apply hidden;
   }
+
   .set-area {
     @apply absolute right-0 bottom-0 top-0 px-3 pt-3;
   }
 }
+
 .set-area * {
   @apply bg-blue-50;
+}
+
+.pointer-events-none-j * {
+  pointer-events: none;
+  user-select: none;
 }

@@ -4,6 +4,7 @@ import './App.css'
 import EditorArea from './components/EditorArea'
 import SetArea from './components/SetArea'
 import PreviewArea from './components/PreviewArea'
+import UpperToolbar from './components/UpperToolbar'
 
 function App() {
   const [editorAreaW, setEditorAreaW] = useState<number>(350)
@@ -70,8 +71,8 @@ function App() {
         <h1 className=' text-left pl-3 pt-1 text-2xl'>MD2PDF</h1>
         {/* <div className=' bg-red-600 z-30 absolute h-2' style={{ width: editorAreaW }}></div> */}
       </header>
-
-      <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none " : " pointer-events-auto "}`}>
+      {/* <UpperToolbar></UpperToolbar> */}
+      <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""}`}>
         <EditorArea width={editorAreaW}></EditorArea>
         <div onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-red-300 resize-col flex-grow-0 flex-shrink-0'></div>
         <SetArea width={editorAndSetAreaW - editorAreaW}></SetArea>
