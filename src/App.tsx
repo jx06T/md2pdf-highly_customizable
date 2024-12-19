@@ -15,30 +15,40 @@ function App() {
   const movingRef = useRef<number>(-1)
   const startEWRef = useRef<number>(0)
   const startESWRef = useRef<number>(0)
-  const MIN_W = useRef<number>(192);
   const [minW, setMinW] = useState<number>(192);
   const [maxW, setMaxW] = useState<number>(document.documentElement.clientWidth);
-  const [showSetArea, setShowSetArea] = useState<boolean>(false)
-  const [showSetNotEditor, setShowSetNotEditor] = useState<boolean>(false)
+  const [expandLevel, setExpandLevel] = useState<number>(2)
+  const [displayId, setDisplayId] = useState<number>(0)
 
   useEffect(() => {
     const handleResize = () => {
-      if (document.documentElement.clientWidth >= 1024) {
-        setMinW(192);
-        setShowSetArea(true)
+      const newW = document.documentElement.clientWidth;
+      if (newW >= 1024) {
+        setExpandLevel(2)
+      } else if (newW > 640) {
+        setExpandLevel(1)
       } else {
-        setMinW(0);
-        setShowSetArea(false)
+        setExpandLevel(0)
+        setEditorAndSetAreaW(newW)
+        setEditorAreaW(newW)
+        setMaxW(newW)
+        return
       }
-      setMaxW(document.documentElement.clientWidth)
+      setMaxW(newW)
+      if (newW < minW + editorAndSetAreaW) {
+        setEditorAndSetAreaW(newW - minW)
+      }
+      if (newW < 2 * minW + editorAreaW) {
+        setEditorAreaW(newW - (2 * minW))
+      }
     }
 
     window.addEventListener('resize', handleResize);
-
+    handleResize();
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [])
+  }, [editorAndSetAreaW, editorAreaW])
 
   useEffect(() => {
     const onMouseMove = (e: globalThis.MouseEvent) => {
@@ -46,9 +56,9 @@ function App() {
 
         if (movingRef.current == 0) {
           if (editorAndSetAreaW - (startEWRef.current + (e.clientX - startXRef.current)) < minW) {
-            setEditorAndSetAreaW(Math.max(MIN_W.current, startEWRef.current + (e.clientX - startXRef.current)) + minW);
+            setEditorAndSetAreaW(Math.min(maxW - minW, Math.max(minW, startEWRef.current + (e.clientX - startXRef.current) + minW)));
           }
-          setEditorAreaW(Math.min(maxW - minW, Math.max(MIN_W.current, startEWRef.current + (e.clientX - startXRef.current))));
+          setEditorAreaW(Math.min(maxW - (2 * minW), Math.max(minW, startEWRef.current + (e.clientX - startXRef.current))));
 
         } else if (movingRef.current == 1) {
           if (startESWRef.current + (e.clientX - startXRef.current) < (2 * minW)) {
@@ -90,10 +100,6 @@ function App() {
     startESWRef.current = editorAndSetAreaW;
   };
 
-  const switchSetArea = (b: boolean) => {
-    setShowSetNotEditor(b)
-  }
-
   return (
     <div className='App h-[100dvh] overflow-y-hidden flex flex-col overflow-x-hidden'>
       <header className=' sticky h-10 bg-blue-300 rounded-b-md -mb-1 z-10 text-l'>
@@ -101,15 +107,17 @@ function App() {
         {/* <div className=' bg-red-600 z-30 absolute h-2' style={{ width: editorAreaW }}></div> */}
       </header>
 
-      {/* <UpperToolbar></UpperToolbar> */}
+      <UpperToolbar editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
       <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""}`}>
-        <EditorArea showSetNotEditor={showSetNotEditor} switchSetArea={switchSetArea} showSetArea={showSetArea} width={editorAreaW}></EditorArea>
-        <div onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 resize-col flex-grow-0 flex-shrink-0 mt-9'></div>
-        <SetArea showSetNotEditor={showSetNotEditor} showSetArea={showSetArea} width={showSetArea ? editorAndSetAreaW - editorAreaW : editorAreaW}></SetArea>
-        {showSetArea &&
-          <div onMouseDown={(e) => onMouseDown(e, 1)} className=' cursor-col-resize w-2 bg-stone-300 resize-col flex-grow-0 flex-shrink-0 mt-9'></div>
+        <EditorArea expandLevel={expandLevel} width={editorAreaW}></EditorArea>
+        {expandLevel > 0 &&
+          <div onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 resize-col flex-grow-0 flex-shrink-0'></div>
         }
-        <PreviewArea></PreviewArea>
+        <SetArea displayId={displayId} expandLevel={expandLevel} width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : editorAreaW}></SetArea>
+        {expandLevel > 1 &&
+          <div onMouseDown={(e) => onMouseDown(e, 1)} className=' cursor-col-resize w-2 bg-stone-300 resize-col flex-grow-0 flex-shrink-0'></div>
+        }
+        <PreviewArea expandLevel={expandLevel} displayId={displayId}></PreviewArea>
       </main>
     </div>
   )

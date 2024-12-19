@@ -2,41 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (min-width: 1024px) {
-  .set-area {
-    @apply min-w-56 static flex-grow-0 h-full;
-  }
-
-  .max-w-full-12 {
-    max-width: calc(100vw - 12rem);
-  }
-
-  .max-w-full-24 {
-    max-width: calc(100vw - 24rem);
-  }
-}
-.max-w-full-24 {
+.max-w-full-12 {
   max-width: calc(100vw - 12rem);
 }
 
-@media (max-width: 1024px) {
-  .set-area.hide-j {
-    position: absolute;
-    left: 0px;
-    top: 2.25rem;
-    /* display: none; */
-  
-  }
-  .set-area.hide-j-2 {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .set-area {
-    @apply absolute right-0 bottom-0 top-0;
-  }
+.max-w-full-24 {
+  max-width: calc(100vw - 24rem);
 }
-
 .set-area input {
   @apply bg-blue-50;
 }
@@ -46,12 +18,12 @@
   user-select: none;
 }
 
-.left-point::before{
+.left-point::before {
   content: "● ";
   width: 10px;
   height: 10px;
 }
 
-.bg-b-2-w{
-  background: linear-gradient(to right, #334155,#404f64, #ffffff);;
+.bg-b-2-w {
+  background: linear-gradient(to right, #334155, #404f64, #ffffff);
 }

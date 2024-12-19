@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 
-function SetArea({ showSetNotEditor, width, showSetArea }: { showSetNotEditor: boolean, width: number, showSetArea: boolean }) {
+function SetArea({ displayId, width, expandLevel }: { displayId: number, width: number, expandLevel: number }) {
 
     return (
-        <div style={{ width: width }} className={`set-area bg-blue-50 ${showSetNotEditor ? "" : "hide-j-2"} ${showSetArea ? "" : "hide-j "}  flex-grow-0 flex-shrink-0 max-w-full-12 min-w-0 lg:min-w-48`}>
-            {showSetArea &&
-                <div className=" bg-white pt-2 w-full h-9 space-x-2 flex">
-                    <label className=" bg-blue-50 rounded-t-md px-2 w-fit pt-1 text-black left-point ">Settings</label>
-                </div>
-            }
+        <div style={{ width: width }} className={`set-area bg-blue-50 ${expandLevel > 1 ? " max-w-full-12 min-w-56 static flex-grow-0" : " absolute left-0 " + (displayId == 1 ? "" : " opacity-0 pointer-events-none ")}  h-full flex-grow-0 flex-shrink-0 min-w-0 lg:min-w-48`}>
             <div className=" p-2 h-full bg-blue-50">
                 <input type="text" defaultValue={"dddd"} />
                 <input type="text" defaultValue={"dddd"} />F

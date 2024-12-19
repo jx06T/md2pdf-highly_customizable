@@ -14,19 +14,14 @@ ddd
 :::
 `;
 
-function PreviewArea() {
+function PreviewArea({ displayId, expandLevel }: { displayId: number, expandLevel: number }) {
     return (
-        <div className="preview-area bg-stone-100 min-w-0 lg:min-w-48 flex-grow w-full h-full">
-            <div className=" bg-white pt-2 w-full h-9 space-x-3 flex">
-                <label className=" bg-stone-100 rounded-t-md px-2 w-fit pt-1 text-black left-point ">Preview</label>
-                <button className="pb-2 rounded-md w-9 h-9"><IcBaselinePrint className="text-2xl"></IcBaselinePrint></button>
-                <button className="pb-2 rounded-md w-9 h-9"><MynauiShareSolid className="text-2xl"></MynauiShareSolid></button>
-            </div>
+        <div className={`preview-area bg-stone-100 min-w-0 lg:min-w-48 w-full h-full  ${expandLevel > 0 ? "flex-grow " : " absolute left-0 " + (displayId == 2 ? "" : " opacity-0 pointer-events-none ")} `} >
             <div className=" p-2">
                 <h1>Markdown-to-JSX Example</h1>
                 <ReactMarkdown>{markdownContent}</ReactMarkdown>
             </div>
-        </div>
+        </ div>
     )
 }
 
