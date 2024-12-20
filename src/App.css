@@ -27,3 +27,16 @@
 .bg-b-2-w {
   background: linear-gradient(to right, #334155, #404f64, #ffffff);
 }
+
+.editor-area *{
+  background-color: black;
+  color: white;
+}
+
+.editor-toolbar,.editor-toolbar a{
+  background-color: white;
+}
+
+.CodeMirror {
+  background-color: black !important;
+}

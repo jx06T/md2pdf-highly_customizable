@@ -1,37 +1,65 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import SimpleMDE from 'simplemde';
+import 'simplemde/dist/simplemde.min.css';
 
-// import 'easymde/src/css/easymde.css';
-// import 'codemirror/lib/codemirror.css'
-// import MarkdownEditor from 'react-markdown-editor-smde'
+const MarkdownEditor = ({ initialValue = '', onChange = () => { } }) => {
+    const editorRef = useRef<HTMLTextAreaElement>(null);
+    const [simplemde, setSimplemde] = useState<SimpleMDE | null>(null);
 
-// const Editor = () => {
-//     const el = useRef<MarkdownEditor>(null);
-//     function onSubmit() {
-//         if (el.current) {
-//             const md = el.current.mdValue;
-//         }
-//     }
-//     function doReset() {
-//         if (el.current) {
-//             el.current.mdValue = '';
-//         }
-//     }
-//     return (
-//         <div>
-//             <MarkdownEditor ref={el} />
-//             <button onClick={onSubmit}>Submit</button>
-//             <button onClick={doReset}>Reset</button>
-//         </div>
-//     )
-// }
+    useEffect(() => {
+        // 初始化 SimpleMDE
+        if (simplemde) return;
+
+        const smde = new SimpleMDE({
+            element: editorRef.current!,
+            initialValue: initialValue,
+            spellChecker: true,
+            autofocus: true,
+            toolbar: [
+                'bold',
+                'italic',
+                'heading',
+                '|',
+                'quote',
+                'unordered-list',
+                'ordered-list',
+                '|',
+                'link',
+                'image',
+                '|',
+                'preview',
+                'guide'
+            ]
+        });
+
+        // 監聽變更事件
+        smde.codemirror.on('change', () => {
+            // @ts-ignore
+            onChange(smde.value());
+        });
+        console.log("!!!")
+
+        setSimplemde(smde);
+
+        // 清理函數
+        return () => {
+            if (simplemde) {
+                // @ts-ignore
+                simplemde.toTextArea();
+                smde.codemirror.off('change');
+                setSimplemde(null);
+            }
+        };
+    }, [initialValue, onChange, simplemde]);
+
+    return <textarea ref={editorRef} />;
+};
 
 function EditorArea({ width, expandLevel }: { width: number, expandLevel: number }) {
     return (
         <div style={{ width: width }} className={`editor-area bg-black ${expandLevel > 1 ? "max-w-full-24" : (expandLevel > 0 ? "max-w-full-12" : "")} min-w-0 lg:min-w-48 flex-grow-0 flex-shrink-0`}>
             <div className=" p-1 h-full w-full">
-                <textarea name="editor" id="editor" className=" w-full bg-black text-white  h-full">
-                    {`tttttt\nttt\nadcewv3\nq2bg5`}
-                </textarea>
+                <MarkdownEditor></MarkdownEditor>
             </div>
         </div>
     )

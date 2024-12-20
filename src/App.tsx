@@ -18,21 +18,23 @@ function App() {
   const [minW, setMinW] = useState<number>(192);
   const [maxW, setMaxW] = useState<number>(document.documentElement.clientWidth);
   const [expandLevel, setExpandLevel] = useState<number>(2)
+  const [maxExpandLevel, setMaxExpandLevel] = useState<number>(2)
+  const [customExpandLevel, setCustomExpandLevel] = useState<number>(2)
   const [displayId, setDisplayId] = useState<number>(0)
 
   useEffect(() => {
     const handleResize = () => {
       const newW = document.documentElement.clientWidth;
-      if (newW >= 1024) {
-        setExpandLevel(2)
-      } else if (newW > 640) {
-        setExpandLevel(1)
-      } else {
-        setExpandLevel(0)
+      if (newW < 640) {
+        setMaxExpandLevel(0)
         setEditorAndSetAreaW(newW)
         setEditorAreaW(newW)
         setMaxW(newW)
-        return
+        return;
+      } else if (newW < 1024) {
+        setMaxExpandLevel(1)
+      } else {
+        setMaxExpandLevel(2)
       }
       setMaxW(newW)
     }
@@ -43,6 +45,13 @@ function App() {
       window.removeEventListener('resize', handleResize);
     };
   }, [])
+
+  useEffect(() => {
+    if (customExpandLevel > -1) {
+      const newExpandLevel = Math.min(maxExpandLevel, customExpandLevel);
+      setExpandLevel(newExpandLevel);
+    }
+  }, [customExpandLevel, maxExpandLevel])
 
   useEffect(() => {
     if (maxW < minW + editorAndSetAreaW) {
@@ -153,13 +162,13 @@ function App() {
         {/* <div className=' bg-red-600 z-30 absolute h-2' style={{ width: editorAreaW }}></div> */}
       </header>
 
-      <UpperToolbar editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
+      <UpperToolbar setCustomExpandLevel={setCustomExpandLevel} editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} maxExpandLevel={maxExpandLevel} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
       <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""}`}>
-        <EditorArea expandLevel={expandLevel} width={editorAreaW}></EditorArea>
+        <EditorArea expandLevel={expandLevel} width={expandLevel == 0 ? maxW : editorAreaW}></EditorArea>
         {expandLevel > 0 &&
           <div onTouchStart={(e) => handleTouchStart(e, 0)} onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
         }
-        <SetArea displayId={displayId} expandLevel={expandLevel} width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : editorAreaW}></SetArea>
+        <SetArea displayId={displayId} expandLevel={expandLevel} width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : (expandLevel > 0 ? editorAreaW : maxW)}></SetArea>
         {expandLevel > 1 &&
           <div onTouchStart={(e) => handleTouchStart(e, 1)} onMouseDown={(e) => onMouseDown(e, 1)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
         }
