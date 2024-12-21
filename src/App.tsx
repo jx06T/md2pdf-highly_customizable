@@ -159,22 +159,22 @@ function App() {
   }
 
   return (
-    <div className='App h-[100dvh] overflow-y-hidden flex flex-col overflow-x-hidden'>
-      <header className=' sticky h-10 bg-blue-300 rounded-b-md -mb-1 z-10 text-l'>
+    <div className='app h-[100dvh] overflow-y-hidden flex flex-col overflow-x-hidden'>
+      <header className='header sticky h-10 bg-blue-300 rounded-b-md -mb-1 z-10 text-l'>
         <h1 className=' text-left pl-3 pt-1 text-2xl'>MD2PDF</h1>
         {/* <div className=' bg-red-600 z-30 absolute h-2' style={{ width: editorAreaW }}></div> */}
       </header>
 
       <MdProvider>
         <UpperToolbar setCustomExpandLevel={setCustomExpandLevel} editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} maxExpandLevel={maxExpandLevel} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
-        <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""} overflow-y-hidden overflow-x-hidden`}>
+        <main className={`main flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""} overflow-y-hidden overflow-x-hidden`}>
           <EditorArea expandLevel={expandLevel} width={expandLevel === 0 ? maxW : editorAreaW}></EditorArea>
           {expandLevel > 0 &&
-            <div onTouchStart={(e) => handleTouchStart(e, 0)} onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
+            <div onTouchStart={(e) => handleTouchStart(e, 0)} onMouseDown={(e) => onMouseDown(e, 0)} className=' print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
           }
           <SetArea displayId={displayId} expandLevel={expandLevel} width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : (expandLevel > 0 ? editorAreaW : maxW)}></SetArea>
           {expandLevel > 1 &&
-            <div onTouchStart={(e) => handleTouchStart(e, 1)} onMouseDown={(e) => onMouseDown(e, 1)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
+            <div onTouchStart={(e) => handleTouchStart(e, 1)} onMouseDown={(e) => onMouseDown(e, 1)} className=' print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
           }
           <PreviewArea expandLevel={expandLevel} displayId={displayId}></PreviewArea>
         </main>

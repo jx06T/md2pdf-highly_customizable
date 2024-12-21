@@ -22,7 +22,11 @@ interface HeaderConfig {
 
 interface ListConfig {
     scaling: number;
-    decorativeSymbol: string;
+    decorativeSymbol1: string;
+    decorativeSymbol2: string;
+    decorativeSymbol3: string;
+    decorativeSymbol4: string;
+    decorativeSymbol5: string;
 }
 
 interface ImageAnnotationConfig {
@@ -64,6 +68,7 @@ interface PageConfig {
 }
 
 interface StyleConfig {
+    init?: boolean;
     page: PageConfig;
     title: {
         H1: HeaderConfig;
@@ -83,6 +88,7 @@ interface StyleConfig {
 
 // Default values
 const defaultStyleConfig: StyleConfig = {
+    init: true,
     page: {
         font: {
             size: 16,
@@ -107,7 +113,7 @@ const defaultStyleConfig: StyleConfig = {
         H1: {
             size: 30,
             weight: 700,
-            tMargin: 5,
+            tMargin: 7,
             bMargin: 3,
             decorativeSymbol: '',
             scaling: 1,
@@ -164,12 +170,20 @@ const defaultStyleConfig: StyleConfig = {
     },
     list: {
         orderedLists: {
-            scaling: 1,
-            decorativeSymbol: '.'
+            scaling: 20,
+            decorativeSymbol1: 'decimal',
+            decorativeSymbol2: 'decimal',
+            decorativeSymbol3: 'decimal',
+            decorativeSymbol4: 'decimal',
+            decorativeSymbol5: 'decimal'
         },
         unorderedList: {
-            scaling: 1,
-            decorativeSymbol: '•'
+            scaling: 20,
+            decorativeSymbol1: 'circle',
+            decorativeSymbol2: 'circle',
+            decorativeSymbol3: 'circle',
+            decorativeSymbol4: 'circle',
+            decorativeSymbol5: 'circle'
         }
     },
     image: {

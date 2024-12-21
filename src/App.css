@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --custom-font-family: "Arial", sans-serif; /* 預設字體 */
+}
+
 .max-w-full-12 {
   max-width: calc(100vw - 192px);
 }
@@ -62,16 +66,19 @@
 .page {
   font-family: var(--custom-font-family);
   color: var(--page-font-color, #000000);
-}
-.page * {
-  font-size: var(--page-font-size, medium);
-  font-weight: var(--page-font-weight, normal);
-  line-height: var(--page-font-height, normal);
   padding-top: var(--page-layout-tBoundary, 15px);
   padding-bottom: var(--page-layout-bBoundary, 15px);
   padding-left: var(--page-layout-lBoundary, 10px);
   padding-right: var(--page-layout-rBoundary, 10px);
   background-color: var(--page-layout-bgColor, #ffffff);
+}
+
+.page *:not(strong) {
+  font-weight: var(--page-font-weight, normal);
+}
+.page * {
+  font-size: var(--page-font-size, medium);
+  line-height: var(--page-font-height, normal);
 }
 
 .preview-area h1 {
@@ -117,8 +124,76 @@
   margin-bottom: var(--title-H6-bMargin, 2px);
 }
 
+.preview-area ul {
+  list-style-type: var(--list-unorderedList-decorativeSymbol1, circle);
+  padding-left: var(--list-unorderedList-scaling, 20px);
+}
+.preview-area ul ul {
+  list-style-type: var(--list-unorderedList-decorativeSymbol2, circle);
+}
 
+.preview-area ul ul ul {
+  list-style-type: var(--list-unorderedList-decorativeSymbol3, circle);
+}
+.preview-area ul ul ul ul {
+  list-style-type: var(--list-unorderedList-decorativeSymbol4, circle);
+}
+.preview-area ul ul ul ul ul {
+  list-style-type: var(--list-unorderedList-decorativeSymbol5, circle);
+}
 
-:root {
-  --custom-font-family: "Arial", sans-serif; /* 預設字體 */
+.preview-area ol {
+  list-style-type: var(--list-orderedLists-decorativeSymbol1, decimal);
+  padding-left: var(--list-orderedLists-scaling, 20px);
+}
+
+.preview-area ol ol {
+  list-style-type: var(--list-orderedLists-decorativeSymbol2, decimal);
+}
+
+.preview-area ol ol ol {
+  list-style-type: var(--list-orderedLists-decorativeSymbol3, decimal);
+}
+
+.preview-area ol ol ol ol {
+  list-style-type: var(--list-orderedLists-decorativeSymbol4, decimal);
+}
+
+.preview-area ol ol ol ol ol {
+  list-style-type: var(--list-orderedLists-decorativeSymbol5, decimal);
+}
+
+@media print {
+  .bkp {
+    break-before: page !important;
+    opacity: 0;
+  }
+
+  .editor-area,
+  .header,
+  .set-area,
+  .print-hide {
+    display: none !important;
+  }
+
+  .page {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+  }
+
+  body,
+  .preview-area,
+  .preview-area-2,
+  #root,
+  .app,
+  .main {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  @page {
+    size: A4;
+  }
 }
