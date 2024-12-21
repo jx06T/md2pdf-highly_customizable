@@ -28,15 +28,18 @@
   background: linear-gradient(to right, #334155, #404f64, #ffffff);
 }
 
-.editor-area *{
+.editor-area * {
   background-color: black;
   color: white;
 }
 
-.editor-toolbar,.editor-toolbar a{
-  background-color: white;
+.mdxeditor,
+.mdxeditor-root-contenteditable,
+.mdxeditor-root-contenteditable > div,
+.mdxeditor-root-contenteditable > div > div {
+  height: 100%;
 }
 
-.CodeMirror {
-  background-color: black !important;
+.mdxeditor h1 {
+  @apply text-3xl;
 }

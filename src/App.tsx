@@ -65,12 +65,12 @@ function App() {
   const handleMove = (clientX: number) => {
     if (isResizing) {
 
-      if (movingRef.current == 0) {
+      if (movingRef.current === 0) {
         if (editorAndSetAreaW - (startEWRef.current + (clientX - startXRef.current)) < minW && expandLevel > 1) {
           setEditorAndSetAreaW(Math.min(maxW - minW, Math.max(minW, startEWRef.current + (clientX - startXRef.current) + minW)));
         }
         setEditorAreaW(Math.min(maxW - (expandLevel * minW), Math.max(minW, startEWRef.current + (clientX - startXRef.current))));
-      } else if (movingRef.current == 1) {
+      } else if (movingRef.current === 1) {
         if (startESWRef.current + (clientX - startXRef.current) < (2 * minW)) {
           return
         }
@@ -164,7 +164,7 @@ function App() {
 
       <UpperToolbar setCustomExpandLevel={setCustomExpandLevel} editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} maxExpandLevel={maxExpandLevel} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
       <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""}`}>
-        <EditorArea expandLevel={expandLevel} width={expandLevel == 0 ? maxW : editorAreaW}></EditorArea>
+        <EditorArea expandLevel={expandLevel} width={expandLevel === 0 ? maxW : editorAreaW}></EditorArea>
         {expandLevel > 0 &&
           <div onTouchStart={(e) => handleTouchStart(e, 0)} onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
         }
