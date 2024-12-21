@@ -53,18 +53,11 @@
   box-shadow: none !important;
 }
 
-.w-md-editor-text {
-  height: 100% !important;
-}
-
 .w-md-editor-area::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Edge */
-}
-
-.w-md-editor-content {
-  overflow-y: auto !important;
 }
 
 .w-md-editor-area {
   scrollbar-width: none; /* For Firefox */
 }
+

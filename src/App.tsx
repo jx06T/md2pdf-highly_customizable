@@ -5,6 +5,7 @@ import EditorArea from './components/EditorArea'
 import SetArea from './components/SetArea'
 import PreviewArea from './components/PreviewArea'
 import UpperToolbar from './components/UpperToolbar'
+import './@uiw/react-md-editor/dist/mdeditor.css'
 
 function App() {
   const [editorAreaW, setEditorAreaW] = useState<number>(350)
@@ -163,7 +164,7 @@ function App() {
       </header>
 
       <UpperToolbar setCustomExpandLevel={setCustomExpandLevel} editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} maxExpandLevel={maxExpandLevel} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
-      <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""}`}>
+      <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""} overflow-y-hidden overflow-x-hidden`}>
         <EditorArea expandLevel={expandLevel} width={expandLevel === 0 ? maxW : editorAreaW}></EditorArea>
         {expandLevel > 0 &&
           <div onTouchStart={(e) => handleTouchStart(e, 0)} onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
