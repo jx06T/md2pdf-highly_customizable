@@ -53,11 +53,12 @@
   box-shadow: none !important;
 }
 
-.w-md-editor-area::-webkit-scrollbar {
+.w-md-editor-area,
+.no-scrollbar::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Edge */
 }
 
-.w-md-editor-area {
+.w-md-editor-area,
+.no-scrollbar {
   scrollbar-width: none; /* For Firefox */
 }
-

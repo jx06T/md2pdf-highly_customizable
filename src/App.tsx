@@ -5,6 +5,7 @@ import EditorArea from './components/EditorArea'
 import SetArea from './components/SetArea'
 import PreviewArea from './components/PreviewArea'
 import UpperToolbar from './components/UpperToolbar'
+import { MdProvider } from './context/MdContext'
 
 import './@uiw/react-md-editor/dist/mdeditor.css'
 
@@ -164,18 +165,20 @@ function App() {
         {/* <div className=' bg-red-600 z-30 absolute h-2' style={{ width: editorAreaW }}></div> */}
       </header>
 
-      <UpperToolbar setCustomExpandLevel={setCustomExpandLevel} editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} maxExpandLevel={maxExpandLevel} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
-      <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""} overflow-y-hidden overflow-x-hidden`}>
-        <EditorArea expandLevel={expandLevel} width={expandLevel === 0 ? maxW : editorAreaW}></EditorArea>
-        {expandLevel > 0 &&
-          <div onTouchStart={(e) => handleTouchStart(e, 0)} onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
-        }
-        <SetArea displayId={displayId} expandLevel={expandLevel} width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : (expandLevel > 0 ? editorAreaW : maxW)}></SetArea>
-        {expandLevel > 1 &&
-          <div onTouchStart={(e) => handleTouchStart(e, 1)} onMouseDown={(e) => onMouseDown(e, 1)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
-        }
-        <PreviewArea expandLevel={expandLevel} displayId={displayId}></PreviewArea>
-      </main>
+      <MdProvider>
+        <UpperToolbar setCustomExpandLevel={setCustomExpandLevel} editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} maxExpandLevel={maxExpandLevel} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
+        <main className={`flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""} overflow-y-hidden overflow-x-hidden`}>
+          <EditorArea expandLevel={expandLevel} width={expandLevel === 0 ? maxW : editorAreaW}></EditorArea>
+          {expandLevel > 0 &&
+            <div onTouchStart={(e) => handleTouchStart(e, 0)} onMouseDown={(e) => onMouseDown(e, 0)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
+          }
+          <SetArea displayId={displayId} expandLevel={expandLevel} width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : (expandLevel > 0 ? editorAreaW : maxW)}></SetArea>
+          {expandLevel > 1 &&
+            <div onTouchStart={(e) => handleTouchStart(e, 1)} onMouseDown={(e) => onMouseDown(e, 1)} className=' cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
+          }
+          <PreviewArea expandLevel={expandLevel} displayId={displayId}></PreviewArea>
+        </main>
+      </MdProvider>
     </div>
   )
 }

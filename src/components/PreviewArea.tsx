@@ -1,24 +1,16 @@
 import React from "react";
 import ReactMarkdown from "markdown-to-jsx";
-const markdownContent = `
-# Hello, Markdown-to-JSX!
-
-This is a simple example of **Markdown** rendered in React.
-
-- Item 1
-- Item 2
-- Item 3
-::: note
-ddd
-:::
-`;
+import { useMdContext } from "../context/MdContext";
 
 function PreviewArea({ displayId, expandLevel }: { displayId: number, expandLevel: number }) {
+    const { mdValue, setMdValue } = useMdContext()
+
     return (
-        <div className={`preview-area bg-stone-100 min-w-0 lg:min-w-48 w-full h-full  ${expandLevel > 0 ? "flex-grow flex-shrink " : " absolute left-0 " + (displayId === 2 ? "" : " opacity-0 pointer-events-none ")} `} >
-            <div className=" p-2">
-                <h1>Markdown-to-JSX Example</h1>
-                <ReactMarkdown>{markdownContent}</ReactMarkdown>
+        <div className={`preview-area no-scrollbar bg-stone-100 min-w-0 lg:min-w-48 w-full h-full overflow-y-scroll   ${expandLevel > 0 ? "flex-grow flex-shrink " : " absolute left-0 " + (displayId === 2 ? "" : " opacity-0 pointer-events-none ")} `} >
+            <div className=" p-4 ">
+                <div className="border-2 page">
+                    <ReactMarkdown>{mdValue}</ReactMarkdown>
+                </div>
             </div>
         </ div>
     )

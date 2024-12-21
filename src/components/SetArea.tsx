@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 function SetArea({ displayId, width, expandLevel }: { displayId: number, width: number, expandLevel: number }) {
 
