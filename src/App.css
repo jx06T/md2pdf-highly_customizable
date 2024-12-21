@@ -10,7 +10,7 @@
   max-width: calc(100vw - 384px);
 }
 .set-area input {
-  @apply bg-blue-50;
+  /* @apply bg-blue-50; */
 }
 
 .pointer-events-none-j * {
@@ -40,10 +40,6 @@
   height: 100%;
 }
 
-.mdxeditor h1 {
-  @apply text-3xl;
-}
-
 .w-md-editor > .w-md-editor-toolbar {
   background-color: black !important;
   /* border: none; */
@@ -53,12 +49,76 @@
   box-shadow: none !important;
 }
 
-.w-md-editor-area,
+.w-md-editor-area::-webkit-scrollbar,
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari, and Edge */
+  /* display: none; */
 }
 
 .w-md-editor-area,
 .no-scrollbar {
-  scrollbar-width: none; /* For Firefox */
+  /* scrollbar-width: none; */
+}
+
+.page {
+  font-family: var(--custom-font-family);
+  color: var(--page-font-color, #000000);
+}
+.page * {
+  font-size: var(--page-font-size, medium);
+  font-weight: var(--page-font-weight, normal);
+  line-height: var(--page-font-height, normal);
+  padding-top: var(--page-layout-tBoundary, 15px);
+  padding-bottom: var(--page-layout-bBoundary, 15px);
+  padding-left: var(--page-layout-lBoundary, 10px);
+  padding-right: var(--page-layout-rBoundary, 10px);
+  background-color: var(--page-layout-bgColor, #ffffff);
+}
+
+.preview-area h1 {
+  font-size: var(--title-H1-size, 30px);
+  font-weight: var(--title-H1-weight, normal);
+  color: var(--title-H1-color, #000000);
+  margin-top: var(--title-H1-tMargin, 5px);
+  margin-bottom: var(--title-H1-bMargin, 2px);
+}
+.preview-area h2 {
+  font-size: var(--title-H2-size, 24px);
+  font-weight: var(--title-H2-weight, normal);
+  color: var(--title-H2-color, #000000);
+  margin-top: var(--title-H2-tMargin, 5px);
+  margin-bottom: var(--title-H2-bMargin, 2px);
+}
+.preview-area h3 {
+  font-size: var(--title-H3-size, 20px);
+  font-weight: var(--title-H3-weight, normal);
+  color: var(--title-H3-color, #000000);
+  margin-top: var(--title-H3-tMargin, 5px);
+  margin-bottom: var(--title-H3-bMargin, 2px);
+}
+.preview-area h4 {
+  font-size: var(--title-H4-size, 18px);
+  font-weight: var(--title-H4-weight, normal);
+  color: var(--title-H4-color, #000000);
+  margin-top: var(--title-H4-tMargin, 5px);
+  margin-bottom: var(--title-H4-bMargin, 2px);
+}
+.preview-area h5 {
+  font-size: var(--title-H5-size, 16px);
+  font-weight: var(--title-H5-weight, normal);
+  color: var(--title-H5-color, #3f4a58);
+  margin-top: var(--title-H5-tMargin, 5px);
+  margin-bottom: var(--title-H5-bMargin, 2px);
+}
+.preview-area h6 {
+  font-size: var(--title-H6-size, 14px);
+  font-weight: var(--title-H6-weight, normal);
+  color: var(--title-H6-color, #475569);
+  margin-top: var(--title-H6-tMargin, 5px);
+  margin-bottom: var(--title-H6-bMargin, 2px);
+}
+
+
+
+:root {
+  --custom-font-family: "Arial", sans-serif; /* 預設字體 */
 }

@@ -8,9 +8,7 @@ import { useMdContext } from "../context/MdContext";
 
 function EditorArea({ width, expandLevel }: { width: number, expandLevel: number }) {
 
-    // const { mdValue, setMdValue } = useMdContext()
-    const [ mdValue, setMdValue ] = useState<string>("#ddd")
-    console.log(mdValue)
+    const { mdValue, setMdValue } = useMdContext()
     const handleChange = (val?: string) => {
         if (val !== undefined) {
             setMdValue(val);
