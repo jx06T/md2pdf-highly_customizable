@@ -43,3 +43,28 @@
 .mdxeditor h1 {
   @apply text-3xl;
 }
+
+.w-md-editor > .w-md-editor-toolbar {
+  background-color: black !important;
+  /* border: none; */
+}
+.w-md-editor {
+  background-color: black !important;
+  box-shadow: none !important;
+}
+
+.w-md-editor-text {
+  height: 100% !important;
+}
+
+.w-md-editor-area::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge */
+}
+
+.w-md-editor-content {
+  overflow-y: auto !important;
+}
+
+.w-md-editor-area {
+  scrollbar-width: none; /* For Firefox */
+}
