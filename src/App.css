@@ -180,6 +180,9 @@
     display: block !important;
     position: static !important;
     width: 100% !important;
+    margin: 0px !important;
+    width: auto !important;
+    scale: 1 !important;
   }
 
   body,
@@ -196,4 +199,12 @@
   @page {
     size: A4;
   }
+}
+
+.page {
+  width: 21cm;
+  scale: 0.7;
+  margin-left: -3cm;
+  margin-top: -9cm;
+  /* 要改用js考慮預覽寬度動態調整 */
 }

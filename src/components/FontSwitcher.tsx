@@ -29,7 +29,7 @@ function FontSwitcher({ value, changeCallback }: { value: string; changeCallback
 
   return (
     <div>
-      <select className=" w-40 p-1 border rounded bg-gray-50 h-9" id="font-selector" value={selectedFont} onChange={handleFontChange}>
+      <select className=" w-24 p-1 border rounded bg-gray-50 h-9" id="font-selector" value={selectedFont} onChange={handleFontChange}>
         {fonts.map((font) => (
           <option key={font.value} value={font.value}>
             {font.name}

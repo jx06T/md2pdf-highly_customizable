@@ -30,7 +30,7 @@ function PreviewArea({ displayId, expandLevel }: { displayId: number, expandLeve
         overrides: {
             bp: {
                 component: () => {
-                    return <div className=" flex items-center"><span className=" h-4 mb-3 text-gray-300" >{'>'}</span ><hr className=" bkp flex-grow " /><span className=" h-4 mb-3 text-gray-300" >{'<'}</span ></div>;
+                    return <div className=" bkp  flex items-center"><span className=" h-4 mb-3 text-gray-300" >{'>'}</span ><hr className="flex-grow " /><span className=" h-4 mb-3 text-gray-300" >{'<'}</span ></div>;
                 }
             },
 

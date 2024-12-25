@@ -160,7 +160,7 @@ const ColorInput: React.FC<ColorInputProps> = ({
                 type="color"
                 value={localValue}
                 onChange={handleChange}
-                className="w-20 p-1 border rounded bg-gray-50 h-9"
+                className=" w-24 p-1 border rounded bg-gray-50 h-9"
             />
         </div>
     );
@@ -194,7 +194,7 @@ const StringInput: React.FC<StringInputProps> = ({
                 type="text"
                 value={localValue}
                 onChange={handleChange}
-                className="w-40 p-1 border rounded bg-gray-50 h-9"
+                className="w-24 p-1 border rounded bg-gray-50 h-9"
             />
         </div>
     );
@@ -224,7 +224,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
     return (
         <div className="flex items-center justify-between mb-2">
             <label className="text-sm">{label}</label>
-            <select className=" w-40 p-1 border rounded bg-gray-50 h-9" value={localValue} onChange={handleChange}>
+            <select className=" w-24 p-1 border rounded bg-gray-50 h-9" value={localValue} onChange={handleChange}>
                 {options.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.name}
@@ -257,7 +257,7 @@ const BooleanInput: React.FC<BooleanInputProps> = ({
     return (
         <div className="flex items-center justify-between mb-2">
             <label className="text-sm">{label}</label>
-            <div className=' w-20 px-2 pt-[5px] border rounded bg-gray-50 h-9' onClick={handleChange}>
+            <div className=' w-24 px-2 pt-[5px] border rounded bg-gray-50 h-9' onClick={handleChange}>
                 <div className={` w-6 h-6 border rounded m-auto ${localValue ? "bg-blue-300" : "bg-gray-200"}`}>
                 </div>
             </div>
@@ -357,8 +357,12 @@ const StyleConfigPanel: React.FC = () => {
         current[path[path.length - 1]] = value;
         // console.log(path, value)
 
-        if (typeof value === 'number') {
-            document.documentElement.style.setProperty("--" + path.join('-'), value.toString() + "px");
+        if (typeof value === "number") {
+            if (path.includes("layout")) {
+                document.documentElement.style.setProperty("--" + path.join('-'), value.toString() + "mm");
+            } else {
+                document.documentElement.style.setProperty("--" + path.join('-'), value.toString() + "px");
+            }
         } else {
             document.documentElement.style.setProperty("--" + path.join('-'), value + "");
         }
@@ -514,7 +518,7 @@ const StyleConfigPanel: React.FC = () => {
                         isExpanded={expandedSections[`title-${level}`]}
                         onToggle={toggleSection}
                     >
-                        <h4 className="font-medium mb-2">{level}</h4>
+                        {/* <h4 className="font-medium mb-2">{level}</h4> */}
                         <NumberInput
                             path={['title', level, 'size']}
                             label="Size"
