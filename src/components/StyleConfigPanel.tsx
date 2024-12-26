@@ -73,6 +73,11 @@ const NumberInput: React.FC<NumberInputProps> = ({
     const initialValue = getNestedValue(config, path) ?? 0;
     const [localValue, setLocalValue] = useState<string>(initialValue.toString());
 
+    useEffect(() => {
+        const initialValue = getNestedValue(config, path) ?? 0;
+        setLocalValue(initialValue)
+    }, [config])
+
     const debouncedUpdate = useCallback(
         debounce((value: number) => {
             updateConfig(path, value);
@@ -135,6 +140,11 @@ const ColorInput: React.FC<ColorInputProps> = ({
     const value = getNestedValue(config, path) ?? '#000000';
     const [localValue, setLocalValue] = useState(value);
 
+    useEffect(() => {
+        const initialValue = getNestedValue(config, path) ?? '#000000';
+        setLocalValue(initialValue)
+    }, [config])
+
     const debouncedUpdate = useCallback(
         debounce((value: string) => {
             updateConfig(path, value);
@@ -176,6 +186,11 @@ const StringInput: React.FC<StringInputProps> = ({
     const value = getNestedValue(config, path) ?? '';
     const [localValue, setLocalValue] = useState(value);
 
+    useEffect(() => {
+        const initialValue = getNestedValue(config, path) ?? '';
+        setLocalValue(initialValue)
+    }, [config])
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value;
         setLocalValue(newValue);
@@ -211,6 +226,11 @@ const SelectInput: React.FC<SelectInputProps> = ({
     const value = getNestedValue(config, path) ?? '';
     const [localValue, setLocalValue] = useState(value);
 
+    useEffect(() => {
+        const initialValue = getNestedValue(config, path) ?? '';
+        setLocalValue(initialValue)
+    }, [config])
+
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newValue = e.target.value;
         setLocalValue(newValue);
@@ -245,6 +265,11 @@ const BooleanInput: React.FC<BooleanInputProps> = ({
     const value = getNestedValue(config, path) ?? false;
     const [localValue, setLocalValue] = useState(value);
 
+    useEffect(() => {
+        const initialValue = getNestedValue(config, path) ?? false;
+        setLocalValue(initialValue)
+    }, [config])
+
     const handleChange = () => {
         updateConfig(path, !localValue);
         setLocalValue(!localValue);
@@ -272,8 +297,13 @@ const FontsInput: React.FC<StringInputProps> = ({
     config,
     updateConfig
 }) => {
-    const value = getNestedValue(config, path) ?? '#000000';
+    const value = getNestedValue(config, path) ?? '';
     const [localValue, setLocalValue] = useState(value);
+
+    useEffect(() => {
+        const initialValue = getNestedValue(config, path) ?? '';
+        setLocalValue(initialValue)
+    }, [config])
 
     const handleChange = (newValue: string) => {
         setLocalValue(newValue);
@@ -374,7 +404,8 @@ const StyleConfigPanel: React.FC = () => {
         const initialconfig = localStorage.getItem('config');
         if (initialconfig) {
             const parsedconfig = JSON.parse(initialconfig);
-            setConfig(parsedconfig)
+            setConfig({ ...parsedconfig, init: false })
+            console.log("!", parsedconfig)
         } else {
             localStorage.setItem('config', JSON.stringify(defaultStyleConfig))
         }
@@ -412,7 +443,7 @@ const StyleConfigPanel: React.FC = () => {
                         path={['page', 'font', 'weight']}
                         label="Weight"
                         step={100}
-                        max={900}
+                        max={3000}
                         config={config}
                         updateConfig={updateConfig}
                     />
@@ -529,7 +560,7 @@ const StyleConfigPanel: React.FC = () => {
                             path={['title', level, 'weight']}
                             label="Weight"
                             step={100}
-                            max={900}
+                            max={3000}
                             config={config}
                             updateConfig={updateConfig}
                         />
@@ -702,11 +733,19 @@ const StyleConfigPanel: React.FC = () => {
                     config={config}
                     updateConfig={updateConfig}
                 />
-                <NumberInput
-                    path={['image', 'annotation', 'size']}
-                    label="Annotation Size"
+
+                <SelectInput
+                    path={['image', 'alignment']}
+                    label="Alignment"
                     config={config}
                     updateConfig={updateConfig}
+                    options={
+                        [
+                            { name: "left", value: "left" },
+                            { name: "center", value: "center" },
+                            { name: "right", value: "right" },
+                        ]
+                    }
                 />
                 <NumberInput
                     path={['image', 'tMargin']}
@@ -730,7 +769,12 @@ const StyleConfigPanel: React.FC = () => {
                     isExpanded={expandedSections.annotation}
                     onToggle={toggleSection}
                 >
-
+                    <NumberInput
+                        path={['image', 'annotation', 'size']}
+                        label="Annotation Size"
+                        config={config}
+                        updateConfig={updateConfig}
+                    />
                     <NumberInput
                         path={['image', 'annotation', 'size']}
                         label="Size"
@@ -741,7 +785,7 @@ const StyleConfigPanel: React.FC = () => {
                         path={['image', 'annotation', 'weight']}
                         label="Weight"
                         step={100}
-                        max={900}
+                        max={3000}
                         config={config}
                         updateConfig={updateConfig}
                     />
@@ -793,7 +837,7 @@ const StyleConfigPanel: React.FC = () => {
                     path={['blockquotes', 'weight']}
                     label="Weight"
                     step={100}
-                    max={900}
+                    max={3000}
                     config={config}
                     updateConfig={updateConfig}
                 />

@@ -116,7 +116,7 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 7,
             bMargin: 3,
             decorativeSymbol: '',
-            scaling: 1,
+            scaling:0,
             underline: false,
             color: '#000000'
         },
@@ -126,7 +126,7 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 5,
             bMargin: 3,
             decorativeSymbol: '',
-            scaling: 1,
+            scaling:0,
             underline: false,
             color: '#000000'
         },
@@ -136,7 +136,7 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 3,
             bMargin: 0,
             decorativeSymbol: '',
-            scaling: 1,
+            scaling:0,
             underline: false,
             color: '#000000'
         },
@@ -146,7 +146,7 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 0,
             bMargin: 0,
             decorativeSymbol: '',
-            scaling: 1,
+            scaling:0,
             color: '#000000'
         },
         H5: {
@@ -155,7 +155,7 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 0,
             bMargin: 0,
             decorativeSymbol: '',
-            scaling: 1,
+            scaling:0,
             color: '#3f4a58'
         },
         H6: {
@@ -164,7 +164,7 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 0,
             bMargin: 0,
             decorativeSymbol: '',
-            scaling: 1,
+            scaling:0,
             color: '#475569'
         }
     },
@@ -187,7 +187,7 @@ const defaultStyleConfig: StyleConfig = {
         }
     },
     image: {
-        radius: 0,
+        radius: 5,
         alignment: 'center',
         tMargin: 24,
         bMargin: 16,

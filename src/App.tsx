@@ -176,7 +176,7 @@ function App() {
           {expandLevel > 1 &&
             <div onTouchStart={(e) => handleTouchStart(e, 1)} onMouseDown={(e) => onMouseDown(e, 1)} className=' print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
           }
-          <PreviewArea expandLevel={expandLevel} displayId={displayId}></PreviewArea>
+          <PreviewArea width={expandLevel > 1 ? maxW - editorAndSetAreaW : (expandLevel > 0 ? maxW - editorAreaW : maxW)} expandLevel={expandLevel} displayId={displayId}></PreviewArea>
         </main>
       </MdProvider>
     </div>
