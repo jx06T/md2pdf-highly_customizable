@@ -42,8 +42,10 @@ interface SelectInputProps {
 interface BooleanInputProps {
     path: string[];
     label: string;
+    tValue?: string;
+    fValue?: string;
     config: StyleConfig;
-    updateConfig: (path: string[], value: boolean) => void;
+    updateConfig: (path: string[], value: string) => void;
 }
 
 interface SectionProps {
@@ -260,23 +262,25 @@ const BooleanInput: React.FC<BooleanInputProps> = ({
     path,
     label,
     config,
+    tValue = "",
+    fValue = "",
     updateConfig
 }) => {
     const value = getNestedValue(config, path) ?? false;
-    const [localValue, setLocalValue] = useState(value);
+    const [localValue, setLocalValue] = useState(value == tValue);
 
     useEffect(() => {
         const initialValue = getNestedValue(config, path) ?? false;
-        setLocalValue(initialValue)
+        setLocalValue(initialValue == tValue)
     }, [config])
 
     const handleChange = () => {
-        updateConfig(path, !localValue);
+        updateConfig(path, ((!localValue) ? tValue : fValue));
         setLocalValue(!localValue);
     };
 
     useEffect(() => {
-        updateConfig(path, localValue)
+        updateConfig(path, (localValue) ? tValue : fValue)
     }, [])
 
     return (
@@ -400,12 +404,39 @@ const StyleConfigPanel: React.FC = () => {
         setConfig(newConfig);
     }, [config, setConfig]);
 
+    const initializeConfigStyles = useCallback((config: Record<string, any>, basePath: string[] = []) => {
+        const traverseConfig = (currentConfig: Record<string, any>, currentPath: string[]) => {
+            Object.entries(currentConfig).forEach(([key, value]) => {
+                const newPath = [...currentPath, key];
+
+                if (typeof value === "object" && value !== null) {
+                    traverseConfig(value, newPath); // 递归处理嵌套结构
+                } else {
+                    const cssVarName = `--${newPath.join('-')}`;
+                    if (typeof value === "number") {
+                        if (newPath.includes("layout")) {
+                            document.documentElement.style.setProperty(cssVarName, value.toString() + "mm");
+                        } else {
+                            document.documentElement.style.setProperty(cssVarName, value.toString() + "px");
+                        }
+                    } else {
+                        document.documentElement.style.setProperty(cssVarName, value + "");
+                    }
+                }
+            });
+        };
+
+        traverseConfig(config, basePath);
+    }, []);
+
+
     useEffect(() => {
         const initialconfig = localStorage.getItem('config');
         if (initialconfig) {
             const parsedconfig = JSON.parse(initialconfig);
             setConfig({ ...parsedconfig, init: false })
-            console.log("!", parsedconfig)
+            console.log(parsedconfig)
+            initializeConfigStyles(parsedconfig);
         } else {
             localStorage.setItem('config', JSON.stringify(defaultStyleConfig))
         }
@@ -570,14 +601,6 @@ const StyleConfigPanel: React.FC = () => {
                             config={config}
                             updateConfig={updateConfig}
                         />
-                        {/* <NumberInput
-                            path={['title', level, 'weight']}
-                            label="Weight"
-                            step={100}
-                            max={3000}
-                            config={config}
-                            updateConfig={updateConfig}
-                            /> */}
                         <SelectInput
                             path={['title', level, 'weight']}
                             label="Weight"
@@ -597,6 +620,7 @@ const StyleConfigPanel: React.FC = () => {
                             label="Top Margin"
                             step={1}
                             max={900}
+                            min={-900}
                             config={config}
                             updateConfig={updateConfig}
                         />
@@ -605,6 +629,7 @@ const StyleConfigPanel: React.FC = () => {
                             label="Bottom Margin"
                             step={1}
                             max={900}
+                            min={-900}
                             config={config}
                             updateConfig={updateConfig}
                         />
@@ -616,15 +641,23 @@ const StyleConfigPanel: React.FC = () => {
                             config={config}
                             updateConfig={updateConfig}
                         />
+                        <ColorInput
+                            path={['title', level, 'color']}
+                            label="Color"
+                            config={config}
+                            updateConfig={updateConfig}
+                        />
                         <BooleanInput
                             path={['title', level, 'underline']}
                             label="Underline"
                             config={config}
                             updateConfig={updateConfig}
+                            tValue="underline"
+                            fValue="none"
                         />
                         <ColorInput
-                            path={['title', level, 'color']}
-                            label="Color"
+                            path={['title', level, 'udlColor']}
+                            label="Underline Color"
                             config={config}
                             updateConfig={updateConfig}
                         />
@@ -780,6 +813,7 @@ const StyleConfigPanel: React.FC = () => {
                     label="Top Margin"
                     step={1}
                     max={900}
+                    min={-900}
                     config={config}
                     updateConfig={updateConfig}
                 />
@@ -788,10 +822,19 @@ const StyleConfigPanel: React.FC = () => {
                     label="Bottom Margin"
                     step={1}
                     max={900}
+                    min={-900}
                     config={config}
                     updateConfig={updateConfig}
                 />
-                <Section
+                <NumberInput
+                    path={['image', 'height']}
+                    label="Max Height"
+                    step={1}
+                    max={900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                {/* <Section
                     title="Annotation"
                     section="annotation"
                     isExpanded={expandedSections.annotation}
@@ -830,7 +873,7 @@ const StyleConfigPanel: React.FC = () => {
                         updateConfig={updateConfig}
                     />
 
-                </Section>
+                </Section> */}
             </Section>
 
             {/* Blockquotes Settings Section */}
@@ -855,7 +898,13 @@ const StyleConfigPanel: React.FC = () => {
                     config={config}
                     updateConfig={updateConfig}
                 />
-                <NumberInput
+                <ColorInput
+                    path={['blockquotes', 'bgColor']}
+                    label="BackgroundColor"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                {/* <NumberInput
                     path={['blockquotes', 'size']}
                     label="Size"
                     config={config}
@@ -868,7 +917,7 @@ const StyleConfigPanel: React.FC = () => {
                     max={3000}
                     config={config}
                     updateConfig={updateConfig}
-                />
+                /> */}
             </Section>
         </div>
     );

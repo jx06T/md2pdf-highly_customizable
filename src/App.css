@@ -1,9 +1,9 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 :root {
-  --custom-font-family: 'Arial', sans-serif; /* 預設字體 */
+  --custom-font-family: "Arial", sans-serif; /* 預設字體 */
 }
 
 .max-w-full-12 {
@@ -23,7 +23,7 @@
 }
 
 .left-point::before {
-  content: '● ';
+  content: "● ";
   width: 10px;
   height: 10px;
 }
@@ -79,9 +79,11 @@
   margin-bottom: var(--title-H1-bMargin, 2px);
   margin-left: var(--title-H1-scaling, 2px);
 
-  text-decoration-line: underline;
+  text-decoration-color: var(--title-H1-udlColor, #d1d5db);
+  text-decoration-line: var(--title-H1-underline, none);
   text-underline-offset: 8px;
 }
+
 .preview-area h2 {
   font-size: var(--title-H2-size, 24px);
   font-weight: var(--title-H2-weight, normal);
@@ -89,6 +91,10 @@
   margin-top: var(--title-H2-tMargin, 5px);
   margin-bottom: var(--title-H2-bMargin, 2px);
   margin-left: var(--title-H2-scaling, 2px);
+
+  text-decoration-color: var(--title-H2-udlColor, #d1d5db);
+  text-decoration-line: var(--title-H2-underline, none);
+  text-underline-offset: 6px;
 }
 .preview-area h3 {
   font-size: var(--title-H3-size, 20px);
@@ -97,7 +103,12 @@
   margin-top: var(--title-H3-tMargin, 5px);
   margin-bottom: var(--title-H3-bMargin, 2px);
   margin-left: var(--title-H3-scaling, 2px);
+
+  text-decoration-color: var(--title-H3-udlColor, #d1d5db);
+  text-decoration-line: var(--title-H3-underline, none);
+  text-underline-offset: 6px;
 }
+
 .preview-area h4 {
   font-size: var(--title-H4-size, 18px);
   font-weight: var(--title-H4-weight, normal);
@@ -105,7 +116,12 @@
   margin-top: var(--title-H4-tMargin, 5px);
   margin-bottom: var(--title-H4-bMargin, 2px);
   margin-left: var(--title-H4-scaling, 2px);
+
+  text-decoration-color: var(--title-H4-udlColor, #d1d5db);
+  text-decoration-line: var(--title-H4-underline, none);
+  text-underline-offset: 4px;
 }
+
 .preview-area h5 {
   font-size: var(--title-H5-size, 16px);
   font-weight: var(--title-H5-weight, normal);
@@ -113,7 +129,12 @@
   margin-top: var(--title-H5-tMargin, 5px);
   margin-bottom: var(--title-H5-bMargin, 2px);
   margin-left: var(--title-H5-scaling, 2px);
+
+  text-decoration-color: var(--title-H5-udlColor, #d1d5db);
+  text-decoration-line: var(--title-H5-underline, none);
+  text-underline-offset: 4px;
 }
+
 .preview-area h6 {
   font-size: var(--title-H6-size, 14px);
   font-weight: var(--title-H6-weight, normal);
@@ -121,6 +142,10 @@
   margin-top: var(--title-H6-tMargin, 5px);
   margin-bottom: var(--title-H6-bMargin, 2px);
   margin-left: var(--title-H6-scaling, 2px);
+
+  text-decoration-color: var(--title-H6-udlColor, #d1d5db);
+  text-decoration-line: var(--title-H6-underline, none);
+  text-underline-offset: 4px;
 }
 
 .preview-area ul {
@@ -172,7 +197,17 @@
 
 .preview-area .md-img > img {
   border-radius: var(--image-radius, 10px);
+  max-height: var(--image-height, 384px);
 }
+
+select {
+  border-right: 24px solid #f9fafb;
+}
+
+/* .header-content {
+  position: running(header);
+  font-size: 12pt;
+} */
 
 @media print {
   .bkp {
@@ -209,9 +244,33 @@
     overflow: visible !important;
   }
 
-  @page {
-    size: A4;
+  .page-break::after {
+    content: counter(page-number);
+    counter-increment: page-number 1;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 30px;
+    text-align: center;
   }
+}
+
+body {
+  counter-reset: page;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+
+  /* @top-left {
+    content: element(header);
+  }
+
+  @bottom-right {
+    content: counter(page);
+  } */
 }
 
 .page {
@@ -243,24 +302,20 @@
 }
 
 .preview-area blockquote {
-  /* background-color: #eeeeee; */
-  border-radius: 5px;
-  padding-left: 3px;
-  padding-right: 3px;
-  position: relative;
-  margin-left: 8px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  border-color: var(--blockquotes-color, #d1d5db);
+  padding-left: var(--blockquotes-scaling, 3px);
+  background-color: var(--blockquotes-bgColor, #ffffff);
 }
+
 .preview-area code {
   background-color: #fefefe;
   border-radius: 5px;
   padding-left: 3px;
   padding-right: 3px;
 }
-
+/* 
 .preview-area blockquote::before {
-  content: '';
+  content: "";
   width: 3px;
   height: 100%;
   position: absolute;
@@ -268,4 +323,4 @@
   left: -8px;
   background-color: #3186f5;
   border-radius: 2px;
-}
+} */

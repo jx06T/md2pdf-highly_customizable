@@ -16,7 +16,8 @@ interface HeaderConfig {
     bMargin: number,
     decorativeSymbol?: string;
     scaling: number;
-    underline?: boolean;
+    underline?: string;
+    udlColor?: string;
     color: string;
 }
 
@@ -42,11 +43,13 @@ interface ImageConfig {
     annotation: ImageAnnotationConfig;
     tMargin: number,
     bMargin: number,
+    height: number,
 }
 
 interface BlockquotesConfig {
     scaling: number;
     color: string;
+    bgColor: string;
     tMargin: number,
     bMargin: number,
     font: FontConfig;
@@ -116,9 +119,10 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 7,
             bMargin: 3,
             decorativeSymbol: '',
-            scaling:0,
-            underline: false,
-            color: '#000000'
+            scaling: 0,
+            underline: "underline",
+            color: '#000000',
+            udlColor: "#222222"
         },
         H2: {
             size: 24,
@@ -126,9 +130,10 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 5,
             bMargin: 3,
             decorativeSymbol: '',
-            scaling:0,
-            underline: false,
-            color: '#000000'
+            scaling: 0,
+            underline: "none",
+            color: '#000000',
+            udlColor: "#222222"
         },
         H3: {
             size: 20,
@@ -136,9 +141,10 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 3,
             bMargin: 0,
             decorativeSymbol: '',
-            scaling:0,
-            underline: false,
-            color: '#000000'
+            scaling: 0,
+            underline: "none",
+            color: '#000000',
+            udlColor: "#222222"
         },
         H4: {
             size: 18,
@@ -146,7 +152,7 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 0,
             bMargin: 0,
             decorativeSymbol: '',
-            scaling:0,
+            scaling: 0,
             color: '#000000'
         },
         H5: {
@@ -155,7 +161,7 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 0,
             bMargin: 0,
             decorativeSymbol: '',
-            scaling:0,
+            scaling: 0,
             color: '#3f4a58'
         },
         H6: {
@@ -164,7 +170,7 @@ const defaultStyleConfig: StyleConfig = {
             tMargin: 0,
             bMargin: 0,
             decorativeSymbol: '',
-            scaling:0,
+            scaling: 0,
             color: '#475569'
         }
     },
@@ -191,6 +197,7 @@ const defaultStyleConfig: StyleConfig = {
         alignment: 'center',
         tMargin: 24,
         bMargin: 16,
+        height: 346,
         annotation: {
             size: 14,
             weight: 400,
@@ -200,7 +207,8 @@ const defaultStyleConfig: StyleConfig = {
     },
     blockquotes: {
         scaling: 1,
-        color: '#666666',
+        color: '#d1d5db',
+        bgColor: '#ffffff',
         tMargin: 16,
         bMargin: 16,
         font: {
