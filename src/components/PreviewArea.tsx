@@ -2,27 +2,6 @@ import React from "react";
 import ReactMarkdown from "markdown-to-jsx";
 import { useMdContext } from "../context/MdContext";
 
-// function CustomHr({ children, ...props }: { children?: React.ReactNode }) {
-//     // @ts-ignore
-//     const sourceText = props['data-sourcetext'];
-//     // @ts-ignore
-//     const sourceText2 = props['data-ee'];
-//     console.log(sourceText,sourceText2)
-
-//     // @ts-ignore
-//     const originalText = props.children?.[0] || '';
-//     console.log('Original text:', originalText); // 可以先看看收到什麼
-
-//     if (sourceText === '---') {
-//         return <hr />;
-//     } else if (sourceText === '------') {
-//         return <hr className="bkp" />;
-//     }
-
-//     // 默認樣式
-//     return <hr />;
-// }
-
 function PreviewArea({ width, displayId, expandLevel }: { width: number, displayId: number, expandLevel: number }) {
     const { mdValue, setMdValue } = useMdContext()
 
@@ -30,7 +9,7 @@ function PreviewArea({ width, displayId, expandLevel }: { width: number, display
         overrides: {
             bp: {
                 component: () => {
-                    return <div className=" bkp  flex items-center"><span className=" h-4 mb-3 text-gray-300" >{'>'}</span ><hr className="flex-grow " /><span className=" h-4 mb-3 text-gray-300" >{'<'}</span ></div>;
+                    return <div className=" bkp flex items-center"><span className=" h-4 mb-3 text-gray-300" >{'>'}</span ><hr className="flex-grow " /><span className=" h-4 mb-3 text-gray-300" >{'<'}</span ></div>;
                 }
             },
             img: {

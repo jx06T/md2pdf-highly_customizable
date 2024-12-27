@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --custom-font-family: "Arial", sans-serif; /* 預設字體 */
+  --custom-font-family: 'Arial', sans-serif; /* 預設字體 */
 }
 
 .max-w-full-12 {
@@ -23,7 +23,7 @@
 }
 
 .left-point::before {
-  content: "● ";
+  content: '● ';
   width: 10px;
   height: 10px;
 }
@@ -53,16 +53,6 @@
   box-shadow: none !important;
 }
 
-.w-md-editor-area::-webkit-scrollbar,
-.no-scrollbar::-webkit-scrollbar {
-  /* display: none; */
-}
-
-.w-md-editor-area,
-.no-scrollbar {
-  /* scrollbar-width: none; */
-}
-
 .page {
   font-family: var(--custom-font-family);
   color: var(--page-font-color, #000000);
@@ -88,6 +78,9 @@
   margin-top: var(--title-H1-tMargin, 5px);
   margin-bottom: var(--title-H1-bMargin, 2px);
   margin-left: var(--title-H1-scaling, 2px);
+
+  text-decoration-line: underline;
+  text-underline-offset: 8px;
 }
 .preview-area h2 {
   font-size: var(--title-H2-size, 24px);
@@ -267,7 +260,7 @@
 }
 
 .preview-area blockquote::before {
-  content: "";
+  content: '';
   width: 3px;
   height: 100%;
   position: absolute;

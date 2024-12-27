@@ -439,13 +439,27 @@ const StyleConfigPanel: React.FC = () => {
                         config={config}
                         updateConfig={updateConfig}
                     />
-                    <NumberInput
+                    {/* <NumberInput
                         path={['page', 'font', 'weight']}
                         label="Weight"
                         step={100}
                         max={3000}
                         config={config}
                         updateConfig={updateConfig}
+                    /> */}
+                    <SelectInput
+                        path={['page', "font", 'weight']}
+                        label="Weight"
+                        config={config}
+                        updateConfig={updateConfig}
+                        options={
+                            [
+                                { name: "lighter", value: "lighter" },
+                                { name: "normal", value: "normal" },
+                                { name: "bold", value: "bold" },
+                                { name: "bolder", value: "bolder" },
+                            ]
+                        }
                     />
                     <NumberInput
                         path={['page', 'font', 'height']}
@@ -556,13 +570,27 @@ const StyleConfigPanel: React.FC = () => {
                             config={config}
                             updateConfig={updateConfig}
                         />
-                        <NumberInput
+                        {/* <NumberInput
                             path={['title', level, 'weight']}
                             label="Weight"
                             step={100}
                             max={3000}
                             config={config}
                             updateConfig={updateConfig}
+                            /> */}
+                        <SelectInput
+                            path={['title', level, 'weight']}
+                            label="Weight"
+                            config={config}
+                            updateConfig={updateConfig}
+                            options={
+                                [
+                                    { name: "lighter", value: "lighter" },
+                                    { name: "normal", value: "normal" },
+                                    { name: "bold", value: "bold" },
+                                    { name: "bolder", value: "bolder" },
+                                ]
+                            }
                         />
                         <NumberInput
                             path={['title', level, 'tMargin']}
