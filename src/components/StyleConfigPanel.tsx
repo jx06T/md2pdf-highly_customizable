@@ -336,7 +336,7 @@ const Section: React.FC<SectionProps> = ({
 }) => (
     <div className="border rounded mb-2">
         <button
-            className="w-full p-2 flex items-center justify-between bg-gray-50"
+            className="w-full p-2 flex items-center justify-between bg-gray-50 rounded"
             onClick={() => onToggle(section)}
         >
             <span>{title}</span>
