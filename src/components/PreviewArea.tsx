@@ -80,10 +80,18 @@ const components = {
                 children={String(children).replace(/\n$/, '')}
                 language={match[1]}
                 showLineNumbers={true}
+                // showInlineLineNumbers={true}
                 style={getComputedStyle(document.documentElement).getPropertyValue("--code-theme") !== "dark" ? vs : vscDarkPlus}
                 wrapLines={true}
-                wrapLongLines={true}
+                
                 lineNumberStyle={{ color: '#888', paddingRight: '10px' }}
+              
+                codeTagProps={{
+                    style: {
+                        whiteSpace: 'pre-wrap',
+                        wordBreak: 'break-word',
+                    },
+                }}
             />
         ) : (
             <code {...rest} className={className}>

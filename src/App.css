@@ -400,10 +400,26 @@ p {
 }
 .preview-area pre {
   overflow-x: hidden !important;
+  padding-left: 40px;
+  position: relative;
 }
 
 .preview-area .linenumber {
-  margin-left: -20px;
+  position: absolute;
+  display: block;
+  left: 2px;
+  padding-right: 0 !important;
+  width: 2rem !important;
+  min-width: 2rem !important;
+}
+
+.preview-area pre code span[style*="height:"] {
+  height: attr(style);
+}
+
+.preview-area pre code span[style*="height:"] > *:where([style*="height: 30"]),
+.preview-area pre code span[style*="height:"] > *:where([style*="height:30"]) {
+  background-color: #90ee90 !important;
 }
 
 .preview-area table {
