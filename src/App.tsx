@@ -160,6 +160,22 @@ function App() {
     handleMoveStart(touch.clientX)
   }
 
+  // const rootRef = useRef<HTMLInputElement>(null)
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     if (rootRef.current) {
+  //       rootRef.current.style.height = `${window.innerHeight}px`;
+  //     }
+  //   };
+  //   handleResize();
+  //   window.addEventListener('resize', handleResize);
+  //   return () => {
+  //     window.removeEventListener('resize', handleResize);
+  //   };
+  // }, []);
+
+
   return (
     <div className='app h-[100dvh] overflow-y-hidden flex flex-col overflow-x-hidden'>
       {showH &&
@@ -178,6 +194,16 @@ function App() {
           <JamChevronCircleDown className='  text-2xl'> </JamChevronCircleDown>
         }
       </button>
+      <div
+        style={{
+          scale: (expandLevel > 1 ? maxW - editorAndSetAreaW : (expandLevel > 0 ? maxW - editorAreaW : maxW)) / 850,
+          left: expandLevel > 1 ? editorAndSetAreaW : (expandLevel > 0 ? editorAreaW : 0),
+          marginLeft: expandLevel > 1 ? 24 : (expandLevel > 0 ? 16 : 8),
+          display: expandLevel > 0 ? "block" : (displayId === 2 ? "block" : "none")
+        }}
+        className=" cover"
+      >
+      </div>
       <MdProvider>
         <UpperToolbar setCustomExpandLevel={setCustomExpandLevel} editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} maxExpandLevel={maxExpandLevel} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
         <main className={`main flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""} overflow-y-hidden overflow-x-hidden`}>
@@ -192,7 +218,7 @@ function App() {
           <PreviewArea width={expandLevel > 1 ? maxW - editorAndSetAreaW : (expandLevel > 0 ? maxW - editorAreaW : maxW)} expandLevel={expandLevel} displayId={displayId}></PreviewArea>
         </main>
       </MdProvider>
-    </div>
+    </div >
   )
 }
 

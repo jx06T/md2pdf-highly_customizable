@@ -11,8 +11,8 @@ export var codeBlock = {
     title: 'Insert Code Block (ctrl + shift +j)'
   },
   icon: /*#__PURE__*/_jsx("svg", {
-    width: "13",
-    height: "13",
+    width: "20",
+    height: "20",
     role: "img",
     viewBox: "0 0 156 156",
     children: /*#__PURE__*/_jsx("path", {

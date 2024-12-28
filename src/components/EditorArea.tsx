@@ -17,7 +17,7 @@ function EditorArea({ width, expandLevel }: { width: number, expandLevel: number
     
     return (
         <div style={{ width: width }} className={`editor-area bg-black ${expandLevel > 1 ? "max-w-full-24" : (expandLevel > 0 ? "max-w-full-12" : "")} min-w-0 lg:min-w-48 flex-grow-0 flex-shrink-0`}>
-            <div className=" p-1 h-full w-full">
+            <div className=" p-1 pl-2 h-full w-full">
                 <MDEditor
                     value={mdValue}
                     onChange={handleChange}

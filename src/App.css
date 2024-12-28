@@ -44,6 +44,11 @@
   height: 100%;
 }
 
+body .w-md-editor-text-pre > code,
+body .w-md-editor-text-input {
+  font-size: 16px !important;
+  line-height: 20px !important;
+}
 .w-md-editor > .w-md-editor-toolbar {
   background-color: black !important;
   /* border: none; */
@@ -82,6 +87,11 @@
   text-decoration-color: var(--title-H1-udlColor, #d1d5db);
   text-decoration-line: var(--title-H1-underline, none);
   text-underline-offset: 8px;
+}
+
+.preview-area a {
+  text-decoration-line: underline;
+  text-underline-offset: 1px;
 }
 
 .preview-area h2 {
@@ -319,21 +329,24 @@ p {
   height: 100%;
 }
 
-.cover {
-  width: 21cm;
-  height: 297mm;
-  position: absolute;
+.app > .cover {
+  width: 21cm !important;
+  height: 297mm !important;
+
+  position: fixed;
   transform-origin: left top;
-  top: 8px;
-  margin-left: 8px;
+
+  top: 100px;
   z-index: 10;
+
   /* background: linear-gradient(
     to bottom,
     rgba(83, 160, 211, 0.363) 3px,
     transparent 3px 297mm
   );
   background-size: 100% 297mm; */
-  border: 3px solid rgba(83, 160, 211, 0.363);
+
+  border: 2px solid rgba(83, 160, 211, 0.363);
   pointer-events: none;
 }
 
@@ -407,11 +420,10 @@ p {
 
 .preview-area .table-container {
   border-radius: 5px;
-  overflow: hidden; 
+  overflow: hidden;
   margin-left: auto;
   margin-right: auto;
   width: 90%;
-
 }
 .preview-area thead th {
   background-color: var(--table-titleColor, #f4f4f4);

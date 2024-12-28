@@ -14,7 +14,7 @@ import remarkGfm from 'remark-gfm'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
-
+import remarkExternalLinks from 'remark-external-links';
 
 const components = {
     p: ({ children, ...props }: { children: React.ReactNode }) => {
@@ -146,13 +146,6 @@ function PreviewArea({ width, displayId, expandLevel }: { width: number, display
     return (
         <div className={`preview-area no-scrollbar bg-stone-100 min-w-0 lg:min-w-48 w-full h-full overflow-y-scroll   ${expandLevel > 0 ? "flex-grow flex-shrink " : " absolute left-0 " + (displayId === 2 ? "" : " opacity-0 pointer-events-none ")} `} >
 
-            <div
-                style={{
-                    scale: width / 850
-                }}
-                className=" cover"
-            >
-            </div>
             <div className=" preview-area-2 p-2 relative ">
                 <div
                     style={{
@@ -163,7 +156,8 @@ function PreviewArea({ width, displayId, expandLevel }: { width: number, display
                     <Markdown
                         components={components}
                         rehypePlugins={[rehypeRaw, rehypeKatex, rehypeKatexNotranslate, rehypeCallouts]}
-                        remarkPlugins={[remarkGfm]}
+                        // @ts-ignore
+                        remarkPlugins={[remarkGfm, [remarkExternalLinks, { target: '_blank', rel: 'noopener noreferrer' }]]}
                     >
                         {mdValue.replace(
                             /^\$\$[\n ]*(.*)[\n ]*\$\$/gm,
