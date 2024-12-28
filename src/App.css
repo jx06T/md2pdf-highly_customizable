@@ -257,17 +257,25 @@ select {
 }
 
 body {
-  counter-reset: page;
+  counter-reset: page-number;
 }
 
 @page {
   size: A4;
-  margin: 0;
+  /* margin: 0; */
 
-  /* @top-left {
-    content: element(header);
+  /* @top-center {
+    content: "title";
+    z-index: 40;
+  } */
+
+  @bottom-center {
+    content: counter(page-number);
+    counter-increment: page-number 1;
+    z-index: 40;
+    height: 8px;
   }
-
+  /* 
   @bottom-right {
     content: counter(page);
   } */
