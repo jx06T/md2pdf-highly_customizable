@@ -71,8 +71,8 @@ export var code = {
     title: 'Insert code (ctrl + j)'
   },
   icon: /*#__PURE__*/_jsx("svg", {
-    width: "14",
-    height: "14",
+    width: "21",
+    height: "21",
     role: "img",
     viewBox: "0 0 640 512",
     children: /*#__PURE__*/_jsx("path", {

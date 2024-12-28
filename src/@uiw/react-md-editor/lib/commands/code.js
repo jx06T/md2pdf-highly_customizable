@@ -18,8 +18,8 @@ var codeBlock = exports.codeBlock = {
     title: 'Insert Code Block (ctrl + shift +j)'
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
-    width: "13",
-    height: "13",
+    width: "20",
+    height: "20",
     role: "img",
     viewBox: "0 0 156 156",
     children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
@@ -78,8 +78,8 @@ var code = exports.code = {
     title: 'Insert code (ctrl + j)'
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
-    width: "14",
-    height: "14",
+    width: "21",
+    height: "21",
     role: "img",
     viewBox: "0 0 640 512",
     children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {

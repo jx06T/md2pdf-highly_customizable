@@ -19,8 +19,8 @@ var image = exports.image = {
     title: 'Add image (ctrl + k)'
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
-    width: "13",
-    height: "13",
+    width: "20",
+    height: "20",
     viewBox: "0 0 20 20",
     children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
       fill: "currentColor",

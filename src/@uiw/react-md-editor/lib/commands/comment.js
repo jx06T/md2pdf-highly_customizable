@@ -19,8 +19,8 @@ var comment = exports.comment = {
     title: 'Insert comment (ctrl + /)'
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
-    height: "1em",
-    width: "1em",
+    height: "20px",
+    width: "20px",
     viewBox: "0 0 25 25",
     children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("g", {
       fill: "none",

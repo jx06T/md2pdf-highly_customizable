@@ -19,8 +19,8 @@ var hr = exports.hr = {
     title: 'Insert HR (ctrl + h)'
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     viewBox: "0 0 175 175",
     children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
       fill: "currentColor",

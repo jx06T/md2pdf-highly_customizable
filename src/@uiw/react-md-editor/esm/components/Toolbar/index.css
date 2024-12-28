@@ -25,13 +25,14 @@
 .w-md-editor-toolbar li {
   display: inline-block;
   font-size: 14px;
+  height: 28px;
 }
 .w-md-editor-toolbar li + li {
   margin: 0;
 }
 .w-md-editor-toolbar li > button {
   border: none;
-  height: 20px;
+  height: 26px;
   line-height: 14px;
   background: none;
   padding: 4px;
@@ -68,7 +69,7 @@
   background-color: var(--color-neutral-muted);
 }
 .w-md-editor-toolbar-divider {
-  height: 14px;
+  height: 26px;
   width: 1px;
   margin: -3px 3px 0 3px !important;
   vertical-align: middle;

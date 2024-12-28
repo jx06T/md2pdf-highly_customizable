@@ -12,8 +12,8 @@ export var comment = {
     title: 'Insert comment (ctrl + /)'
   },
   icon: /*#__PURE__*/_jsx("svg", {
-    height: "1em",
-    width: "1em",
+    height: "20px",
+    width: "20px",
     viewBox: "0 0 25 25",
     children: /*#__PURE__*/_jsxs("g", {
       fill: "none",

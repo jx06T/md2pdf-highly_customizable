@@ -13,7 +13,7 @@ export var title5 = {
   },
   icon: /*#__PURE__*/_jsx("div", {
     style: {
-      fontSize: 12,
+      fontSize: 14,
       textAlign: 'left'
     },
     children: "Title 5"

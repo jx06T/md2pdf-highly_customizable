@@ -57,8 +57,8 @@ export var unorderedListCommand = {
   },
   icon: /*#__PURE__*/_jsx("svg", {
     "data-name": "unordered-list",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     viewBox: "0 0 512 512",
     children: /*#__PURE__*/_jsx("path", {
       fill: "currentColor",
@@ -80,8 +80,8 @@ export var orderedListCommand = {
   },
   icon: /*#__PURE__*/_jsx("svg", {
     "data-name": "ordered-list",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     role: "img",
     viewBox: "0 0 512 512",
     children: /*#__PURE__*/_jsx("path", {
@@ -104,8 +104,8 @@ export var checkedListCommand = {
   },
   icon: /*#__PURE__*/_jsx("svg", {
     "data-name": "checked-list",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     role: "img",
     viewBox: "0 0 512 512",
     children: /*#__PURE__*/_jsx("path", {

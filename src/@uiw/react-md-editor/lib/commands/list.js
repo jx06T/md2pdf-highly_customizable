@@ -63,8 +63,8 @@ var unorderedListCommand = exports.unorderedListCommand = {
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
     "data-name": "unordered-list",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     viewBox: "0 0 512 512",
     children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
       fill: "currentColor",
@@ -86,8 +86,8 @@ var orderedListCommand = exports.orderedListCommand = {
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
     "data-name": "ordered-list",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     role: "img",
     viewBox: "0 0 512 512",
     children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
@@ -112,8 +112,8 @@ var checkedListCommand = exports.checkedListCommand = {
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
     "data-name": "checked-list",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     role: "img",
     viewBox: "0 0 512 512",
     children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {

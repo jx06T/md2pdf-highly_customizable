@@ -19,8 +19,8 @@ var issue = exports.issue = {
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
     role: "img",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     viewBox: "0 0 448 512",
     children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
       fill: "currentColor",

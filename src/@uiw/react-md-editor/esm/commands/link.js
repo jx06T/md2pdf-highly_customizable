@@ -13,8 +13,8 @@ export var link = {
   },
   icon: /*#__PURE__*/_jsx("svg", {
     "data-name": "italic",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     role: "img",
     viewBox: "0 0 520 520",
     children: /*#__PURE__*/_jsx("path", {

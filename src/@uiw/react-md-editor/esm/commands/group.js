@@ -6,8 +6,8 @@ export var group = (arr, options) => {
   var data = _extends({
     children: arr,
     icon: /*#__PURE__*/_jsx("svg", {
-      width: "12",
-      height: "12",
+      width: "19",
+      height: "19",
       viewBox: "0 0 520 520",
       children: /*#__PURE__*/_jsx("path", {
         fill: "currentColor",

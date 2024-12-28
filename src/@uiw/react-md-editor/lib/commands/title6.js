@@ -20,7 +20,7 @@ var title6 = exports.title6 = {
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
     style: {
-      fontSize: 12,
+      fontSize: 14,
       textAlign: 'left'
     },
     children: "Title 6"

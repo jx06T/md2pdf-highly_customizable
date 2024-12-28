@@ -19,8 +19,8 @@ var italic = exports.italic = {
   },
   icon: /*#__PURE__*/(0, _jsxRuntime.jsx)("svg", {
     "data-name": "italic",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     role: "img",
     viewBox: "0 0 320 512",
     children: /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {

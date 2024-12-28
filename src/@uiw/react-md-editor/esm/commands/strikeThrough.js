@@ -12,8 +12,8 @@ export var strikethrough = {
   prefix: '~~',
   icon: /*#__PURE__*/_jsx("svg", {
     "data-name": "strikethrough",
-    width: "12",
-    height: "12",
+    width: "19",
+    height: "19",
     role: "img",
     viewBox: "0 0 512 512",
     children: /*#__PURE__*/_jsx("path", {
