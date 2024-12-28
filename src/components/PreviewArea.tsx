@@ -12,6 +12,7 @@ import 'rehype-callouts/theme/github'
 import remarkGfm from 'remark-gfm'
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 
@@ -44,10 +45,20 @@ const components = {
             </span>
         );
     },
+    table: ({ children }: { children: React.ReactNode }) => {
+        return (
+            <div className="table-container">
+
+                <table >
+                    {children}
+                </table>
+            </div>
+        );
+    },
     ma: ({ children }: { children: React.ReactNode }) => {
         return (
-            <span className=" w-full flex justify-center items-center ">
-                <span className=" !text-gray-700 !text-sm">
+            <span className=" w-full flex justify-center items-center mt-1 ">
+                <span className=" !text-sm">
                     {children}
                 </span>
             </span>
@@ -69,7 +80,7 @@ const components = {
                 children={String(children).replace(/\n$/, '')}
                 language={match[1]}
                 showLineNumbers={true}
-                style={vscDarkPlus}
+                style={getComputedStyle(document.documentElement).getPropertyValue("--code-theme") !== "dark" ? vs : vscDarkPlus}
                 wrapLines={true}
                 wrapLongLines={true}
                 lineNumberStyle={{ color: '#888', paddingRight: '10px' }}
@@ -104,7 +115,7 @@ function PreviewArea({ width, displayId, expandLevel }: { width: number, display
         let i = 0
 
         for (const element of elements) {
-            console.log(i,element,currentHeight)
+            console.log(i, element, currentHeight)
             const position = i * effectiveHeight;
             // @ts-ignore
             currentHeight += element.offsetHeight;
@@ -120,17 +131,17 @@ function PreviewArea({ width, displayId, expandLevel }: { width: number, display
 
     }
 
-    useEffect(() => {
-        const handleBeforePrint = () => {
-            autoPageBreak()
-        };
+    // useEffect(() => {
+    //     const handleBeforePrint = () => {
+    //         autoPageBreak()
+    //     };
 
-        window.addEventListener('beforeprint', handleBeforePrint);
+    //     window.addEventListener('beforeprint', handleBeforePrint);
 
-        return () => {
-            window.removeEventListener('beforeprint', handleBeforePrint);
-        };
-    }, []);
+    //     return () => {
+    //         window.removeEventListener('beforeprint', handleBeforePrint);
+    //     };
+    // }, []);
 
     return (
         <div className={`preview-area no-scrollbar bg-stone-100 min-w-0 lg:min-w-48 w-full h-full overflow-y-scroll   ${expandLevel > 0 ? "flex-grow flex-shrink " : " absolute left-0 " + (displayId === 2 ? "" : " opacity-0 pointer-events-none ")} `} >

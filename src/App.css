@@ -155,41 +155,52 @@ ul.contains-task-list {
 
 .preview-area ul {
   list-style-type: var(--list-unorderedList-decorativeSymbol1, circle);
-  padding-left: var(--list-unorderedList-scaling, 20px);
+  padding-left: var(--list-unorderedList-scaling1, 20px);
 }
+
 .preview-area ul ul {
   list-style-type: var(--list-unorderedList-decorativeSymbol2, circle);
+  padding-left: var(--list-unorderedList-scaling2, 20px);
 }
 
 .preview-area ul ul ul {
   list-style-type: var(--list-unorderedList-decorativeSymbol3, circle);
+  padding-left: var(--list-unorderedList-scaling3, 20px);
 }
+
 .preview-area ul ul ul ul {
   list-style-type: var(--list-unorderedList-decorativeSymbol4, circle);
+  padding-left: var(--list-unorderedList-scaling4, 20px);
 }
+
 .preview-area ul ul ul ul ul {
   list-style-type: var(--list-unorderedList-decorativeSymbol5, circle);
+  padding-left: var(--list-unorderedList-scaling5, 20px);
 }
 
 .preview-area ol {
   list-style-type: var(--list-orderedLists-decorativeSymbol1, decimal);
-  padding-left: var(--list-orderedLists-scaling, 20px);
+  padding-left: var(--list-orderedLists-scaling1, 20px);
 }
 
 .preview-area ol ol {
   list-style-type: var(--list-orderedLists-decorativeSymbol2, decimal);
+  padding-left: var(--list-orderedLists-scaling2, 20px);
 }
 
 .preview-area ol ol ol {
   list-style-type: var(--list-orderedLists-decorativeSymbol3, decimal);
+  padding-left: var(--list-orderedLists-scaling3, 20px);
 }
 
 .preview-area ol ol ol ol {
   list-style-type: var(--list-orderedLists-decorativeSymbol4, decimal);
+  padding-left: var(--list-orderedLists-scaling4, 20px);
 }
 
 .preview-area ol ol ol ol ol {
   list-style-type: var(--list-orderedLists-decorativeSymbol5, decimal);
+  padding-left: var(--list-orderedLists-scaling5, 20px);
 }
 
 .preview-area .md-img {
@@ -252,22 +263,22 @@ p {
     overflow: visible !important;
   }
 
-  .preview-area code span,
-  .preview-area code {
-    background-color: #1e1e1e !important;
+  .preview-area pre code span,
+  .preview-area pre code {
+    background-color: var(--code-bgColor, #1e1e1e);
   }
 
   .show-botton {
     display: none;
   }
 
-  body {
+  /* body {
     counter-reset: page-number;
   }
 
   p {
     counter-increment: page-number 1;
-  }
+  } */
 
   @page {
     size: A4;
@@ -289,7 +300,7 @@ p {
     } */
 
     @bottom-left {
-     display: none;
+      display: none;
     }
 
     /* 
@@ -332,20 +343,42 @@ p {
   background-color: var(--blockquotes-bgColor, #ffffff);
 }
 
-.preview-area code {
-  background-color: #fefefe;
+.preview-area pre {
   border-radius: 5px;
   padding-left: 3px;
   padding-right: 3px;
+}
+
+.preview-area pre {
+  margin-top: var(--code-tMargin, 0px);
+  margin-bottom: var(--code-bMargin, 0px);
 }
 
 .katex-html {
   display: none;
 }
 
-.preview-area code span,
-.preview-area code {
-  background-color: #1e1e1e;
+.preview-area pre code span,
+.preview-area pre > div,
+.preview-area pre,
+.preview-area pre code {
+  background-color: var(--code-bgColor, #1e1e1e) !important;
+}
+
+.preview-area pre > div {
+  margin-top: 7px;
+  margin-bottom: 0px;
+  /* padding-bottom: 5px !important; */
+  border: none !important;
+}
+
+.preview-area p code {
+  background-color: var(--code-inlineColor, #d1d5db);
+  margin-left: 3px;
+  margin-right: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 3px;
 }
 
 .preview-area pre > div {
@@ -361,30 +394,44 @@ p {
 }
 
 .preview-area table {
-  margin-left: auto;
-  margin-right: auto;
+  /* border-collapse: separate;
+  border-spacing: 0; */
+  width: 100%;
+
   border-radius: 5px;
-  width: 90%;
   border-collapse: collapse;
-  margin-top: 20px 0;
-  text-align: left;
+  margin-top: var(--table-tMargin, 20px);
+  margin-bottom: var(--table-bMargin, -10px);
+  text-align: var(--table-textAlignment, center);
 }
 
+.preview-area .table-container {
+  border-radius: 5px;
+  overflow: hidden; 
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+
+}
 .preview-area thead th {
-  background-color: #f4f4f4;
-  color: #333;
+  background-color: var(--table-titleColor, #f4f4f4);
   font-weight: bold;
   padding: 10px;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid;
+  border-color: var(--table-lineColor, #ddd);
 }
 
 .preview-area tbody td {
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid;
+  border-color: var(--table-lineColor, #ddd);
 }
 
 .preview-area tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: var(--table-color2, #f9f9f9);
+}
+.preview-area tbody tr {
+  background-color: var(--table-color1, #ffffff);
 }
 
 /* .preview-area table td:empty {

@@ -358,20 +358,22 @@ const StyleConfigPanel: React.FC = () => {
     const [config, setConfig] = useState(defaultStyleConfig);
 
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-        blockquotes: true,
-        annotation: true,
-        image: true,
-        list: true,
-        title: true,
+        // blockquotes: true,
+        // annotation: true,
+        // image: true,
+        // list: true,
+        // title: true,
         // "title-H1": true,
         // "title-H2": true,
         // "title-H3": true,
         // "title-H4": true,
         // "title-H5": true,
         // "title-H6": true,
-        layout: true,
-        pageFont: true,
-        page: true
+        // layout: true,
+        // pageFont: true,
+        page: true,
+        // code: true,
+        // table: true
     });
 
     const toggleSection = (section: string) => {
@@ -386,7 +388,7 @@ const StyleConfigPanel: React.FC = () => {
         let current: any = newConfig;
 
         for (let i = 0; i < path.length - 1; i++) {
-            current = current[path[i]];
+            current = current[path[i]] || {};
         }
         current[path[path.length - 1]] = value;
         // console.log(path, value)
@@ -414,10 +416,16 @@ const StyleConfigPanel: React.FC = () => {
             Object.entries(currentConfig).forEach(([key, value]) => {
                 const newPath = [...currentPath, key];
 
+
                 if (typeof value === "object" && value !== null) {
                     traverseConfig(value, newPath); // 递归处理嵌套结构
                 } else {
                     const cssVarName = `--${newPath.join('-')}`;
+
+                    if (newPath[newPath.length - 1] == "title") {
+                        document.title = value;
+                    }
+
                     if (typeof value === "number") {
                         if (newPath.includes("layout")) {
                             document.documentElement.style.setProperty(cssVarName, value.toString() + "mm");
@@ -454,6 +462,45 @@ const StyleConfigPanel: React.FC = () => {
         localStorage.setItem('config', JSON.stringify(config))
     }, [config])
 
+
+    const handleExportConfig = () => {
+        const dataStr = JSON.stringify(config, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'style-config.json';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
+
+    const handleImportConfig = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const importedConfig = JSON.parse(e.target?.result as string);
+                    setConfig({ ...importedConfig, init: false });
+                    initializeConfigStyles(importedConfig);
+                    localStorage.setItem('config', JSON.stringify(importedConfig));
+                } catch (error) {
+                    alert('Invalid JSON file');
+                }
+            };
+            reader.readAsText(file);
+        }
+    };
+
+    const handleReset = () => {
+        if (window.confirm('Are you sure you want to reset all settings to default?')) {
+            setConfig({ ...defaultStyleConfig, init: false });
+            initializeConfigStyles(defaultStyleConfig);
+            localStorage.setItem('config', JSON.stringify(defaultStyleConfig));
+        }
+    };
 
     return (
         <div className="w-full bg-blue-50 p-4 overflow-y-auto h-full">
@@ -924,7 +971,7 @@ const StyleConfigPanel: React.FC = () => {
                 />
                 <ColorInput
                     path={['blockquotes', 'bgColor']}
-                    label="BackgroundColor"
+                    label="Background Color"
                     config={config}
                     updateConfig={updateConfig}
                 />
@@ -943,6 +990,150 @@ const StyleConfigPanel: React.FC = () => {
                     updateConfig={updateConfig}
                 /> */}
             </Section>
+
+            <Section
+                title="Code Settings"
+                section="code"
+                isExpanded={expandedSections.code}
+                onToggle={toggleSection}
+            >
+                <ColorInput
+                    path={['code', 'inlineColor']}
+                    label="Inline Code Background Color"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <ColorInput
+                    path={['code', 'bgColor']}
+                    label="Background Color"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <NumberInput
+                    path={['code', 'tMargin']}
+                    label="Top Margin"
+                    step={1}
+                    max={900}
+                    min={-900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <NumberInput
+                    path={['code', 'bMargin']}
+                    label="Bottom Margin"
+                    step={1}
+                    max={900}
+                    min={-900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <SelectInput
+                    path={['code', 'theme']}
+                    label="Theme"
+                    config={config}
+                    updateConfig={updateConfig}
+                    options={
+                        [
+                            { name: "dark", value: "dark" },
+                            { name: "bright", value: "bright" },
+                        ]
+                    }
+                />
+
+            </Section>
+            <Section
+                title="Table Settings"
+                section="table"
+                isExpanded={expandedSections.table}
+                onToggle={toggleSection}
+            >
+                <ColorInput
+                    path={['table', 'titleColor']}
+                    label="Title Color"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <ColorInput
+                    path={['table', 'color1']}
+                    label="Color1"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <ColorInput
+                    path={['table', 'color2']}
+                    label="Color2"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <ColorInput
+                    path={['table', 'lineColor']}
+                    label="Line Color"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <SelectInput
+                    path={['table', 'textAlignment']}
+                    label="Text Alignment"
+                    config={config}
+                    updateConfig={updateConfig}
+                    options={
+                        [
+                            { name: "left", value: "left" },
+                            { name: "center", value: "center" },
+                            { name: "right", value: "right" },
+                        ]
+                    }
+                />
+                <NumberInput
+                    path={['table', 'tMargin']}
+                    label="Top Margin"
+                    step={1}
+                    max={900}
+                    min={-900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <NumberInput
+                    path={['table', 'bMargin']}
+                    label="Bottom Margin"
+                    step={1}
+                    max={900}
+                    min={-900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+            </Section>
+
+            <div className="mt-4 space-y-2">
+                <button
+                    onClick={handleExportConfig}
+                    className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500 w-full"
+                >
+                    Export Config
+                </button>
+                <label className=" block px-4 py-2 bg-green-400 text-white rounded hover:bg-green-500 cursor-pointer w-full text-center">
+                    Import Config
+                    <input
+                        type="file"
+                        accept=".json"
+                        onChange={handleImportConfig}
+                        className="hidden"
+                    />
+                </label>
+                <button
+                    onClick={handleReset}
+                    className="w-full px-4 py-2 bg-red-400 text-white rounded hover:bg-red-500"
+                >
+                    Reset to Default
+                </button>
+            </div>
         </div >
     );
 };

@@ -3,7 +3,7 @@
 // Types
 interface FontConfig {
     size: number;
-    weight: number;
+    weight: string;
     family?: string;
     height?: number;
     color?: string;
@@ -11,7 +11,7 @@ interface FontConfig {
 
 interface HeaderConfig {
     size: number;
-    weight: number;
+    weight: string;
     tMargin: number,
     bMargin: number,
     decorativeSymbol?: string;
@@ -36,7 +36,7 @@ interface ListConfig {
 
 interface ImageAnnotationConfig {
     size: number;
-    weight: number;
+    weight: string;
     decorativeSymbol?: string;
     color: string;
 }
@@ -90,7 +90,23 @@ interface StyleConfig {
         unorderedList: ListConfig;
         task: {
             scaling: number;
-        }
+        },
+    };
+    code: {
+        inlineColor: string,
+        bgColor: string,
+        tMargin: number,
+        bMargin: number,
+        theme: string
+    };
+    table: {
+        titleColor: string,
+        color1: string,
+        color2: string,
+        lineColor: string,
+        textAlignment: 'left' | 'center' | 'right';
+        tMargin: number,
+        bMargin: number,
     };
     image: ImageConfig;
     blockquotes: BlockquotesConfig;
@@ -101,9 +117,9 @@ const defaultStyleConfig: StyleConfig = {
     init: true,
     page: {
         font: {
-            size: 16,
-            weight: 400,
-            family: 'Arial',
+            size: 18,
+            weight: "normal",
+            family: '"Microsoft JhengHei", sans-serif',
             height: 30,
             color: '#000000'
         },
@@ -121,21 +137,21 @@ const defaultStyleConfig: StyleConfig = {
     },
     title: {
         H1: {
-            size: 30,
-            weight: 700,
+            size: 32,
+            weight: "bold",
             tMargin: 7,
-            bMargin: 3,
+            bMargin: 5,
             decorativeSymbol: '',
             scaling: 0,
             underline: "underline",
             color: '#000000',
-            udlColor: "#222222"
+            udlColor: "#474747"
         },
         H2: {
             size: 24,
-            weight: 700,
+            weight: "bold",
             tMargin: 5,
-            bMargin: 3,
+            bMargin: 5,
             decorativeSymbol: '',
             scaling: 0,
             underline: "underline",
@@ -144,9 +160,9 @@ const defaultStyleConfig: StyleConfig = {
         },
         H3: {
             size: 20,
-            weight: 600,
+            weight: "bold",
             tMargin: 3,
-            bMargin: 0,
+            bMargin: 5,
             decorativeSymbol: '',
             scaling: 0,
             underline: "underline",
@@ -154,8 +170,8 @@ const defaultStyleConfig: StyleConfig = {
             udlColor: "#5e5e5e"
         },
         H4: {
-            size: 18,
-            weight: 600,
+            size: 20,
+            weight: "normal",
             tMargin: 0,
             bMargin: 0,
             decorativeSymbol: '',
@@ -165,7 +181,7 @@ const defaultStyleConfig: StyleConfig = {
         },
         H5: {
             size: 16,
-            weight: 500,
+            weight: "normal",
             tMargin: 0,
             bMargin: 0,
             decorativeSymbol: '',
@@ -175,7 +191,7 @@ const defaultStyleConfig: StyleConfig = {
         },
         H6: {
             size: 14,
-            weight: 500,
+            weight: "normal",
             tMargin: 0,
             bMargin: 0,
             decorativeSymbol: '',
@@ -186,7 +202,7 @@ const defaultStyleConfig: StyleConfig = {
     },
     list: {
         orderedLists: {
-            scaling1: 20,
+            scaling1: 36,
             scaling2: 20,
             scaling3: 20,
             scaling4: 20,
@@ -198,7 +214,7 @@ const defaultStyleConfig: StyleConfig = {
             decorativeSymbol5: 'decimal'
         },
         unorderedList: {
-            scaling1: 20,
+            scaling1: 35,
             scaling2: 20,
             scaling3: 20,
             scaling4: 20,
@@ -210,32 +226,48 @@ const defaultStyleConfig: StyleConfig = {
             decorativeSymbol5: 'circle'
         },
         task: {
-            scaling: 20,
+            scaling: 18,
         }
     },
     image: {
         radius: 5,
         alignment: 'center',
-        tMargin: 24,
-        bMargin: 16,
-        height: 346,
+        tMargin: 8,
+        bMargin: 24,
+        height: 256,
         annotation: {
             size: 14,
-            weight: 400,
+            weight: "normal",
             decorativeSymbol: '',
             color: '#666666'
         }
     },
     blockquotes: {
         scaling: 10,
-        color: '#d1d5db',
+        color: '#c3c6cb',
         bgColor: '#ffffff',
         tMargin: 16,
         bMargin: 16,
         font: {
             size: 16,
-            weight: 400
+            weight: "normal"
         }
+    },
+    code: {
+        inlineColor: '#ebebeb',
+        bgColor: '#1e1e1e',
+        tMargin: 0,
+        bMargin: 0,
+        theme: 'dark'
+    },
+    table: {
+        titleColor: '#f4f4f4',
+        color1: '#FFFFFF',
+        color2: '#f9f9f9',
+        lineColor: '#dddddd',
+        textAlignment: 'center',
+        tMargin: 20,
+        bMargin: -10,
     }
 };
 
