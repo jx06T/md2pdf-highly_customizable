@@ -6,6 +6,7 @@ import SetArea from './components/SetArea'
 import PreviewArea from './components/PreviewArea'
 import UpperToolbar from './components/UpperToolbar'
 import { MdProvider } from './context/MdContext'
+import { JamChevronCircleUp, JamChevronCircleDown } from "./utils/Icons";
 
 import './@uiw/react-md-editor/dist/mdeditor.css'
 
@@ -13,6 +14,7 @@ function App() {
   const [editorAreaW, setEditorAreaW] = useState<number>(350)
   const [editorAndSetAreaW, setEditorAndSetAreaW] = useState<number>(650)
   const [isResizing, setIsResizing] = useState<boolean>(false)
+  const [showH, setShowH] = useState<boolean>(true)
 
   const startXRef = useRef<number>(0)
   const movingRef = useRef<number>(-1)
@@ -160,11 +162,22 @@ function App() {
 
   return (
     <div className='app h-[100dvh] overflow-y-hidden flex flex-col overflow-x-hidden'>
-      <header className='header sticky h-10 bg-blue-300 rounded-b-md -mb-1 z-10 text-l'>
-        <h1 className=' text-left pl-3 pt-1 text-2xl'>MD2PDF</h1>
-        {/* <div className=' bg-red-600 z-30 absolute h-2' style={{ width: editorAreaW }}></div> */}
-      </header>
-
+      {showH &&
+        <header className='header sticky h-10 bg-blue-300 rounded-b-md -mb-1 z-10 text-l'>
+          <div className=' w-36 h-[70px] bg-transparent -mt-3 ml-2' style={{
+            backgroundImage: "url(https://i.imgur.com/XkgEJAc.png)",
+            backgroundPosition: "center",
+            backgroundSize: "contain"
+          }}></div>
+        </header>
+      }
+      <button onClick={() => setShowH(!showH)} className=' show-botton fixed right-2 top-2 z-30'>
+        {showH ?
+          <JamChevronCircleUp className='  text-2xl'></JamChevronCircleUp>
+          :
+          <JamChevronCircleDown className='  text-2xl'> </JamChevronCircleDown>
+        }
+      </button>
       <MdProvider>
         <UpperToolbar setCustomExpandLevel={setCustomExpandLevel} editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} maxExpandLevel={maxExpandLevel} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
         <main className={`main flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""} overflow-y-hidden overflow-x-hidden`}>

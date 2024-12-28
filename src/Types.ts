@@ -22,7 +22,11 @@ interface HeaderConfig {
 }
 
 interface ListConfig {
-    scaling: number;
+    scaling1: number;
+    scaling2: number;
+    scaling3: number;
+    scaling4: number;
+    scaling5: number;
     decorativeSymbol1: string;
     decorativeSymbol2: string;
     decorativeSymbol3: string;
@@ -84,6 +88,9 @@ interface StyleConfig {
     list: {
         orderedLists: ListConfig;
         unorderedList: ListConfig;
+        task: {
+            scaling: number;
+        }
     };
     image: ImageConfig;
     blockquotes: BlockquotesConfig;
@@ -131,9 +138,9 @@ const defaultStyleConfig: StyleConfig = {
             bMargin: 3,
             decorativeSymbol: '',
             scaling: 0,
-            underline: "none",
+            underline: "underline",
             color: '#000000',
-            udlColor: "#222222"
+            udlColor: "#5e5e5e"
         },
         H3: {
             size: 20,
@@ -142,9 +149,9 @@ const defaultStyleConfig: StyleConfig = {
             bMargin: 0,
             decorativeSymbol: '',
             scaling: 0,
-            underline: "none",
+            underline: "underline",
             color: '#000000',
-            udlColor: "#222222"
+            udlColor: "#5e5e5e"
         },
         H4: {
             size: 18,
@@ -153,7 +160,8 @@ const defaultStyleConfig: StyleConfig = {
             bMargin: 0,
             decorativeSymbol: '',
             scaling: 0,
-            color: '#000000'
+            color: '#000000',
+            udlColor: "#5e5e5e"
         },
         H5: {
             size: 16,
@@ -162,7 +170,8 @@ const defaultStyleConfig: StyleConfig = {
             bMargin: 0,
             decorativeSymbol: '',
             scaling: 0,
-            color: '#3f4a58'
+            color: '#3f4a58',
+            udlColor: "#5e5e5e"
         },
         H6: {
             size: 14,
@@ -171,12 +180,17 @@ const defaultStyleConfig: StyleConfig = {
             bMargin: 0,
             decorativeSymbol: '',
             scaling: 0,
-            color: '#475569'
+            color: '#475569',
+            udlColor: "#5e5e5e"
         }
     },
     list: {
         orderedLists: {
-            scaling: 20,
+            scaling1: 20,
+            scaling2: 20,
+            scaling3: 20,
+            scaling4: 20,
+            scaling5: 20,
             decorativeSymbol1: 'decimal',
             decorativeSymbol2: 'decimal',
             decorativeSymbol3: 'decimal',
@@ -184,12 +198,19 @@ const defaultStyleConfig: StyleConfig = {
             decorativeSymbol5: 'decimal'
         },
         unorderedList: {
-            scaling: 20,
+            scaling1: 20,
+            scaling2: 20,
+            scaling3: 20,
+            scaling4: 20,
+            scaling5: 20,
             decorativeSymbol1: 'circle',
             decorativeSymbol2: 'circle',
             decorativeSymbol3: 'circle',
             decorativeSymbol4: 'circle',
             decorativeSymbol5: 'circle'
+        },
+        task: {
+            scaling: 20,
         }
     },
     image: {
@@ -206,7 +227,7 @@ const defaultStyleConfig: StyleConfig = {
         }
     },
     blockquotes: {
-        scaling: 1,
+        scaling: 10,
         color: '#d1d5db',
         bgColor: '#ffffff',
         tMargin: 16,

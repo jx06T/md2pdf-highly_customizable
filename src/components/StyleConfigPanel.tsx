@@ -363,12 +363,12 @@ const StyleConfigPanel: React.FC = () => {
         image: true,
         list: true,
         title: true,
-        "title-H1": true,
-        "title-H2": true,
-        "title-H3": true,
-        "title-H4": true,
-        "title-H5": true,
-        "title-H6": true,
+        // "title-H1": true,
+        // "title-H2": true,
+        // "title-H3": true,
+        // "title-H4": true,
+        // "title-H5": true,
+        // "title-H6": true,
         layout: true,
         pageFont: true,
         page: true
@@ -390,6 +390,11 @@ const StyleConfigPanel: React.FC = () => {
         }
         current[path[path.length - 1]] = value;
         // console.log(path, value)
+
+        if (path[path.length - 1] == "title") {
+            document.title = value;
+        }
+
 
         if (typeof value === "number") {
             if (path.includes("layout")) {
@@ -525,7 +530,7 @@ const StyleConfigPanel: React.FC = () => {
                         config={config}
                         updateConfig={updateConfig}
                     />
-                    <BooleanInput
+                    {/* <BooleanInput
                         path={['page', 'layout', 'pageNumber']}
                         label="PageNumber"
                         config={config}
@@ -536,7 +541,7 @@ const StyleConfigPanel: React.FC = () => {
                         label="Author"
                         config={config}
                         updateConfig={updateConfig}
-                    />
+                    /> */}
                     <StringInput
                         path={['page', 'layout', 'title']}
                         label="Title"
@@ -678,107 +683,126 @@ const StyleConfigPanel: React.FC = () => {
                 isExpanded={expandedSections.list}
                 onToggle={toggleSection}
             >
-                <div className="mb-4">
-                    <h4 className="font-medium mb-2">Ordered Lists</h4>
-                    < NumberInput
-                        path={['list', 'orderedLists', 'scaling']}
-                        label="Scaling"
-                        step={1}
-                        max={900}
-                        config={config}
-                        updateConfig={updateConfig}
-                    />
+                <Section
+                    title="Ordered List"
+                    section="orderedLists"
+                    isExpanded={expandedSections.orderedLists}
+                    onToggle={toggleSection}
+                >
                     {[1, 2, 3, 4, 5].map(n => (
-                        <SelectInput
-                            key={n}
-                            path={['list', 'orderedLists', 'decorativeSymbol' + n]}
-                            label={`Bullet Style ${n}`}
-                            config={config}
-                            updateConfig={updateConfig}
-                            options={
-                                [
-                                    { name: "decimal (數字)", value: "decimal" },
-                                    { name: "decimal-leading-zero (前置零數字)", value: "decimal-leading-zero" },
-                                    { name: "lower-roman (小寫羅馬數字)", value: "lower-roman" },
-                                    { name: "upper-roman (大寫羅馬數字)", value: "upper-roman" },
-                                    { name: "lower-greek (小寫希臘字母)", value: "lower-greek" },
-                                    { name: "lower-alpha (小寫拉丁字母)", value: "lower-alpha" },
-                                    { name: "upper-alpha (大寫拉丁字母)", value: "upper-alpha" },
-                                    { name: "arabic-indic (阿拉伯數字)", value: "arabic-indic" },
-                                    // { name: "armenian (亞美尼亞數字)", value: "armenian" },
-                                    // { name: "bengali (孟加拉數字)", value: "bengali" },
-                                    // { name: "cambodian/khmer (柬埔寨數字)", value: "cambodian" },
-                                    { name: "cjk-decimal (漢字數字)", value: "cjk-decimal" },
-                                    { name: "cjk-earthly-branch (地支)", value: "cjk-earthly-branch" },
-                                    { name: "cjk-heavenly-stem (天干)", value: "cjk-heavenly-stem" },
-                                    { name: "cjk-ideographic (傳統漢字)", value: "cjk-ideographic" },
-                                    { name: "devanagari (天城文數字)", value: "devanagari" },
-                                    // { name: "ethiopic-numeric (埃塞俄比亞數字)", value: "ethiopic-numeric" },
-                                    // { name: "georgian (格魯吉亞數字)", value: "georgian" },
-                                    // { name: "gujarati (古吉拉特數字)", value: "gujarati" },
-                                    // { name: "gurmukhi (古魯穆奇數字)", value: "gurmukhi" },
-                                    // { name: "hebrew (希伯來數字)", value: "hebrew" },
-                                    { name: "hiragana (平假名字母)", value: "hiragana" },
-                                    // { name: "hiragana-iroha (平假名伊呂波)", value: "hiragana-iroha" },
-                                    { name: "japanese-formal (日本正式數字)", value: "japanese-formal" },
-                                    { name: "japanese-informal (日本非正式數字)", value: "japanese-informal" },
-                                    // { name: "kannada (坎納達數字)", value: "kannada" },
-                                    { name: "katakana (片假名字母)", value: "katakana" },
-                                    // { name: "katakana-iroha (片假名伊呂波)", value: "katakana-iroha" },
-                                    // { name: "korean-hangul-formal (韓文正式數字)", value: "korean-hangul-formal" },
-                                    // { name: "korean-hanja-formal (韓文漢字正式數字)", value: "korean-hanja-formal" },
-                                    // { name: "korean-hanja-informal (韓文漢字非正式數字)", value: "korean-hanja-informal" },
-                                    { name: "lao (老撾數字)", value: "lao" },
-                                    // { name: "lower-armenian (小寫亞美尼亞數字)", value: "lower-armenian" },
-                                    // { name: "malayalam (馬拉雅拉姆數字)", value: "malayalam" },
-                                    // { name: "mongolian (蒙古數字)", value: "mongolian" },
-                                    // { name: "myanmar (緬甸數字)", value: "myanmar" },
-                                    // { name: "oriya (奧里亞數字)", value: "oriya" },
-                                    // { name: "persian (波斯數字)", value: "persian" },
-                                    // { name: "tamil (泰米爾數字)", value: "tamil" },
-                                    // { name: "telugu (泰盧固數字)", value: "telugu" },
-                                    // { name: "thai (泰國數字)", value: "thai" },
-                                    // { name: "tibetan (藏文數字)", value: "tibetan" },
-                                    { name: "trad-chinese-formal (繁體中文正式數字)", value: "trad-chinese-formal" },
-                                    { name: "trad-chinese-informal (繁體中文非正式數字)", value: "trad-chinese-informal" },
-                                    // { name: "upper-armenian (大寫亞美尼亞數字)", value: "upper-armenian" }
-                                ]
-                            }
-                        />
+                        <div key={n}>
+                            < NumberInput
+                                path={['list', 'orderedLists', 'scaling' + n]}
+                                label={`Scaling ${n}`}
+                                step={1}
+                                max={900}
+                                config={config}
+                                updateConfig={updateConfig}
+                            />
+                            <SelectInput
+
+                                path={['list', 'orderedLists', 'decorativeSymbol' + n]}
+                                label={`Bullet Style ${n}`}
+                                config={config}
+                                updateConfig={updateConfig}
+                                options={
+                                    [
+                                        { name: "decimal (數字)", value: "decimal" },
+                                        { name: "decimal-leading-zero (前置零數字)", value: "decimal-leading-zero" },
+                                        { name: "lower-roman (小寫羅馬數字)", value: "lower-roman" },
+                                        { name: "upper-roman (大寫羅馬數字)", value: "upper-roman" },
+                                        { name: "lower-greek (小寫希臘字母)", value: "lower-greek" },
+                                        { name: "lower-alpha (小寫拉丁字母)", value: "lower-alpha" },
+                                        { name: "upper-alpha (大寫拉丁字母)", value: "upper-alpha" },
+                                        { name: "arabic-indic (阿拉伯數字)", value: "arabic-indic" },
+                                        // { name: "armenian (亞美尼亞數字)", value: "armenian" },
+                                        // { name: "bengali (孟加拉數字)", value: "bengali" },
+                                        // { name: "cambodian/khmer (柬埔寨數字)", value: "cambodian" },
+                                        { name: "cjk-decimal (漢字數字)", value: "cjk-decimal" },
+                                        { name: "cjk-earthly-branch (地支)", value: "cjk-earthly-branch" },
+                                        { name: "cjk-heavenly-stem (天干)", value: "cjk-heavenly-stem" },
+                                        { name: "cjk-ideographic (傳統漢字)", value: "cjk-ideographic" },
+                                        { name: "devanagari (天城文數字)", value: "devanagari" },
+                                        // { name: "ethiopic-numeric (埃塞俄比亞數字)", value: "ethiopic-numeric" },
+                                        // { name: "georgian (格魯吉亞數字)", value: "georgian" },
+                                        // { name: "gujarati (古吉拉特數字)", value: "gujarati" },
+                                        // { name: "gurmukhi (古魯穆奇數字)", value: "gurmukhi" },
+                                        // { name: "hebrew (希伯來數字)", value: "hebrew" },
+                                        { name: "hiragana (平假名字母)", value: "hiragana" },
+                                        // { name: "hiragana-iroha (平假名伊呂波)", value: "hiragana-iroha" },
+                                        { name: "japanese-formal (日本正式數字)", value: "japanese-formal" },
+                                        { name: "japanese-informal (日本非正式數字)", value: "japanese-informal" },
+                                        // { name: "kannada (坎納達數字)", value: "kannada" },
+                                        { name: "katakana (片假名字母)", value: "katakana" },
+                                        // { name: "katakana-iroha (片假名伊呂波)", value: "katakana-iroha" },
+                                        // { name: "korean-hangul-formal (韓文正式數字)", value: "korean-hangul-formal" },
+                                        // { name: "korean-hanja-formal (韓文漢字正式數字)", value: "korean-hanja-formal" },
+                                        // { name: "korean-hanja-informal (韓文漢字非正式數字)", value: "korean-hanja-informal" },
+                                        { name: "lao (老撾數字)", value: "lao" },
+                                        // { name: "lower-armenian (小寫亞美尼亞數字)", value: "lower-armenian" },
+                                        // { name: "malayalam (馬拉雅拉姆數字)", value: "malayalam" },
+                                        // { name: "mongolian (蒙古數字)", value: "mongolian" },
+                                        // { name: "myanmar (緬甸數字)", value: "myanmar" },
+                                        // { name: "oriya (奧里亞數字)", value: "oriya" },
+                                        // { name: "persian (波斯數字)", value: "persian" },
+                                        // { name: "tamil (泰米爾數字)", value: "tamil" },
+                                        // { name: "telugu (泰盧固數字)", value: "telugu" },
+                                        // { name: "thai (泰國數字)", value: "thai" },
+                                        // { name: "tibetan (藏文數字)", value: "tibetan" },
+                                        { name: "trad-chinese-formal (繁體中文正式數字)", value: "trad-chinese-formal" },
+                                        { name: "trad-chinese-informal (繁體中文非正式數字)", value: "trad-chinese-informal" },
+                                        // { name: "upper-armenian (大寫亞美尼亞數字)", value: "upper-armenian" }
+                                    ]
+                                }
+                            />
+                        </div>
                     ))
                     }
-                </div>
-                <div>
-                    <h4 className="font-medium mb-2">Unordered Lists</h4>
-                    <NumberInput
-                        path={['list', 'unorderedList', 'scaling']}
-                        label="Scaling"
-                        step={1}
-                        max={900}
-                        config={config}
-                        updateConfig={updateConfig}
-                    />
+                </Section>
+                <Section
+                    title="Unordered List"
+                    section="unorderedList"
+                    isExpanded={expandedSections.unorderedList}
+                    onToggle={toggleSection}
+                >
                     {[1, 2, 3, 4, 5].map(n => (
-                        <SelectInput
-                            key={n}
-                            path={['list', 'unorderedList', 'decorativeSymbol' + n]}
-                            label={`Bullet Style ${n}`}
-                            config={config}
-                            updateConfig={updateConfig}
-                            options={
-                                [
-                                    { name: "none", value: "none" },
-                                    { name: "disc", value: "disc" },
-                                    { name: "circle", value: "circle" },
-                                    { name: "square", value: "square" },
-                                    { name: "disclosure-open", value: "disclosure-open" },
-                                    { name: "disclosure-closed", value: "disclosure-closed" }
-                                ]
-                            }
-                        />
+                        <div key={n}>
+                            <NumberInput
+                                path={['list', 'unorderedList', 'scaling' + n]}
+                                label={`Scaling ${n}`}
+                                step={1}
+                                max={900}
+                                config={config}
+                                updateConfig={updateConfig}
+                            />
+                            <SelectInput
+                                path={['list', 'unorderedList', 'decorativeSymbol' + n]}
+                                label={`Bullet Style ${n}`}
+                                config={config}
+                                updateConfig={updateConfig}
+                                options={
+                                    [
+                                        { name: "none", value: "none" },
+                                        { name: "disc", value: "disc" },
+                                        { name: "circle", value: "circle" },
+                                        { name: "square", value: "square" },
+                                        { name: "disclosure-open", value: "disclosure-open" },
+                                        { name: "disclosure-closed", value: "disclosure-closed" }
+                                    ]
+                                }
+                            />
+                        </div>
                     ))
                     }
-                </div>
+                </Section>
+                <NumberInput
+                    path={['list', 'task', 'scaling']}
+                    label=" Task List Scaling"
+                    step={1}
+                    max={900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
             </Section>
 
             {/* Image Settings Section */}
@@ -919,7 +943,7 @@ const StyleConfigPanel: React.FC = () => {
                     updateConfig={updateConfig}
                 /> */}
             </Section>
-        </div>
+        </div >
     );
 };
 
