@@ -133,8 +133,8 @@ const defaultStyleConfig: StyleConfig = {
             author: '',
             title: '',
             orientation: 'portrait',
-            tBoundary: 10,
-            bBoundary: 10,
+            tBoundary: 5,
+            bBoundary: 15,
             lBoundary: 10,
             rBoundary: 10
         }
