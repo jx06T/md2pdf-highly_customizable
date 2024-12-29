@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities; */
 
-:root {
-  --custom-font-family: "Arial", sans-serif; /* 預設字體 */
-}
 
 .max-w-full-12 {
   max-width: calc(100vw - 192px);
@@ -58,6 +55,11 @@ body .w-md-editor-text-input {
   box-shadow: none !important;
 }
 
+@font-face {
+  font-family: "rrrrr";
+  src: url("edukai-5.0.ttf");
+}
+
 .page {
   font-family: var(--page-font-familyE), var(--page-font-familyC);
   color: var(--page-font-color, #000000);
@@ -96,11 +98,11 @@ body .w-md-editor-text-input {
 }
 
 .preview-area input[type="checkbox"] {
-  accent-color: var(--page-font-Dcolor, #222222)!important;
-  height: var(--page-font-size,16px);
-  width: var(--page-font-size,16px);
+  accent-color: var(--page-font-Dcolor, #222222) !important;
+  height: var(--page-font-size, 16px);
+  width: var(--page-font-size, 16px);
   display: inline-block;
-  vertical-align: text-top; 
+  vertical-align: text-top;
   /* margin-bottom: -4px; */
 }
 
@@ -108,7 +110,7 @@ body .w-md-editor-text-input {
   color: var(--page-font-Dcolor, #222222);
 }
 
-.preview-area .task-list-item{
+.preview-area .task-list-item {
   /* padding-bottom: 2px; */
 }
 
@@ -248,20 +250,13 @@ select {
   border-right: 24px solid #f9fafb;
 }
 
-@page {
-  counter-reset: page-number; /* Initialize the page number counter */
-}
-
-p {
-  counter-increment: page-number 1; /* Increment the page number on page breaks */
-}
-
 .preview-area ul::marker,
 .preview-area li::marker {
   color: var(--page-font-Dcolor, #222222);
 }
 
 @media print {
+
   .bkp {
     break-before: page !important;
     opacity: 0;
@@ -283,6 +278,7 @@ p {
     width: auto !important;
     scale: 1 !important;
     transform-origin: center !important;
+    font-family: var(--page-font-familyE), var(--page-font-familyC);
 
     margin-top: 10px;
     margin-bottom: 0px;

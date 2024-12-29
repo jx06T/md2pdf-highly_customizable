@@ -541,7 +541,7 @@ const StyleConfigPanel: React.FC = () => {
                                 { name: "黑體", value: '"Microsoft JhengHei", sans-serif' },
                                 { name: "細明體", value: '"PMingLiU", serif' },
                                 // { name: "宋體", value: '"SimSun", serif' },
-                                { name: "標楷體", value: '"DFKai-SB", cursive' },
+                                { name: "標楷體", value: '"rrrrr", cursive' },
                                 { name: "Noto Serif Traditional Chinese", value: ' "Noto Serif TC" , serif' },
                                 { name: "Noto Sans Hong Kong", value: ' "Noto Sans HK", serif' },
                                 { name: "LXGW WenKai TC", value: ' "LXGW WenKai TC", serif' },
