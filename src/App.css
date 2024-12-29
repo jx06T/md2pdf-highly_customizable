@@ -59,7 +59,7 @@ body .w-md-editor-text-input {
 }
 
 .page {
-  font-family: var(--custom-font-family);
+  font-family: var(--page-font-familyE), var(--page-font-familyC);
   color: var(--page-font-color, #000000);
   padding-top: var(--page-layout-tBoundary, 15px);
   padding-bottom: var(--page-layout-bBoundary, 15px);

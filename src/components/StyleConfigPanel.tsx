@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import { JamChevronCircleDown, JamChevronCircleRight } from "../utils/Icons";
 import { defaultStyleConfig, StyleConfig } from '../Types';
-import FontSwitcher from './FontSwitcher';
 
 // Props 類型定義
 
@@ -294,38 +293,6 @@ const BooleanInput: React.FC<BooleanInputProps> = ({
     );
 };
 
-// StringInput 組件
-const FontsInput: React.FC<StringInputProps> = ({
-    path,
-    label,
-    config,
-    updateConfig
-}) => {
-    const value = getNestedValue(config, path) ?? '';
-    const [localValue, setLocalValue] = useState(value);
-
-    useEffect(() => {
-        const initialValue = getNestedValue(config, path) ?? '';
-        setLocalValue(initialValue)
-    }, [config])
-
-    const handleChange = (newValue: string) => {
-        setLocalValue(newValue);
-        updateConfig(path, newValue);
-    };
-
-    useEffect(() => {
-        updateConfig(path, localValue)
-    }, [])
-
-    return (
-        <div className="flex items-center justify-between mb-2">
-            <label className="text-sm">{label}</label>
-            <FontSwitcher value={localValue} changeCallback={handleChange} ></FontSwitcher>
-        </div>
-    );
-};
-
 // Section 組件
 const Section: React.FC<SectionProps> = ({
     title,
@@ -558,11 +525,45 @@ const StyleConfigPanel: React.FC = () => {
                         config={config}
                         updateConfig={updateConfig}
                     />
-                    <FontsInput
+                    {/* <FontsInput
                         path={['page', 'font', 'family']}
                         label="family"
                         config={config}
                         updateConfig={updateConfig}
+                    /> */}
+                    <SelectInput
+                        path={['page', "font", 'familyC']}
+                        label="Family C"
+                        config={config}
+                        updateConfig={updateConfig}
+                        options={
+                            [
+                                { name: "黑體", value: '"Microsoft JhengHei", sans-serif' },
+                                { name: "細明體", value: '"PMingLiU", serif' },
+                                // { name: "宋體", value: '"SimSun", serif' },
+                                { name: "標楷體", value: '"DFKai-SB", cursive' },
+                                { name: "Noto Serif Traditional Chinese", value: ' "Noto Serif TC" , serif' },
+                                { name: "Noto Sans Hong Kong", value: ' "Noto Sans HK", serif' },
+                                { name: "LXGW WenKai TC", value: ' "LXGW WenKai TC", serif' },
+                            ]
+                        }
+                    />
+                    <SelectInput
+                        path={['page', "font", 'familyE']}
+                        label="Family E"
+                        config={config}
+                        updateConfig={updateConfig}
+                        options={
+                            [
+                                { name: "auto", value: 'none' },
+                                { name: "Roboto", value: '"Roboto", serif' },
+                                { name: "Dancing Script", value: '"Dancing Script", serif' },
+                                { name: "Arial", value: '"Arial", sans-serif' },
+                                { name: "Times New Roman", value: '"Times New Roman", serif' },
+                                { name: "Verdana", value: '"Verdana", sans-serif' },
+                                { name: "Tahoma", value: '"Tahoma", sans-serif' },
+                            ]
+                        }
                     />
                     <ColorInput
                         path={['page', 'font', 'Dcolor']}

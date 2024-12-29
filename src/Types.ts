@@ -4,7 +4,8 @@
 interface FontConfig {
     size: number;
     weight: string;
-    family?: string;
+    familyC?: string;
+    familyE?: string;
     height?: number;
     color?: string;
     Dcolor?: string;
@@ -120,7 +121,8 @@ const defaultStyleConfig: StyleConfig = {
         font: {
             size: 18,
             weight: "normal",
-            family: '"Microsoft JhengHei", sans-serif',
+            familyC: '"Microsoft JhengHei", sans-serif',
+            familyE: '"Microsoft JhengHei", sans-serif',
             height: 30,
             color: '#000000',
             Dcolor: '#222222'

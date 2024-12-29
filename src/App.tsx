@@ -31,7 +31,7 @@ const PreviewArea = React.lazy(() => import('./components/PreviewArea') as Promi
 // Loading 組件
 const LoadingSpinner: React.FC = () => (
   <div className="flex items-center justify-center h-full w-full">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+    <div className="animate-spin full h-8 w-8 border-b-2 border-t-2 border-gray-900"></div>
   </div>
 )
 
