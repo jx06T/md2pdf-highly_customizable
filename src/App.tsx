@@ -1,41 +1,71 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, Suspense } from 'react'
 import './App.css'
-
-import EditorArea from './components/EditorArea'
-import SetArea from './components/SetArea'
-import PreviewArea from './components/PreviewArea'
-import UpperToolbar from './components/UpperToolbar'
-import { MdProvider } from './context/MdContext'
-import { JamChevronCircleUp, JamChevronCircleDown } from "./utils/Icons";
-
 import './@uiw/react-md-editor/dist/mdeditor.css'
+import { MdProvider } from './context/MdContext'
+import { JamChevronCircleUp, JamChevronCircleDown } from "./utils/Icons"
+import UpperToolbar from './components/UpperToolbar'
+
+// 組件 Props 類型定義
+interface EditorAreaProps {
+  expandLevel: number
+  width: number
+}
+
+interface SetAreaProps {
+  displayId: number
+  expandLevel: number
+  width: number
+}
+
+interface PreviewAreaProps {
+  width: number
+  expandLevel: number
+  displayId: number
+}
+
+// Lazy 載入組件
+const EditorArea = React.lazy(() => import('./components/EditorArea') as Promise<{ default: React.ComponentType<EditorAreaProps> }>)
+const SetArea = React.lazy(() => import('./components/SetArea') as Promise<{ default: React.ComponentType<SetAreaProps> }>)
+const PreviewArea = React.lazy(() => import('./components/PreviewArea') as Promise<{ default: React.ComponentType<PreviewAreaProps> }>)
+
+// Loading 組件
+const LoadingSpinner: React.FC = () => (
+  <div className="flex items-center justify-center h-full w-full">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+  </div>
+)
 
 function App() {
+  // State 定義
   const [editorAreaW, setEditorAreaW] = useState<number>(350)
   const [editorAndSetAreaW, setEditorAndSetAreaW] = useState<number>(650)
   const [isResizing, setIsResizing] = useState<boolean>(false)
   const [showH, setShowH] = useState<boolean>(true)
 
+  // Refs 定義
   const startXRef = useRef<number>(0)
   const movingRef = useRef<number>(-1)
   const startEWRef = useRef<number>(0)
   const startESWRef = useRef<number>(0)
-  const [minW, setMinW] = useState<number>(192);
-  const [maxW, setMaxW] = useState<number>(document.documentElement.clientWidth);
+
+  // 其他 State 定義
+  const [minW] = useState<number>(192)
+  const [maxW, setMaxW] = useState<number>(document.documentElement.clientWidth)
   const [expandLevel, setExpandLevel] = useState<number>(2)
   const [maxExpandLevel, setMaxExpandLevel] = useState<number>(2)
   const [customExpandLevel, setCustomExpandLevel] = useState<number>(2)
   const [displayId, setDisplayId] = useState<number>(0)
 
+  // Resize 處理
   useEffect(() => {
-    const handleResize = () => {
-      const newW = document.documentElement.clientWidth;
+    const handleResize = (): void => {
+      const newW = document.documentElement.clientWidth
       if (newW < 640) {
         setMaxExpandLevel(0)
         setEditorAndSetAreaW(newW)
         setEditorAreaW(newW)
         setMaxW(newW)
-        return;
+        return
       } else if (newW < 1024) {
         setMaxExpandLevel(1)
       } else {
@@ -44,20 +74,22 @@ function App() {
       setMaxW(newW)
     }
 
-    window.addEventListener('resize', handleResize);
-    handleResize();
+    window.addEventListener('resize', handleResize)
+    handleResize()
     return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
+  // ExpandLevel 處理
   useEffect(() => {
     if (customExpandLevel > -1) {
-      const newExpandLevel = Math.min(maxExpandLevel, customExpandLevel);
-      setExpandLevel(newExpandLevel);
+      const newExpandLevel = Math.min(maxExpandLevel, customExpandLevel)
+      setExpandLevel(newExpandLevel)
     }
   }, [customExpandLevel, maxExpandLevel])
 
+  // Width 調整處理
   useEffect(() => {
     if (maxW < minW + editorAndSetAreaW) {
       setEditorAndSetAreaW(maxW - minW)
@@ -65,134 +97,127 @@ function App() {
     if (maxW < expandLevel * minW + editorAreaW) {
       setEditorAreaW(maxW - (expandLevel * minW))
     }
-  }, [maxW, editorAndSetAreaW, editorAreaW])
+  }, [maxW, editorAndSetAreaW, editorAreaW, expandLevel, minW])
 
-  const handleMove = (clientX: number) => {
+  // 移動處理函數
+  const handleMove = (clientX: number): void => {
     if (isResizing) {
-
       if (movingRef.current === 0) {
         if (editorAndSetAreaW - (startEWRef.current + (clientX - startXRef.current)) < minW && expandLevel > 1) {
-          setEditorAndSetAreaW(Math.min(maxW - minW, Math.max(minW, startEWRef.current + (clientX - startXRef.current) + minW)));
+          setEditorAndSetAreaW(Math.min(maxW - minW, Math.max(minW, startEWRef.current + (clientX - startXRef.current) + minW)))
         }
-        setEditorAreaW(Math.min(maxW - (expandLevel * minW), Math.max(minW, startEWRef.current + (clientX - startXRef.current))));
+        setEditorAreaW(Math.min(maxW - (expandLevel * minW), Math.max(minW, startEWRef.current + (clientX - startXRef.current))))
       } else if (movingRef.current === 1) {
         if (startESWRef.current + (clientX - startXRef.current) < (2 * minW)) {
           return
         }
         if (startESWRef.current + (clientX - startXRef.current) - editorAreaW < minW) {
-          setEditorAreaW(startESWRef.current + (clientX - startXRef.current) - minW);
+          setEditorAreaW(startESWRef.current + (clientX - startXRef.current) - minW)
         }
-        setEditorAndSetAreaW(Math.min((maxW - minW), Math.max(386, startESWRef.current + (clientX - startXRef.current))));
+        setEditorAndSetAreaW(Math.min((maxW - minW), Math.max(386, startESWRef.current + (clientX - startXRef.current))))
       }
     }
-  };
+  }
 
+  // 滑鼠事件處理
   useEffect(() => {
-    const onMouseMove = (e: globalThis.MouseEvent) => {
+    const onMouseMove = (e: MouseEvent): void => {
       if (isResizing) {
         handleMove(e.clientX)
       }
-    };
+    }
 
-    const onMouseUp = () => {
-      setIsResizing(false);
-      startEWRef.current = editorAreaW;
-      startESWRef.current = editorAndSetAreaW;
-      movingRef.current = -1;
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp);
-    };
+    const onMouseUp = (): void => {
+      setIsResizing(false)
+      startEWRef.current = editorAreaW
+      startESWRef.current = editorAndSetAreaW
+      movingRef.current = -1
+      document.removeEventListener("mousemove", onMouseMove)
+      document.removeEventListener("mouseup", onMouseUp)
+    }
 
     if (isResizing) {
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseup", onMouseUp);
+      document.addEventListener("mousemove", onMouseMove)
+      document.addEventListener("mouseup", onMouseUp)
     }
 
     return () => {
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp);
-    };
-  }, [isResizing]);
+      document.removeEventListener("mousemove", onMouseMove)
+      document.removeEventListener("mouseup", onMouseUp)
+    }
+  }, [isResizing, editorAreaW, editorAndSetAreaW])
 
+  // 觸控事件處理
   useEffect(() => {
-    const onTouchMove = (e: globalThis.TouchEvent) => {
+    const onTouchMove = (e: TouchEvent): void => {
       if (isResizing) {
-        const moceTouch = e.changedTouches[0];
-        handleMove(moceTouch.clientX)
+        const moveTouch = e.changedTouches[0]
+        handleMove(moveTouch.clientX)
       }
-    };
+    }
 
-    const onTouchEnd = () => {
-      setIsResizing(false);
-      startEWRef.current = editorAreaW;
-      startESWRef.current = editorAndSetAreaW;
-      movingRef.current = -1;
-      document.removeEventListener("touchmove", onTouchMove);
-      document.removeEventListener("touchend", onTouchEnd);
-    };
+    const onTouchEnd = (): void => {
+      setIsResizing(false)
+      startEWRef.current = editorAreaW
+      startESWRef.current = editorAndSetAreaW
+      movingRef.current = -1
+      document.removeEventListener("touchmove", onTouchMove)
+      document.removeEventListener("touchend", onTouchEnd)
+    }
 
     if (isResizing) {
-      document.addEventListener('touchmove', onTouchMove);
-      document.addEventListener('touchend', onTouchEnd);
+      document.addEventListener('touchmove', onTouchMove)
+      document.addEventListener('touchend', onTouchEnd)
     }
 
     return () => {
-      document.removeEventListener("touchmove", onTouchMove);
-      document.removeEventListener("touchend", onTouchEnd);
-    };
-  }, [isResizing]);
+      document.removeEventListener("touchmove", onTouchMove)
+      document.removeEventListener("touchend", onTouchEnd)
+    }
+  }, [isResizing, editorAreaW, editorAndSetAreaW])
 
-  const handleMoveStart = (clientX: number) => {
-    setIsResizing(true);
-    startXRef.current = clientX;
-    startEWRef.current = editorAreaW;
-    startESWRef.current = editorAndSetAreaW;
+  // 開始移動處理
+  const handleMoveStart = (clientX: number): void => {
+    setIsResizing(true)
+    startXRef.current = clientX
+    startEWRef.current = editorAreaW
+    startESWRef.current = editorAndSetAreaW
   }
 
-  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>, target: number) => {
-    movingRef.current = target;
+  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>, target: number): void => {
+    movingRef.current = target
     handleMoveStart(e.clientX)
-  };
+  }
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>, target: number) => {
-    movingRef.current = target;
-    const touch = e.changedTouches[0];
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>, target: number): void => {
+    movingRef.current = target
+    const touch = e.changedTouches[0]
     handleMoveStart(touch.clientX)
   }
 
-  // const rootRef = useRef<HTMLInputElement>(null)
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     if (rootRef.current) {
-  //       rootRef.current.style.height = `${window.innerHeight}px`;
-  //     }
-  //   };
-  //   handleResize();
-  //   window.addEventListener('resize', handleResize);
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, []);
-
-
   return (
     <div className='app h-[100dvh] overflow-y-hidden flex flex-col overflow-x-hidden'>
-      {showH &&
+      {showH && (
         <header className='header sticky h-10 bg-blue-300 rounded-b-md -mb-1 z-10 text-l'>
-          <div className=' w-36 h-[70px] bg-transparent -mt-3 ml-2' style={{
-            backgroundImage: "url(md2pdf.png)",
-            backgroundPosition: "center",
-            backgroundSize: "contain"
-          }}></div>
+          <div 
+            className='w-36 h-[70px] bg-transparent -mt-3 ml-2' 
+            style={{
+              backgroundImage: "url(md2pdf.png)",
+              backgroundPosition: "center",
+              backgroundSize: "contain"
+            }}
+          />
         </header>
-      }
-      <button onClick={() => setShowH(!showH)} className=' show-botton fixed right-2 top-2 z-30'>
-        {showH ?
-          <JamChevronCircleUp className='  text-2xl'></JamChevronCircleUp>
-          :
-          <JamChevronCircleDown className='  text-2xl'> </JamChevronCircleDown>
-        }
+      )}
+      <button 
+        onClick={() => setShowH(!showH)} 
+        className='show-botton fixed right-2 top-2 z-30'
+      >
+        {showH ? (
+          <JamChevronCircleUp className='text-2xl' />
+        ) : (
+          <JamChevronCircleDown className='text-2xl' />
+        )}
       </button>
       <div
         style={{
@@ -201,24 +226,60 @@ function App() {
           marginLeft: expandLevel > 1 ? 24 : (expandLevel > 0 ? 16 : 8),
           display: expandLevel > 0 ? "block" : (displayId === 2 ? "block" : "none")
         }}
-        className=" cover"
-      >
-      </div>
+        className="cover"
+      />
       <MdProvider>
-        <UpperToolbar setCustomExpandLevel={setCustomExpandLevel} editorAndSetWidth={editorAndSetAreaW} editorWidth={editorAreaW} maxExpandLevel={maxExpandLevel} expandLevel={expandLevel} displayId={displayId} setDisplayId={setDisplayId}></UpperToolbar>
-        <main className={`main flex h-full flex-grow relative ${isResizing ? " pointer-events-none-j " : ""} overflow-y-hidden overflow-x-hidden`}>
-          <EditorArea expandLevel={expandLevel} width={expandLevel === 0 ? maxW : editorAreaW}></EditorArea>
-          {expandLevel > 0 &&
-            <div onTouchStart={(e) => handleTouchStart(e, 0)} onMouseDown={(e) => onMouseDown(e, 0)} className=' print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
-          }
-          <SetArea displayId={displayId} expandLevel={expandLevel} width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : (expandLevel > 0 ? editorAreaW : maxW)}></SetArea>
-          {expandLevel > 1 &&
-            <div onTouchStart={(e) => handleTouchStart(e, 1)} onMouseDown={(e) => onMouseDown(e, 1)} className=' print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'></div>
-          }
-          <PreviewArea width={expandLevel > 1 ? maxW - editorAndSetAreaW : (expandLevel > 0 ? maxW - editorAreaW : maxW)} expandLevel={expandLevel} displayId={displayId}></PreviewArea>
+        <UpperToolbar 
+          setCustomExpandLevel={setCustomExpandLevel}
+          editorAndSetWidth={editorAndSetAreaW}
+          editorWidth={editorAreaW}
+          maxExpandLevel={maxExpandLevel}
+          expandLevel={expandLevel}
+          displayId={displayId}
+          setDisplayId={setDisplayId}
+        />
+        <main className={`main flex h-full flex-grow relative ${isResizing ? "pointer-events-none-j" : ""} overflow-y-hidden overflow-x-hidden`}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <EditorArea 
+              expandLevel={expandLevel}
+              width={expandLevel === 0 ? maxW : editorAreaW}
+            />
+          </Suspense>
+          
+          {expandLevel > 0 && (
+            <div 
+              onTouchStart={(e) => handleTouchStart(e, 0)}
+              onMouseDown={(e) => onMouseDown(e, 0)}
+              className='print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'
+            />
+          )}
+          
+          <Suspense fallback={<LoadingSpinner />}>
+            <SetArea 
+              displayId={displayId}
+              expandLevel={expandLevel}
+              width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : (expandLevel > 0 ? editorAreaW : maxW)}
+            />
+          </Suspense>
+          
+          {expandLevel > 1 && (
+            <div 
+              onTouchStart={(e) => handleTouchStart(e, 1)}
+              onMouseDown={(e) => onMouseDown(e, 1)}
+              className='print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'
+            />
+          )}
+          
+          <Suspense fallback={<LoadingSpinner />}>
+            <PreviewArea 
+              width={expandLevel > 1 ? maxW - editorAndSetAreaW : (expandLevel > 0 ? maxW - editorAreaW : maxW)}
+              expandLevel={expandLevel}
+              displayId={displayId}
+            />
+          </Suspense>
         </main>
       </MdProvider>
-    </div >
+    </div>
   )
 }
 

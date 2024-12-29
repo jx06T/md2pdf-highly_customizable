@@ -564,6 +564,12 @@ const StyleConfigPanel: React.FC = () => {
                         config={config}
                         updateConfig={updateConfig}
                     />
+                    <ColorInput
+                        path={['page', 'font', 'Dcolor']}
+                        label="Decorative color"
+                        config={config}
+                        updateConfig={updateConfig}
+                    />
                 </Section>
                 <Section
                     title="Layout"
@@ -1036,12 +1042,15 @@ const StyleConfigPanel: React.FC = () => {
                     updateConfig={updateConfig}
                     options={
                         [
-                            { name: "dark", value: "dark" },
-                            { name: "bright", value: "bright" },
+                            { name: "vs-dark", value: "dark" },
+                            { name: "vs-bright", value: "bright" },
+                            { name: "github", value: "github" },
+                            { name: "dracula", value: "dracula" },
+                            { name: "nord", value: "nord" },
+                            { name: "monokai", value: "monokai" },
                         ]
                     }
                 />
-
             </Section>
             <Section
                 title="Table Settings"

@@ -1,7 +1,10 @@
-import React from "react";
-import { IcBaselinePrint, MynauiShareSolid, MingcuteArrowToLeftFill, MingcuteAlignArrowRightFill } from "../utils/Icons";
+import React, { useState } from "react";
+import { IcBaselinePrint, MaterialSymbolsContentCopyOutlineRounded, MynauiShareSolid, MingcuteArrowToLeftFill, MingcuteAlignArrowRightFill } from "../utils/Icons";
+import { copyToClipboard } from '../utils/tool';
 
 function UpperToolbar({ editorWidth, setCustomExpandLevel, editorAndSetWidth, displayId, setDisplayId, maxExpandLevel, expandLevel }: { setCustomExpandLevel: Function, editorAndSetWidth: number, editorWidth: number, displayId: number, setDisplayId: Function, expandLevel: number, maxExpandLevel: number }) {
+  const [copied, setCopied] = useState<boolean>(false);
+
   return (
     <div className="print-hide flex w-full h-9">
       <div style={{ width: expandLevel > 1 ? editorWidth : "fit-content" }} className={`${displayId === 0 || expandLevel > 1 ? " bg-b-2-w" : " bg-white"} pt-2 flex flex-shrink-0 flex-grow-0 `}>
@@ -13,11 +16,19 @@ function UpperToolbar({ editorWidth, setCustomExpandLevel, editorAndSetWidth, di
         {(expandLevel !== 0 && maxExpandLevel > 1) && <button onClick={() => setCustomExpandLevel(expandLevel > 1 ? 1 : 2)} className="pb-2 rounded-md w-9 h-9 ml-2">{expandLevel > 1 ? <MingcuteArrowToLeftFill className=" text-2xl"></MingcuteArrowToLeftFill> : <MingcuteAlignArrowRightFill className=" text-2xl"></MingcuteAlignArrowRightFill>}</button>}
       </div>
 
-      <div className=" bg-white pt-2 w-full h-9 space-x-3 flex">
+      <div className=" bg-white pt-2 w-full h-9 space-x-2 flex">
         <label onClick={expandLevel > 0 ? () => { } : () => setDisplayId(2)} className={` ${displayId === 2 || expandLevel > 0 ? "bg-slate-100" : " bg-stone-400"} cursor-pointer bg-stone-100 rounded-t-md px-2 w-fit pt-1 text-black left-point `}>Preview        </label>
         {(maxExpandLevel > 0) && <button onClick={() => setCustomExpandLevel(expandLevel > 0 ? 0 : 1)} className="pb-2 rounded-md w-9 h-9 ml-2">{expandLevel > 0 ? <MingcuteArrowToLeftFill className=" text-2xl"></MingcuteArrowToLeftFill> : <MingcuteAlignArrowRightFill className=" text-2xl"></MingcuteAlignArrowRightFill>}</button>}
-        <button onClick={() => window.print()} className="pb-2 rounded-md w-9 h-9"><IcBaselinePrint className="text-2xl"></IcBaselinePrint></button>
-        <button className="pb-2 rounded-md w-9 h-9"><MynauiShareSolid className="text-2xl"></MynauiShareSolid></button>
+        <button onClick={() => window.print()} className="pb-2 rounded-md w-9 h-9 "><IcBaselinePrint className="text-2xl"></IcBaselinePrint></button>
+        <button onClick={() => {
+          setCopied(true)
+          copyToClipboard(localStorage.getItem('mdValue') || "")
+          setTimeout(() => {
+            setCopied(false)
+          }, 500);
+        }} className="pb-2 rounded-md w-9 h-9"><MaterialSymbolsContentCopyOutlineRounded className={`text-2xl ${copied ? " text-green-700" : " text-black"} `}></MaterialSymbolsContentCopyOutlineRounded></button>
+        {copied && <span className=" bg-stone-200 text-black rounded-full h-6 !-ml-2 px-2 block">copied!</span>}
+        {/* <button className="pb-2 rounded-md w-9 h-9"><MynauiShareSolid className="text-2xl"></MynauiShareSolid></button> */}
       </div>
     </div >
   )

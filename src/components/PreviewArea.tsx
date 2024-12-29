@@ -4,7 +4,8 @@ import { useMdContext } from "../context/MdContext";
 import rehypeRaw from 'rehype-raw';
 import rehypeKatexNotranslate from 'rehype-katex-notranslate';
 import Markdown from 'react-markdown'
-import { visit } from 'unist-util-visit';
+// import { visit } from 'unist-util-visit';
+import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 import rehypeCallouts from 'rehype-callouts'
 import 'rehype-callouts/theme/github'
@@ -12,9 +13,34 @@ import 'rehype-callouts/theme/github'
 import remarkGfm from 'remark-gfm'
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+
 import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { nord } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { github } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import { monokai } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+
 import remarkExternalLinks from 'remark-external-links';
+
+function getThemeStyle(th: string) {
+    switch (th) {
+        case "dark":
+            return vscDarkPlus;
+        case "bright":
+            return vs;
+        case "dracula":
+            return dracula;
+        case "nord":
+            return nord;
+        case "github":
+            return github;
+        case "monokai":
+            return monokai;
+        default:
+            return vscDarkPlus;
+    }
+}
 
 const components = {
     p: ({ children, ...props }: { children: React.ReactNode }) => {
@@ -73,6 +99,7 @@ const components = {
     },
     code({ children, className, ...rest }: { children: React.ReactNode, className: string }) {
         const match = /language-(\w+)/.exec(className || '')
+        const th = getComputedStyle(document.documentElement).getPropertyValue("--code-theme") || "dark"
         return match ? (
             <SyntaxHighlighter
                 {...rest}
@@ -81,11 +108,11 @@ const components = {
                 language={match[1]}
                 showLineNumbers={true}
                 // showInlineLineNumbers={true}
-                style={getComputedStyle(document.documentElement).getPropertyValue("--code-theme") !== "dark" ? vs : vscDarkPlus}
+                style={getThemeStyle(th)}
                 wrapLines={true}
-                
+
                 lineNumberStyle={{ color: '#888', paddingRight: '10px' }}
-              
+
                 codeTagProps={{
                     style: {
                         whiteSpace: 'pre-wrap',
@@ -163,14 +190,11 @@ function PreviewArea({ width, displayId, expandLevel }: { width: number, display
                 >
                     <Markdown
                         components={components}
-                        rehypePlugins={[rehypeRaw, rehypeKatex, rehypeKatexNotranslate, rehypeCallouts]}
+                        rehypePlugins={[rehypeRaw, remarkMath, rehypeKatex, rehypeKatexNotranslate, rehypeCallouts]}
                         // @ts-ignore
                         remarkPlugins={[remarkGfm, [remarkExternalLinks, { target: '_blank', rel: 'noopener noreferrer' }]]}
                     >
                         {mdValue.replace(
-                            /^\$\$[\n ]*(.*)[\n ]*\$\$/gm,
-                            '``` math\n$1\n```'
-                        ).replace(
                             /^<<\s*(.+)$/gm,
                             (match, group1) => `<ma>${group1
                                 .replace(/</g, '&lt;')
@@ -195,3 +219,8 @@ function PreviewArea({ width, displayId, expandLevel }: { width: number, display
 }
 
 export default PreviewArea
+
+// .replace(
+//     /^\$\$[\n ]*(.*)[\n ]*\$\$/gm,
+//     '``` math\n$1\n```'
+// )

@@ -7,6 +7,7 @@ interface FontConfig {
     family?: string;
     height?: number;
     color?: string;
+    Dcolor?: string;
 }
 
 interface HeaderConfig {
@@ -121,7 +122,8 @@ const defaultStyleConfig: StyleConfig = {
             weight: "normal",
             family: '"Microsoft JhengHei", sans-serif',
             height: 30,
-            color: '#000000'
+            color: '#000000',
+            Dcolor: '#222222'
         },
         layout: {
             bgColor: '#ffffff',

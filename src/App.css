@@ -92,6 +92,24 @@ body .w-md-editor-text-input {
 .preview-area a {
   text-decoration-line: underline;
   text-underline-offset: 1px;
+  text-decoration-color: var(--page-font-Dcolor, #222222);
+}
+
+.preview-area input[type="checkbox"] {
+  accent-color: var(--page-font-Dcolor, #222222)!important;
+  height: var(--page-font-size,16px);
+  width: var(--page-font-size,16px);
+  display: inline-block;
+  vertical-align: text-top; 
+  /* margin-bottom: -4px; */
+}
+
+.preview-area input[type="checkbox"]::placeholder {
+  color: var(--page-font-Dcolor, #222222);
+}
+
+.preview-area .task-list-item{
+  /* padding-bottom: 2px; */
 }
 
 .preview-area h2 {
@@ -238,6 +256,11 @@ p {
   counter-increment: page-number 1; /* Increment the page number on page breaks */
 }
 
+.preview-area ul::marker,
+.preview-area li::marker {
+  color: var(--page-font-Dcolor, #222222);
+}
+
 @media print {
   .bkp {
     break-before: page !important;
@@ -260,6 +283,9 @@ p {
     width: auto !important;
     scale: 1 !important;
     transform-origin: center !important;
+
+    margin-top: 10px;
+    margin-bottom: 0px;
   }
 
   body,
@@ -292,11 +318,14 @@ p {
 
   @page {
     size: A4;
-    margin-top: 20px;
     margin-left: 0;
     margin-right: 0;
-    margin-bottom: 40px;
 
+    /* margin-top: 20px;
+    margin-bottom: 40px; */
+
+    margin-top: var(--page-layout-tBoundary, 20px);
+    margin-bottom: var(--page-layout-bBoundary, 40px);
     /* @top-center {
     content: "title";
     z-index: 40;
@@ -411,15 +440,6 @@ p {
   padding-right: 0 !important;
   width: 2rem !important;
   min-width: 2rem !important;
-}
-
-.preview-area pre code span[style*="height:"] {
-  height: attr(style);
-}
-
-.preview-area pre code span[style*="height:"] > *:where([style*="height: 30"]),
-.preview-area pre code span[style*="height:"] > *:where([style*="height:30"]) {
-  background-color: #90ee90 !important;
 }
 
 .preview-area table {
