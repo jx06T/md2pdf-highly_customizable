@@ -2,8 +2,13 @@ import React, { useEffect, useRef, useState, Suspense } from 'react'
 import './App.css'
 import './@uiw/react-md-editor/dist/mdeditor.css'
 import { MdProvider } from './context/MdContext'
-import { JamChevronCircleUp, JamChevronCircleDown } from "./utils/Icons"
+import { JamChevronCircleUp, JamChevronCircleDown, TdesignLogoGithubFilled, MaterialSymbolsDocsOutlineRounded } from "./utils/Icons"
 import UpperToolbar from './components/UpperToolbar'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import DocsPage from './pages/DocsPage'
+// import DocsPage from './pages/DocsPage';  // 這是你為 Docs 頁面創建的組件
+
 
 // 組件 Props 類型定義
 interface EditorAreaProps {
@@ -21,6 +26,7 @@ interface PreviewAreaProps {
   width: number
   expandLevel: number
   displayId: number
+  initMdValue?: string
 }
 
 // Lazy 載入組件
@@ -196,90 +202,110 @@ function App() {
   }
 
   return (
-    <div className='app h-[100dvh] overflow-y-hidden flex flex-col overflow-x-hidden'>
-      {showH && (
-        <header className='header sticky h-10 bg-blue-300 rounded-b-md -mb-1 z-10 text-l'>
-          <div 
-            className='w-36 h-[70px] bg-transparent -mt-3 ml-2' 
-            style={{
-              backgroundImage: "url(md2pdf.png)",
-              backgroundPosition: "center",
-              backgroundSize: "contain"
-            }}
-          />
-        </header>
-      )}
-      <button 
-        onClick={() => setShowH(!showH)} 
-        className='show-botton fixed right-2 top-2 z-30'
-      >
-        {showH ? (
-          <JamChevronCircleUp className='text-2xl' />
-        ) : (
-          <JamChevronCircleDown className='text-2xl' />
+    <Router>
+      <div className='app h-[100dvh] overflow-y-hidden flex flex-col overflow-x-hidden'>
+        {showH && (
+          <header className='header sticky h-10 bg-blue-300 rounded-b-md -mb-1 z-10 text-l flex justify-between'>
+            <Link to="/">
+              <div
+                className='w-36 h-[70px] bg-transparent -mt-3 ml-2 pointer-events-none'
+                style={{
+                  backgroundImage: "url(md2pdf.png)",
+                  backgroundPosition: "center",
+                  backgroundSize: "contain"
+                }}
+              />
+            </Link>
+            <div className=' mr-12 text-xl pt-[1px] space-x-4 text-blue-300'>
+              <a target="_blank" href='https://github.com/jx06T/md2pdf-highly_customizable' className=' bg-blue-500 px-2 py-1 rounded-b-md underline decoration-blue-300 underline-offset-1 cursor-pointer'> <TdesignLogoGithubFilled className=' inline-block mb-1 mr-1 text-blue-300' />Github</a>
+              <Link to="/docs" className='bg-blue-500 px-2 py-1 rounded-b-md underline decoration-blue-300 underline-offset-1 cursor-pointer'><MaterialSymbolsDocsOutlineRounded className=' inline-block mb-1 mr-1' />Docs</Link>
+            </div>
+          </header>
         )}
-      </button>
-      <div
-        style={{
-          scale: (expandLevel > 1 ? maxW - editorAndSetAreaW : (expandLevel > 0 ? maxW - editorAreaW : maxW)) / 850,
-          left: expandLevel > 1 ? editorAndSetAreaW : (expandLevel > 0 ? editorAreaW : 0),
-          marginLeft: expandLevel > 1 ? 24 : (expandLevel > 0 ? 16 : 8),
-          display: expandLevel > 0 ? "block" : (displayId === 2 ? "block" : "none")
-        }}
-        className="cover"
-      />
-      <MdProvider>
-        <UpperToolbar 
-          setCustomExpandLevel={setCustomExpandLevel}
-          editorAndSetWidth={editorAndSetAreaW}
-          editorWidth={editorAreaW}
-          maxExpandLevel={maxExpandLevel}
-          expandLevel={expandLevel}
-          displayId={displayId}
-          setDisplayId={setDisplayId}
-        />
-        <main className={`main flex h-full flex-grow relative ${isResizing ? "pointer-events-none-j" : ""} overflow-y-hidden overflow-x-hidden`}>
-          <Suspense fallback={<LoadingSpinner />}>
-            <EditorArea 
-              expandLevel={expandLevel}
-              width={expandLevel === 0 ? maxW : editorAreaW}
-            />
-          </Suspense>
-          
-          {expandLevel > 0 && (
-            <div 
-              onTouchStart={(e) => handleTouchStart(e, 0)}
-              onMouseDown={(e) => onMouseDown(e, 0)}
-              className='print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'
-            />
+
+        <button
+          onClick={() => setShowH(!showH)}
+          className='show-botton fixed right-2 top-2 z-30'
+        >
+          {showH ? (
+            <JamChevronCircleUp className='text-2xl' />
+          ) : (
+            <JamChevronCircleDown className='text-2xl' />
           )}
-          
-          <Suspense fallback={<LoadingSpinner />}>
-            <SetArea 
-              displayId={displayId}
-              expandLevel={expandLevel}
-              width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : (expandLevel > 0 ? editorAreaW : maxW)}
-            />
-          </Suspense>
-          
-          {expandLevel > 1 && (
-            <div 
-              onTouchStart={(e) => handleTouchStart(e, 1)}
-              onMouseDown={(e) => onMouseDown(e, 1)}
-              className='print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'
-            />
-          )}
-          
-          <Suspense fallback={<LoadingSpinner />}>
-            <PreviewArea 
-              width={expandLevel > 1 ? maxW - editorAndSetAreaW : (expandLevel > 0 ? maxW - editorAreaW : maxW)}
-              expandLevel={expandLevel}
-              displayId={displayId}
-            />
-          </Suspense>
-        </main>
-      </MdProvider>
-    </div>
+        </button>
+
+        <MdProvider>
+          <Routes>
+            <Route path="/" element={
+              <>
+                <div
+                  style={{
+                    scale: (expandLevel > 1 ? maxW - editorAndSetAreaW : (expandLevel > 0 ? maxW - editorAreaW : maxW)) / 850,
+                    left: expandLevel > 1 ? editorAndSetAreaW : (expandLevel > 0 ? editorAreaW : 0),
+                    marginLeft: expandLevel > 1 ? 24 : (expandLevel > 0 ? 16 : 8),
+                    display: expandLevel > 0 ? "block" : (displayId === 2 ? "block" : "none")
+                  }}
+                  className="cover"
+                />
+                <UpperToolbar
+                  setCustomExpandLevel={setCustomExpandLevel}
+                  editorAndSetWidth={editorAndSetAreaW}
+                  editorWidth={editorAreaW}
+                  maxExpandLevel={maxExpandLevel}
+                  expandLevel={expandLevel}
+                  displayId={displayId}
+                  setDisplayId={setDisplayId}
+                />
+                <main className={`main flex h-full flex-grow relative ${isResizing ? "pointer-events-none-j" : ""} overflow-y-hidden overflow-x-hidden`}>
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <EditorArea
+                      expandLevel={expandLevel}
+                      width={expandLevel === 0 ? maxW : editorAreaW}
+                    />
+                  </Suspense>
+
+                  {expandLevel > 0 && (
+                    <div
+                      onTouchStart={(e) => handleTouchStart(e, 0)}
+                      onMouseDown={(e) => onMouseDown(e, 0)}
+                      className='print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'
+                    />
+                  )}
+
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <SetArea
+                      displayId={displayId}
+                      expandLevel={expandLevel}
+                      width={expandLevel > 1 ? editorAndSetAreaW - editorAreaW : (expandLevel > 0 ? editorAreaW : maxW)}
+                    />
+                  </Suspense>
+
+                  {expandLevel > 1 && (
+                    <div
+                      onTouchStart={(e) => handleTouchStart(e, 1)}
+                      onMouseDown={(e) => onMouseDown(e, 1)}
+                      className='print-hide cursor-col-resize w-2 bg-stone-300 hover:bg-slate-50 resize-col flex-grow-0 flex-shrink-0'
+                    />
+                  )}
+
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <PreviewArea
+                      width={expandLevel > 1 ? maxW - editorAndSetAreaW : (expandLevel > 0 ? maxW - editorAreaW : maxW)}
+                      expandLevel={expandLevel}
+                      displayId={displayId}
+                    />
+                  </Suspense>
+                </main>
+              </>
+            } />
+
+            <Route path="/docs" element={<DocsPage maxW={maxW} />} />
+
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </MdProvider>
+      </div>
+    </Router >
   )
 }
 

@@ -123,7 +123,7 @@ const defaultStyleConfig: StyleConfig = {
             weight: "normal",
             familyC: '"Microsoft JhengHei", sans-serif',
             familyE: '"Microsoft JhengHei", sans-serif',
-            height: 30,
+            height: 31,
             color: '#000000',
             Dcolor: '#222222'
         },
@@ -143,8 +143,8 @@ const defaultStyleConfig: StyleConfig = {
         H1: {
             size: 32,
             weight: "bold",
-            tMargin: 7,
-            bMargin: 5,
+            tMargin: 13,
+            bMargin: 7,
             decorativeSymbol: '',
             scaling: 0,
             underline: "underline",
@@ -154,8 +154,8 @@ const defaultStyleConfig: StyleConfig = {
         H2: {
             size: 24,
             weight: "bold",
-            tMargin: 5,
-            bMargin: 5,
+            tMargin: 9,
+            bMargin: 7,
             decorativeSymbol: '',
             scaling: 0,
             underline: "underline",
@@ -165,18 +165,18 @@ const defaultStyleConfig: StyleConfig = {
         H3: {
             size: 20,
             weight: "bold",
-            tMargin: 3,
-            bMargin: 5,
+            tMargin: 7,
+            bMargin: 0,
             decorativeSymbol: '',
             scaling: 0,
-            underline: "underline",
+            underline: "",
             color: '#000000',
             udlColor: "#5e5e5e"
         },
         H4: {
             size: 20,
             weight: "normal",
-            tMargin: 0,
+            tMargin: 3,
             bMargin: 0,
             decorativeSymbol: '',
             scaling: 0,
@@ -223,7 +223,7 @@ const defaultStyleConfig: StyleConfig = {
             scaling3: 20,
             scaling4: 20,
             scaling5: 20,
-            decorativeSymbol1: 'circle',
+            decorativeSymbol1: 'disc',
             decorativeSymbol2: 'circle',
             decorativeSymbol3: 'circle',
             decorativeSymbol4: 'circle',
@@ -260,8 +260,8 @@ const defaultStyleConfig: StyleConfig = {
     code: {
         inlineColor: '#ebebeb',
         bgColor: '#1e1e1e',
-        tMargin: 0,
-        bMargin: 0,
+        tMargin: 10,
+        bMargin: 10,
         theme: 'dark'
     },
     table: {
@@ -271,7 +271,7 @@ const defaultStyleConfig: StyleConfig = {
         lineColor: '#dddddd',
         textAlignment: 'center',
         tMargin: 20,
-        bMargin: -10,
+        bMargin: 10,
     }
 };
 

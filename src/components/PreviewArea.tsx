@@ -130,8 +130,12 @@ const components = {
 
 }
 
-function PreviewArea({ width, displayId, expandLevel }: { width: number, displayId: number, expandLevel: number }) {
-    const { mdValue, setMdValue } = useMdContext()
+function PreviewArea({ width, displayId, expandLevel, initMdValue = '', only = false }: { width: number, displayId: number, expandLevel: number, initMdValue?: string, only?: boolean }) {
+    let { mdValue, setMdValue } = useMdContext()
+
+    if (initMdValue) {
+        mdValue = initMdValue;
+    }
 
     const autoPageBreak = () => {
         const container: HTMLDivElement | null = document.querySelector('.markdown-content');
@@ -179,9 +183,9 @@ function PreviewArea({ width, displayId, expandLevel }: { width: number, display
     // }, []);
 
     return (
-        <div className={`preview-area no-scrollbar bg-stone-100 min-w-0 lg:min-w-48 w-full h-full overflow-y-scroll   ${expandLevel > 0 ? "flex-grow flex-shrink " : " absolute left-0 " + (displayId === 2 ? "" : " opacity-0 pointer-events-none ")} `} >
+        <div className={`preview-area no-scrollbar bg-stone-100 min-w-0 lg:min-w-48 w-full h-full overflow-y-scroll ${only ? " w-full" : expandLevel > 0 ? "flex-grow flex-shrink " : " absolute left-0 " + (displayId === 2 ? "" : " opacity-0 pointer-events-none ")} `} >
 
-            <div className=" preview-area-2 p-2 relative ">
+            <div className={`preview-area-2 p-2 relative ${only ? "w-full flex justify-center" : ""}`}>
                 <div
                     style={{
                         scale: width / 850
@@ -202,14 +206,11 @@ function PreviewArea({ width, displayId, expandLevel }: { width: number, display
                                 .replace(/\\/g, '&#92;')
                                 .replace(/\//g, '&#47;')}</ma>`
                         ).replace(
-                            /\|[\n ]{2,3}(?!\|)/,
-                            '|\n\n　\n\n'
-                        ).replace(
                             /^([-]{3,})$/gm,
                             (match) => match.length === 3 ? '---' : '<bpf></bpf>'
                         ).replace(
-                            /^\n$/gm,
-                            '<br></br>'
+                            /^ {2,}$/gm,
+                            '<br/>\n'
                         )}
                     </Markdown>
                 </div>

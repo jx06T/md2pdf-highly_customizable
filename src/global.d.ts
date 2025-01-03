@@ -8,3 +8,7 @@ declare module './reportWebVitals' {
     export default reportWebVitals;
 }
 
+declare module '*.md' {
+    const content: string;
+    export default content;
+  }
