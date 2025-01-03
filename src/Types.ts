@@ -125,7 +125,7 @@ const defaultStyleConfig: StyleConfig = {
             familyE: '"Microsoft JhengHei", sans-serif',
             height: 31,
             color: '#000000',
-            Dcolor: '#222222'
+            Dcolor: '#444444'
         },
         layout: {
             bgColor: '#ffffff',
