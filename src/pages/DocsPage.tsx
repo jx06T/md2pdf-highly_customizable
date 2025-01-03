@@ -28,6 +28,10 @@ const doc = `
 ###### *version-V1.2.0*
 
 ---
+  
+> [!check]
+> 若此頁面排版出現問題，可以考慮至編輯區重置樣式設定，重置前記得匯出當前設定。
+>
 
 ## 上方導覽列
 > 此處有 [**Github 儲存庫連結**](https://github.com/jx06T/md2pdf-highly_customizable) 以及[**說明文檔**](https://md2pdf-jx.vercel.app/docs)，而右側按鈕可收合或開啟，點擊左側圖標可返回首頁。
