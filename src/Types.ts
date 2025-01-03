@@ -238,7 +238,7 @@ const defaultStyleConfig: StyleConfig = {
         alignment: 'center',
         tMargin: 8,
         bMargin: 24,
-        height: 256,
+        height: 370,
         annotation: {
             size: 14,
             weight: "normal",

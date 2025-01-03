@@ -165,6 +165,14 @@ $$
   
 第二段
 
+## 列印設定
+  
+> [!tip]
+> 此範例在 windows 11 & Edge 瀏覽器下進行，不同操作系統或瀏覽器可能會有不同
+
+![注意事項1](https://i.imgur.com/VdIpN5W.png)
+![注意事項2](https://i.imgur.com/5xTlIJp.png)
+
 `
 
 function DocsPage({ maxW }: { maxW: number }) {
@@ -180,7 +188,7 @@ function DocsPage({ maxW }: { maxW: number }) {
         </div>
 
         <PreviewArea
-            width={Math.min(880, maxW - 10)}
+            width={Math.min(1024, maxW - 10)}
             expandLevel={2}
             displayId={2}
             only={true}
