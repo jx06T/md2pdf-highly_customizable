@@ -1,86 +1,86 @@
-# Getting Started with Create React App
+# md2pdf - highly customizable
+###### *version-V1.2.0* 
+---
+## 簡介&功能
+- 工具網址 [https://md2pdf-jx.vercel.app/](https://md2pdf-jx.vercel.app/)
+- 上方導覽列有 **Github 儲存庫連結**以及**說明文檔**，右側按鈕可收合或開啟
+- 下方有三個分頁（**移動裝置預設收合**），展開狀態的分頁可以透過其右側箭頭收合，同理向右箭頭能展開收合的分頁
+- 拖動展開的分頁中間之分隔線可調整頁面布局
+- 最右方有兩個按鈕
+  - 列印文件：將文件轉為 **PDF** 建議在**電腦**上使用此功能，避免文字重影或其他錯誤
+  - 複製純文字格式：將左側編輯器內容直接**複製到剪貼簿**
+- 編輯區：
+  - 上方有一些 **markdown 語法** 的基本快速操作按鈕
+  - 下方為編輯區，來自 **uiwjs** 的 [react-md-editor](https://github.com/uiwjs/react-md-editor) 
+  - 支援常見快捷鍵，例如 **粗體**、_斜體_ 等等
+- 中間為文件樣式設定區
+  - 頁面設置
+    - **字型**: 設定字型大小、字型樣式、裝飾顏色、字型顏色及行高等屬性。
+    - **佈局**: 包括頁面背景色、文件名、頁面邊界。
+  - 標題樣式
+    - **H1 到 H6**: 設定標題層級的字型大小、字重、邊距、顏色及下劃線顏色等。
+  - 列表樣式
+    - **有序列表**: 設定各層級的縮排及符號樣式。
+    - **無序列表**: 設定各層級的縮排及符號樣式。
+    - **任務列表**: 設定任務清單項目的樣式。
+  - 圖片樣式
+    - **圖片**: 設定圖片的圓角、對齊方式、邊距等屬性。
+  - 引用樣式
+    - **引用**: 設定引用文字的顏色、背景色、邊距等屬性。
+  - 代碼樣式
+    - **行內代碼**: 設定行內代碼的背景顏色。
+    - **代碼區塊**: 設定代碼區塊的背景顏色及上下邊距，並且支持語法高亮主題設置。
+  - 表格樣式
+    - **表格標題顏色**: 設定表格標題顏色、表格行單雙數行的顏色、邊框顏色、文字對齊方式等屬性。
+- 右側為預覽區域
+  - 淺藍色框代表 **A4** 紙張範圍
+ 
+## 更新
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 1.2
+```
+1.2.1
+新增文檔與 README.md
+修復分頁標籤無法點擊之錯誤
 
-## Available Scripts
+1.2.0
+新增網站圖標
+完成所有樣式設定介面
+新增樣式匯出匯入與重置功能
+修復字體無法載入錯誤
+修復中英文字體衝突錯誤
 
-In the project directory, you can run:
+```
 
-### `npm start`
+### 1.1
+```
+1.1.2
+調整編輯區按鈕大小
+修復紙張大小參考線對齊錯誤
+新增圖片、表格與程式碼塊下方之註解語法
+新增表格、程式碼區塊、圖片等樣式設定
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1.1.1
+新增 callout 語法支援
+新增 Katex 語法支援
+新增基礎程式碼高亮功能
 
 
-rehypejs/rehype-autolink-headings：在 HTML 中添加標題連結的外掛程式 --- rehypejs/rehype-autolink-headings: plugin to add links to headings in HTML
-https://github.com/rehypejs/rehype-autolink-headings
+1.1.0
+完成預覽區域與編輯區功能與樣式
+完成基本文件樣式設定區
+新增強制分頁符號
 
-lin-stephanie/rehype-callouts: Render blockquote-based callouts (admonitions/alerts).
-https://github.com/lin-stephanie/rehype-callouts
+```
 
-PrinOrange/rehype-katex-notranslate：在 rehype-katex 生成的 katex 公式中增加 'translate=“no”' 属性，以防止公式被網頁和瀏覽器翻譯工具識別和翻譯。 --- PrinOrange/rehype-katex-notranslate: Add the attribute `translate="no"` to the katex formula generated by rehype-katex to prevent the formulas from being recognized and translated by webpage and browser translation tools.
-https://github.com/PrinOrange/rehype-katex-notranslate
+### 2.0
+```
+1.0.1
+編輯區樣式修改
+完成移動裝置頁面部局
+修改分頁標籤顯示方式
 
-JS-DevTools/rehype-toc：一個 rehype 外掛程式，用於向頁面添加目錄 （TOC） --- JS-DevTools/rehype-toc: A rehype plugin that adds a table of contents (TOC) to the page
-https://github.com/JS-DevTools/rehype-toc
+1.0.0
+完成電腦頁面部局
 
-rehypejs/rehype-starry-night: plugin to apply syntax highlighting to code with `starry-night`
-https://github.com/rehypejs/rehype-starry-night
+```
