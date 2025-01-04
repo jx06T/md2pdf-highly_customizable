@@ -182,12 +182,12 @@ $$
 > 此範例在 **windows 11 中的 Edge 瀏覽器下演示**，不同操作系統或瀏覽器可能會有不同
 >
 
-![注意事項1](https://i.imgur.com/VdIpN5W.png)
-![注意事項2](https://i.imgur.com/5xTlIJp.png)
+![注意事項1](https://i.imgur.com/5JHAKo4.png)
+![注意事項2](https://i.imgur.com/iInw4G4.png)
 << 此圖片上下部分為不同設定所呈現的結果
 
 > [!note]
-> 若邊界設定為預設值，仍可透過取消勾選「頁首與頁尾」來隱藏頁碼
+> 若勾選「頁首與頁尾」但仍未出現頁碼可先檢查頁面樣式設定中的下邊界是否設定過小
 >
 
 `
