@@ -237,7 +237,7 @@ const defaultStyleConfig: StyleConfig = {
         radius: 5,
         alignment: 'center',
         tMargin: 8,
-        bMargin: 24,
+        bMargin: 16,
         height: 370,
         annotation: {
             size: 14,

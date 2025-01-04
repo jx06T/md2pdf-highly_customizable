@@ -1,4 +1,6 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
+import { copyToClipboard } from '../utils/tool';
+import { IcBaselinePrint, MaterialSymbolsContentCopyOutlineRounded, MynauiShareSolid, MingcuteArrowToLeftFill, MingcuteAlignArrowRightFill } from "../utils/Icons";
 
 const PreviewArea = React.lazy(() => import('../components/PreviewArea') as Promise<{ default: React.ComponentType<PreviewAreaProps> }>)
 const SetArea = React.lazy(() => import('../components/SetArea') as Promise<{ default: React.ComponentType<SetAreaProps> }>)
@@ -40,7 +42,7 @@ const doc = `
 > **此區在行動裝置預設收合**，展開狀態的分頁可以透過**向左箭頭收合**，同理**向右箭頭能展開已收合的分頁**，拖動已展開分頁中間的分隔線可調整頁面布局。
 
 ### 分頁區 - 右方按鈕
-  - 列印文件：將文件轉為 **PDF 建議在電腦上使用此功能**，避免文字重影或其他錯誤
+  - 列印文件：將文件轉為 **PDF，建議在電腦上使用此功能**，避免文字重影或其他錯誤
   - 複製文件：將左側編輯器內容直接以**純文字 markdown 格式**複製到剪貼簿
 
 ### 分頁區 - 編輯區
@@ -130,7 +132,7 @@ $$
 >
 \`\`\`
 
-- 說明：在引用符號 \`>\` 的右方使用 \`[!類型]\`標註 Callout 類型即可使用，可用類型有：**note、warning、caution、tip、info、danger、important、check** 等。
+- 說明：在引用符號 \`>\` 的右方使用 \`[!type]\`標註 Callout 類型即可使用，可用類型有：**note、warning、caution、tip、info、danger、important、check** 等。
 
 - 效果：
   
@@ -147,6 +149,7 @@ $$
 \`\`\` md
  ------
 \`\`\`
+
 - 說明：一般的分隔線 \`---\` 在列印時不會在該處強制分頁。但透過 \`------\` 可做到在該處強制分頁的效果。
 - 效果：
 ------
@@ -176,15 +179,22 @@ $$
 ## 列印設定
   
 > [!tip]
-> 此範例在 windows 11 & Edge 瀏覽器下進行，不同操作系統或瀏覽器可能會有不同
+> 此範例在 **windows 11 中的 Edge 瀏覽器下演示**，不同操作系統或瀏覽器可能會有不同
+>
 
 ![注意事項1](https://i.imgur.com/VdIpN5W.png)
 ![注意事項2](https://i.imgur.com/5xTlIJp.png)
 << 此圖片上下部分為不同設定所呈現的結果
 
+> [!note]
+> 若邊界設定為預設值，仍可透過取消勾選「頁首與頁尾」來隱藏頁碼
+>
+
 `
 
 function DocsPage({ maxW }: { maxW: number }) {
+    const [copied, setCopied] = useState<boolean>(false);
+
     return (<Suspense fallback={<LoadingSpinner />}>
         <div className=' fi pointer-events-none opacity-0 w-0 h-0 overflow-hidden'>
             <Suspense fallback={<LoadingSpinner />}>
@@ -195,7 +205,17 @@ function DocsPage({ maxW }: { maxW: number }) {
                 />
             </Suspense>
         </div>
-
+        <div className=' doc-tool fixed top-16 right-8 w-10 z-30 bg-slate-200 p-2 pb-1 rounded-md'>
+            <button onClick={() => window.print()} className="pb-2 rounded-md w-9 h-9 "><IcBaselinePrint className="text-2xl"></IcBaselinePrint></button>
+            <button onClick={() => {
+                setCopied(true)
+                copyToClipboard(doc)
+                setTimeout(() => {
+                    setCopied(false)
+                }, 500);
+            }} className="pb-2 rounded-md w-9 h-9"><MaterialSymbolsContentCopyOutlineRounded className={`text-2xl ${copied ? " text-green-700" : " text-black"} `}></MaterialSymbolsContentCopyOutlineRounded></button>
+        </div>
+        {copied && <span className=" fixed top-40 right-3  text-black rounded-md h-6 !-ml-2 px-2 block">copied!</span>}
         <PreviewArea
             width={Math.min(1024, maxW - 10)}
             expandLevel={2}

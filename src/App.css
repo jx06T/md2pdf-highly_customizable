@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities; */
 
-
 .max-w-full-12 {
   max-width: calc(100vw - 192px);
 }
@@ -256,12 +255,12 @@ select {
 }
 
 @media print {
-
   .bkp {
     break-before: page !important;
     opacity: 0;
   }
 
+  .doc-tool,
   .editor-area,
   .header,
   .set-area,
@@ -282,6 +281,7 @@ select {
 
     margin-top: 10px;
     margin-bottom: 0px;
+    border: none !important;
   }
 
   body,
@@ -411,6 +411,15 @@ select {
 }
 
 .preview-area p code {
+  background-color: var(--code-inlineColor, #d1d5db);
+  margin-left: 3px;
+  margin-right: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 3px;
+}
+
+.preview-area li code {
   background-color: var(--code-inlineColor, #d1d5db);
   margin-left: 3px;
   margin-right: 3px;
