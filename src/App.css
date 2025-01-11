@@ -62,10 +62,13 @@ body .w-md-editor-text-input {
 .page {
   font-family: var(--page-font-familyE), var(--page-font-familyC);
   color: var(--page-font-color, #000000);
-  padding-top: var(--page-layout-tBoundary, 15px);
-  padding-bottom: var(--page-layout-bBoundary, 15px);
-  padding-left: var(--page-layout-lBoundary, 10px);
-  padding-right: var(--page-layout-rBoundary, 10px);
+  padding-top: calc(
+    var(--page-layout-tPadding, 10mm) + var(--page-layout-tBoundary, 10mm)
+  );
+
+  padding-bottom: var(--page-layout-bBoundary, 15mm);
+  padding-left: var(--page-layout-lBoundary, 10mm);
+  padding-right: var(--page-layout-rBoundary, 10mm);
   background-color: var(--page-layout-bgColor, #ffffff);
 }
 
@@ -88,6 +91,7 @@ body .w-md-editor-text-input {
   text-decoration-color: var(--title-H1-udlColor, #d1d5db);
   text-decoration-line: var(--title-H1-underline, none);
   text-underline-offset: 8px;
+  text-align: var(--title-H1-alignment);
 }
 
 .preview-area a {
@@ -124,6 +128,9 @@ body .w-md-editor-text-input {
   text-decoration-color: var(--title-H2-udlColor, #d1d5db);
   text-decoration-line: var(--title-H2-underline, none);
   text-underline-offset: 6px;
+
+  text-align: var(--title-H2-alignment);
+
 }
 .preview-area h3 {
   font-size: var(--title-H3-size, 20px);
@@ -136,6 +143,8 @@ body .w-md-editor-text-input {
   text-decoration-color: var(--title-H3-udlColor, #d1d5db);
   text-decoration-line: var(--title-H3-underline, none);
   text-underline-offset: 6px;
+
+  text-align: var(--title-H3-alignment);
 }
 
 .preview-area h4 {
@@ -149,6 +158,8 @@ body .w-md-editor-text-input {
   text-decoration-color: var(--title-H4-udlColor, #d1d5db);
   text-decoration-line: var(--title-H4-underline, none);
   text-underline-offset: 4px;
+
+  text-align: var(--title-H4-alignment);
 }
 
 .preview-area h5 {
@@ -162,6 +173,8 @@ body .w-md-editor-text-input {
   text-decoration-color: var(--title-H5-udlColor, #d1d5db);
   text-decoration-line: var(--title-H5-underline, none);
   text-underline-offset: 4px;
+
+  text-align: var(--title-H5-alignment);
 }
 
 .preview-area h6 {
@@ -175,6 +188,8 @@ body .w-md-editor-text-input {
   text-decoration-color: var(--title-H6-udlColor, #d1d5db);
   text-decoration-line: var(--title-H6-underline, none);
   text-underline-offset: 4px;
+
+  text-align: var(--title-H6-alignment);
 }
 
 ul.contains-task-list {
@@ -254,6 +269,31 @@ select {
   color: var(--page-font-Dcolor, #222222);
 }
 
+.preview-area .callout {
+  margin-left: var(--blockquotes-scaling, 10px);
+  padding-left: 0px;
+  margin-top: var(--blockquotes-tMargin, 20px);
+  margin-bottom: var(--blockquotes-bMargin, 20px);
+}
+
+.preview-area .callout > .callout-content {
+  margin-left: var(--blockquotes-textScaling, 10px);
+  margin-top: var(--blockquotes-contentMargin, -10px);
+}
+
+.preview-area .callout > .callout-title {
+  margin-left: var(--blockquotes-titleMargin, 15px);
+}
+
+.preview-area blockquote {
+  border-color: var(--blockquotes-color, #d1d5db);
+  padding-left: var(--blockquotes-textScaling, 20px);
+  margin-left: var(--blockquotes-scaling, 10px);
+  background-color: var(--blockquotes-bgColor, #ffffff);
+  margin-top: var(--blockquotes-tMargin, 20px);
+  margin-bottom: var(--blockquotes-bMargin, 20px);
+}
+
 @media print {
   .bkp {
     break-before: page !important;
@@ -278,10 +318,12 @@ select {
     scale: 1 !important;
     transform-origin: center !important;
     font-family: var(--page-font-familyE), var(--page-font-familyC);
-
-    margin-top: 10px;
-    margin-bottom: 0px;
+    /* padding-top: var(--page-layout-tPadding,5mm) !important; */
+    /* padding-top: 5mm !important; */
+    /* margin-top: 10px;
+    margin-bottom: 0px; */
     border: none !important;
+    margin-top: calc(0mm - var(--page-layout-tBoundary)) !important;
   }
 
   body,
@@ -320,8 +362,10 @@ select {
     /* margin-top: 20px;
     margin-bottom: 40px; */
 
-    margin-top: var(--page-layout-tBoundary, 20px);
-    margin-bottom: var(--page-layout-bBoundary, 40px);
+    /* padding-top: var(--page-layout-tPadding, 10mm); */
+    margin-top: var(--page-layout-tBoundary, 10mm);
+    margin-bottom: var(--page-layout-bBoundary, 10mm);
+
     /* @top-center {
     content: "title";
     z-index: 40;
@@ -334,10 +378,13 @@ select {
       margin-bottom: 6px;
     } */
 
-    @bottom-left {
+    /* @bottom-left {
       display: none;
-    }
+    } */
 
+    @top-center {
+      content: "";
+    }
     /* 
   @bottom-right {
     content: counter(page);
@@ -373,12 +420,6 @@ select {
 
   border: 2px solid rgba(83, 160, 211, 0.363);
   pointer-events: none;
-}
-
-.preview-area blockquote {
-  border-color: var(--blockquotes-color, #d1d5db);
-  padding-left: var(--blockquotes-scaling, 3px);
-  background-color: var(--blockquotes-bgColor, #ffffff);
 }
 
 .preview-area pre {

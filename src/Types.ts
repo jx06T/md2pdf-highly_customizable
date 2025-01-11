@@ -12,6 +12,7 @@ interface FontConfig {
 }
 
 interface HeaderConfig {
+    alignment?: string,
     size: number;
     weight: string;
     tMargin: number,
@@ -53,9 +54,12 @@ interface ImageConfig {
 }
 
 interface BlockquotesConfig {
+    titleMargin: number;
+    textScaling: number;
     scaling: number;
     color: string;
     bgColor: string;
+    contentMargin: number,
     tMargin: number,
     bMargin: number,
     font: FontConfig;
@@ -70,6 +74,7 @@ interface PageConfig {
         title: string;
         orientation: 'portrait' | 'landscape';
         tBoundary: number
+        tPadding?: number
         bBoundary: number
         lBoundary: number
         rBoundary: number
@@ -133,7 +138,8 @@ const defaultStyleConfig: StyleConfig = {
             author: '',
             title: '',
             orientation: 'portrait',
-            tBoundary: 5,
+            tPadding: 0,
+            tBoundary: 10,
             bBoundary: 15,
             lBoundary: 10,
             rBoundary: 10
@@ -149,7 +155,8 @@ const defaultStyleConfig: StyleConfig = {
             scaling: 0,
             underline: "underline",
             color: '#000000',
-            udlColor: "#474747"
+            udlColor: "#474747",
+            alignment: 'left',
         },
         H2: {
             size: 24,
@@ -247,11 +254,14 @@ const defaultStyleConfig: StyleConfig = {
         }
     },
     blockquotes: {
+        textScaling: 20,
+        contentMargin: -10,
+        titleMargin: 15,
         scaling: 10,
         color: '#c3c6cb',
         bgColor: '#ffffff',
-        tMargin: 16,
-        bMargin: 16,
+        tMargin: 20,
+        bMargin: 20,
         font: {
             size: 16,
             weight: "normal"

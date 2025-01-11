@@ -77,7 +77,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
     useEffect(() => {
         const initialValue = getNestedValue(config, path) ?? 0;
         setLocalValue(initialValue)
-    }, [config])
+    }, [config, path])
 
     const debouncedUpdate = useCallback(
         debounce((value: number) => {
@@ -144,7 +144,7 @@ const ColorInput: React.FC<ColorInputProps> = ({
     useEffect(() => {
         const initialValue = getNestedValue(config, path) ?? '#000000';
         setLocalValue(initialValue)
-    }, [config])
+    }, [config, path])
 
     const debouncedUpdate = useCallback(
         debounce((value: string) => {
@@ -190,7 +190,7 @@ const StringInput: React.FC<StringInputProps> = ({
     useEffect(() => {
         const initialValue = getNestedValue(config, path) ?? '';
         setLocalValue(initialValue)
-    }, [config])
+    }, [config, path])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = e.target.value;
@@ -230,7 +230,7 @@ const SelectInput: React.FC<SelectInputProps> = ({
     useEffect(() => {
         const initialValue = getNestedValue(config, path) ?? '';
         setLocalValue(initialValue)
-    }, [config])
+    }, [config, path])
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newValue = e.target.value;
@@ -256,6 +256,37 @@ const SelectInput: React.FC<SelectInputProps> = ({
     );
 };
 
+// SelectInput 組件
+function HSelectInput({ value, update }: { value: string, update: Function }) {
+    const options = [
+        { name: "H1", value: "H1" },
+        { name: "H2", value: "H2" },
+        { name: "H3", value: "H3" },
+        { name: "H4", value: "H4" },
+        { name: "H5", value: "H5" },
+        { name: "H6", value: "H6" },
+    ]
+
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newValue = e.target.value;
+        console.log("sss")
+        update(newValue);
+    };
+
+    return (
+        <div className="flex items-center justify-between mb-2">
+            <label className="text-sm">{"the heading to configure"}</label>
+            <select className=" w-24 p-1 border rounded bg-gray-50 h-9" value={value} onChange={handleChange}>
+                {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                        {option.name}
+                    </option>
+                ))}
+            </select>
+        </div>
+    );
+};
+
 // BooleanInput 組件
 const BooleanInput: React.FC<BooleanInputProps> = ({
     path,
@@ -271,7 +302,7 @@ const BooleanInput: React.FC<BooleanInputProps> = ({
     useEffect(() => {
         const initialValue = getNestedValue(config, path) ?? false;
         setLocalValue(initialValue == tValue)
-    }, [config])
+    }, [config, path])
 
     const handleChange = () => {
         updateConfig(path, ((!localValue) ? tValue : fValue));
@@ -323,6 +354,7 @@ const Section: React.FC<SectionProps> = ({
 // 主組件
 const StyleConfigPanel: React.FC = () => {
     const [config, setConfig] = useState(defaultStyleConfig);
+    const [headingToConfigure, setHeadingToConfigure] = useState<string>('H1');
 
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
         // blockquotes: true,
@@ -603,6 +635,14 @@ const StyleConfigPanel: React.FC = () => {
                         updateConfig={updateConfig}
                     />
                     <NumberInput
+                        path={['page', 'layout', 'tPadding']}
+                        label="Header margin"
+                        step={1}
+                        max={900}
+                        config={config}
+                        updateConfig={updateConfig}
+                    />
+                    <NumberInput
                         path={['page', 'layout', 'tBoundary']}
                         label="Top boundary"
                         step={1}
@@ -645,89 +685,94 @@ const StyleConfigPanel: React.FC = () => {
                 isExpanded={expandedSections.title}
                 onToggle={toggleSection}
             >
-                {['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].map((level) => (
-                    <Section
-                        key={level}
-                        title={level}
-                        section={`title-${level}`}
-                        isExpanded={expandedSections[`title-${level}`]}
-                        onToggle={toggleSection}
-                    >
-                        {/* <h4 className="font-medium mb-2">{level}</h4> */}
-                        <NumberInput
-                            path={['title', level, 'size']}
-                            label="Size"
-                            config={config}
-                            updateConfig={updateConfig}
-                        />
-                        <SelectInput
-                            path={['title', level, 'weight']}
-                            label="Weight"
-                            config={config}
-                            updateConfig={updateConfig}
-                            options={
-                                [
-                                    { name: "lighter", value: "lighter" },
-                                    { name: "normal", value: "normal" },
-                                    { name: "bold", value: "bold" },
-                                    { name: "bolder", value: "bolder" },
-                                ]
-                            }
-                        />
-                        <NumberInput
-                            path={['title', level, 'tMargin']}
-                            label="Top Margin"
-                            step={1}
-                            max={900}
-                            min={-900}
-                            config={config}
-                            updateConfig={updateConfig}
-                        />
-                        <NumberInput
-                            path={['title', level, 'bMargin']}
-                            label="Bottom Margin"
-                            step={1}
-                            max={900}
-                            min={-900}
-                            config={config}
-                            updateConfig={updateConfig}
-                        />
-                        <NumberInput
-                            path={['title', level, 'scaling']}
-                            label="Scaling"
-                            step={1}
-                            max={900}
-                            config={config}
-                            updateConfig={updateConfig}
-                        />
-                        <ColorInput
-                            path={['title', level, 'color']}
-                            label="Color"
-                            config={config}
-                            updateConfig={updateConfig}
-                        />
-                        <BooleanInput
-                            path={['title', level, 'underline']}
-                            label="Underline"
-                            config={config}
-                            updateConfig={updateConfig}
-                            tValue="underline"
-                            fValue="none"
-                        />
-                        <ColorInput
-                            path={['title', level, 'udlColor']}
-                            label="Underline Color"
-                            config={config}
-                            updateConfig={updateConfig}
-                        />
-                        <StringInput
-                            path={['title', level, 'decorativeSymbol']}
-                            label="Decorative Symbol"
-                            config={config}
-                            updateConfig={updateConfig}
-                        />
-                    </Section>
-                ))}
+                <HSelectInput value={headingToConfigure} update={setHeadingToConfigure} />
+                <h2 className=' my-3 text-xl'>currently configured title：{headingToConfigure}</h2>
+
+                <NumberInput
+                    path={['title', headingToConfigure, 'size']}
+                    label="Size"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <SelectInput
+                    path={['title', headingToConfigure, 'weight']}
+                    label="Weight"
+                    config={config}
+                    updateConfig={updateConfig}
+                    options={
+                        [
+                            { name: "lighter", value: "lighter" },
+                            { name: "normal", value: "normal" },
+                            { name: "bold", value: "bold" },
+                            { name: "bolder", value: "bolder" },
+                        ]
+                    }
+                />
+                <NumberInput
+                    path={['title', headingToConfigure, 'tMargin']}
+                    label="Top Margin"
+                    step={1}
+                    max={900}
+                    min={-900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <NumberInput
+                    path={['title', headingToConfigure, 'bMargin']}
+                    label="Bottom Margin"
+                    step={1}
+                    max={900}
+                    min={-900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <NumberInput
+                    path={['title', headingToConfigure, 'scaling']}
+                    label="Scaling"
+                    step={1}
+                    max={900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <ColorInput
+                    path={['title', headingToConfigure, 'color']}
+                    label="Color"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <BooleanInput
+                    path={['title', headingToConfigure, 'underline']}
+                    label="Underline"
+                    config={config}
+                    updateConfig={updateConfig}
+                    tValue="underline"
+                    fValue="none"
+                />
+                <ColorInput
+                    path={['title', headingToConfigure, 'udlColor']}
+                    label="Underline Color"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <StringInput
+                    path={['title', headingToConfigure, 'decorativeSymbol']}
+                    label="Decorative Symbol"
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <SelectInput
+                    path={['title', headingToConfigure, 'alignment']}
+                    label="Alignment"
+                    config={config}
+                    updateConfig={updateConfig}
+                    options={
+                        [
+                            { name: "left", value: "left" },
+                            { name: "center", value: "center" },
+                            { name: "right", value: "right" },
+                        ]
+                    }
+                />
             </Section>
 
             {/* List Settings Section */}
@@ -964,6 +1009,50 @@ const StyleConfigPanel: React.FC = () => {
                 <NumberInput
                     path={['blockquotes', 'scaling']}
                     label="Scaling"
+                    step={1}
+                    max={900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <NumberInput
+                    path={['blockquotes', 'titleMargin']}
+                    label="Title Scaling"
+                    step={1}
+                    max={900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <NumberInput
+                    path={['blockquotes', 'textScaling']}
+                    label="Text Scaling"
+                    step={1}
+                    max={900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <NumberInput
+                    path={['blockquotes', 'contentMargin']}
+                    label="Content Margin"
+                    step={1}
+                    max={900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+
+                <NumberInput
+                    path={['blockquotes', 'tMargin']}
+                    label="Top Margin"
+                    step={1}
+                    max={900}
+                    config={config}
+                    updateConfig={updateConfig}
+                />
+                <NumberInput
+                    path={['blockquotes', 'bMargin']}
+                    label="Bottom Margin"
                     step={1}
                     max={900}
                     config={config}
