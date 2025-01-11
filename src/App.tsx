@@ -61,6 +61,34 @@ function App() {
   const [maxExpandLevel, setMaxExpandLevel] = useState<number>(2)
   const [customExpandLevel, setCustomExpandLevel] = useState<number>(2)
   const [displayId, setDisplayId] = useState<number>(0)
+  const [isInit, setIsInit] = useState<boolean>(true)
+
+
+  useEffect(() => {
+    const stringData = localStorage.getItem('layout');
+    if (stringData) {
+      const storedData = JSON.parse(stringData);
+      if (storedData) {
+        const { expandLevel, displayId, editorAreaW, editorAndSetAreaW, customExpandLevel, isInit } = storedData;
+        setExpandLevel(expandLevel);
+        setDisplayId(displayId);
+        setEditorAreaW(editorAreaW);
+        setEditorAndSetAreaW(editorAndSetAreaW);
+        setCustomExpandLevel(customExpandLevel);
+        setIsInit(false);
+        return;
+      }
+    }
+    localStorage.setItem('layout', JSON.stringify({ expandLevel, displayId, editorAreaW, editorAndSetAreaW, customExpandLevel, isInit: true }))
+  }, [])
+
+  useEffect(() => {
+    if (isInit) {
+      return
+    }
+    localStorage.setItem('layout', JSON.stringify({ expandLevel, displayId, editorAreaW, editorAndSetAreaW, customExpandLevel }))
+  }, [expandLevel, displayId, editorAreaW, editorAndSetAreaW, customExpandLevel])
+
 
   // Resize 處理
   useEffect(() => {

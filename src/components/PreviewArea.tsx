@@ -74,7 +74,6 @@ const components = {
     table: ({ children }: { children: React.ReactNode }) => {
         return (
             <div className="table-container">
-
                 <table >
                     {children}
                 </table>

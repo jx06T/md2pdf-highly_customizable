@@ -156,7 +156,7 @@ const defaultStyleConfig: StyleConfig = {
             underline: "underline",
             color: '#000000',
             udlColor: "#474747",
-            alignment: 'left',
+            alignment: 'center',
         },
         H2: {
             size: 24,

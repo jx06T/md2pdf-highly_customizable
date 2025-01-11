@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import { JamChevronCircleDown, JamChevronCircleRight } from "../utils/Icons";
-import { defaultStyleConfig, StyleConfig } from '../Types';
+import { StyleConfig } from '../Types';
+
+import defaultStyleConfigJson from "./default.json";
+const defaultStyleConfig = defaultStyleConfigJson as StyleConfig
 
 // Props 類型定義
-
-
 interface NumberInputProps {
     path: string[];
     label: string;
