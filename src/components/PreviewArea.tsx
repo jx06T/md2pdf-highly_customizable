@@ -91,7 +91,7 @@ const components = {
     },
     blockquote({ children }: { children: React.ReactNode }) {
         return (
-            <blockquote className="rounded-sm border-l-4 pl-4 italic my-4">
+            <blockquote className="rounded-sm border-l-[0.25em] pl-4 italic my-4">
                 {children}
             </blockquote>
         );
