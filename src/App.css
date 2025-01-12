@@ -105,7 +105,7 @@ body .w-md-editor-text-input {
   height: var(--page-font-size, 16px);
   width: var(--page-font-size, 16px);
 
-  border: 2px solid var(--page-font-Dcolor, #222222);
+  border: 0.1em solid var(--page-font-Dcolor, #222222);
   /* background-color: var(--page-font-Dcolor, #222222); */
   position: absolute;
   top: 0;
@@ -309,6 +309,14 @@ select {
 
 .preview-area .callout > .callout-title {
   margin-left: var(--blockquotes-titleMargin, 15px);
+}
+
+.preview-area .callout .callout-title-inner {
+  font-weight: bold ;
+}
+
+.preview-area .callout svg {
+  margin-bottom: 0.1em;
 }
 
 .preview-area blockquote {
