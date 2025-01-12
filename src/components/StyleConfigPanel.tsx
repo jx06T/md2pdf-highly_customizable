@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import { JamChevronCircleDown, JamChevronCircleRight } from "../utils/Icons";
 import { StyleConfig } from '../Types';
-import { useMdContext } from "../context/MdContext";
 
 import defaultStyleConfigJson from "./default.json"
 import createConfirmDialog from './ConfirmDialog';
@@ -32,7 +31,6 @@ interface StringInputProps {
     label: string;
     config: StyleConfig;
     updateConfig: (path: string[], value: string) => void;
-    long?: boolean;
 }
 
 interface SelectInputProps {
@@ -187,8 +185,7 @@ const StringInput: React.FC<StringInputProps> = ({
     path,
     label,
     config,
-    updateConfig,
-    long = false,
+    updateConfig
 }) => {
     const value = getNestedValue(config, path) ?? '';
     const [localValue, setLocalValue] = useState(value);
@@ -216,7 +213,7 @@ const StringInput: React.FC<StringInputProps> = ({
                 type="text"
                 value={localValue}
                 onChange={handleChange}
-                className={` ${long ? "w-[85%] min-w-36" : "w-24"}  p-1 border rounded bg-gray-50 h-9`}
+                className="w-24 p-1 border rounded bg-gray-50 h-9"
             />
         </div>
     );
@@ -405,7 +402,6 @@ const Section: React.FC<SectionProps> = ({
 const StyleConfigPanel: React.FC = () => {
     const [config, setConfig] = useState(defaultStyleConfig);
     const [headingToConfigure, setHeadingToConfigure] = useState<string>('H1');
-    const { rootPath, setRootPath } = useMdContext()
 
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     });
@@ -439,11 +435,7 @@ const StyleConfigPanel: React.FC = () => {
                 document.documentElement.style.setProperty("--" + path.join('-'), value.toString() + "px");
             }
         } else {
-            if (path.includes("rootPath")) {
-                setRootPath(value.toString())
-            } else {
-                document.documentElement.style.setProperty("--" + path.join('-'), value + "");
-            }
+            document.documentElement.style.setProperty("--" + path.join('-'), value + "");
         }
 
         setConfig(newConfig);
@@ -471,11 +463,7 @@ const StyleConfigPanel: React.FC = () => {
                             document.documentElement.style.setProperty(cssVarName, value.toString() + "px");
                         }
                     } else {
-                        if (newPath.includes("rootPath")) {
-                            setRootPath(value.toString())
-                        } else {
-                            document.documentElement.style.setProperty(cssVarName, value + "");
-                        }
+                        document.documentElement.style.setProperty(cssVarName, value + "");
                     }
                 }
             });
@@ -998,13 +986,7 @@ const StyleConfigPanel: React.FC = () => {
                     config={config}
                     updateConfig={updateConfig}
                 />
-                <StringInput
-                    path={['rootPath']}
-                    label="Root Path"
-                    config={{ ...config, rootPath: rootPath }}
-                    updateConfig={updateConfig}
-                    long
-                />
+
                 {/* <Section
                     title="Annotation"
                     section="annotation"

@@ -83,7 +83,6 @@ interface PageConfig {
 
 interface StyleConfig {
     init?: boolean;
-    rootPath?: String;
     page: PageConfig;
     title: {
         H1: HeaderConfig;
@@ -123,7 +122,6 @@ interface StyleConfig {
 // Default values
 const defaultStyleConfig: StyleConfig = {
     init: true,
-    rootPath: "",
     page: {
         font: {
             size: 18,

@@ -1,6 +1,5 @@
 {
   "init": false,
-  "rootPath": "https://raw.githubusercontent.com/jx06T/md2pdf-highly_customizable/refs/heads/main/",
   "page": {
     "font": {
       "size": 18,
