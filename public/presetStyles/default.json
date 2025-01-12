@@ -1,5 +1,5 @@
 {
-  "init": false,
+  "init": true,
   "page": {
     "font": {
       "size": 18,

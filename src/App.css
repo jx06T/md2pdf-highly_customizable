@@ -417,10 +417,15 @@ select {
   } */
   }
 }
+
 .page {
   width: 21cm;
   position: absolute;
   transform-origin: left top;
+}
+
+.page.only {
+  transform-origin: top;
 }
 
 .preview-area-2 {
@@ -524,7 +529,7 @@ select {
 
   text-align: var(--table-textAlignment, center);
 
-  margin-bottom:-1px ;
+  margin-bottom: -1px;
 }
 
 .preview-area .table-container {

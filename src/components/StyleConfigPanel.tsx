@@ -3,7 +3,9 @@ import debounce from 'lodash/debounce';
 import { JamChevronCircleDown, JamChevronCircleRight } from "../utils/Icons";
 import { StyleConfig } from '../Types';
 
-import defaultStyleConfigJson from "./default.json";
+import defaultStyleConfigJson from "./default.json"
+import createConfirmDialog from './ConfirmDialog';
+
 const defaultStyleConfig = defaultStyleConfigJson as StyleConfig
 
 // Props 類型定義
@@ -270,7 +272,6 @@ function HSelectInput({ value, update }: { value: string, update: Function }) {
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newValue = e.target.value;
-        console.log("sss")
         update(newValue);
     };
 
@@ -325,6 +326,51 @@ const BooleanInput: React.FC<BooleanInputProps> = ({
     );
 };
 
+
+// SelectInput 組件
+function StyleSelector({ handleReset }: { handleReset: (newStyleConfig: StyleConfig) => void }) {
+    const [selectedStyle, setSelectedStyle] = useState<string>("default")
+    const options = [
+        { name: "default", value: "default" },
+        { name: "purple", value: "purple" },
+    ]
+
+    const handleChange = async () => {
+        try {
+            const response = await fetch(`/presetStyles/${selectedStyle}.json`);
+            if (!response.ok) {
+                throw new Error(`Failed to load ${selectedStyle}`);
+            }
+            const data = await response.json();
+            console.log("Loaded JSON:", data);
+            createConfirmDialog("Reset Config？", "This will override all current styles.", () => handleReset(data), () => { }, "Reset")
+        } catch (error) {
+            console.error("Error loading JSON:", error);
+        }
+    };
+
+    return (
+        <div className="flex items-center justify-between mb-2">
+            <label className="text-sm ">{"Reset To Preset Config"}</label>
+            <div className=' flex space-x-4 items-center'>
+                <select className=" w-24 p-1 border rounded bg-gray-50 h-9" value={selectedStyle} onChange={(e) => setSelectedStyle(e.target.value)}>
+                    {options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.name}
+                        </option>
+                    ))}
+                </select>
+                <button
+                    onClick={handleChange}
+                    className="w-full px-4 py-2  bg-red-400 text-white rounded hover:bg-red-500"
+                >
+                    Reset to "{selectedStyle}"
+                </button>
+            </div>
+        </div>
+    );
+};
+
 // Section 組件
 const Section: React.FC<SectionProps> = ({
     title,
@@ -345,7 +391,7 @@ const Section: React.FC<SectionProps> = ({
             }
         </button>
         {isExpanded && (
-            <div className="p-2">
+            <div className="p-2 px-3">
                 {children}
             </div>
         )}
@@ -358,22 +404,6 @@ const StyleConfigPanel: React.FC = () => {
     const [headingToConfigure, setHeadingToConfigure] = useState<string>('H1');
 
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
-        // blockquotes: true,
-        // annotation: true,
-        // image: true,
-        // list: true,
-        // title: true,
-        // "title-H1": true,
-        // "title-H2": true,
-        // "title-H3": true,
-        // "title-H4": true,
-        // "title-H5": true,
-        // "title-H6": true,
-        // layout: true,
-        // pageFont: true,
-        page: true,
-        // code: true,
-        // table: true
     });
 
     const toggleSection = (section: string) => {
@@ -494,12 +524,10 @@ const StyleConfigPanel: React.FC = () => {
         }
     };
 
-    const handleReset = () => {
-        if (window.confirm('Are you sure you want to reset all settings to default?')) {
-            setConfig({ ...defaultStyleConfig, init: false });
-            initializeConfigStyles(defaultStyleConfig);
-            localStorage.setItem('config', JSON.stringify(defaultStyleConfig));
-        }
+    const handleReset = (newStyleConfig: StyleConfig) => {
+        setConfig({ ...newStyleConfig, init: false });
+        initializeConfigStyles(newStyleConfig);
+        localStorage.setItem('config', JSON.stringify(newStyleConfig));
     };
 
     return (
@@ -1210,30 +1238,35 @@ const StyleConfigPanel: React.FC = () => {
                 />
 
             </Section>
+            <Section
+                title="Import and Export"
+                section="importExport"
+                isExpanded={expandedSections.importExport}
+                onToggle={toggleSection}
+            >
+                <div className="mt-4 space-y-4">
+                    <button
+                        onClick={handleExportConfig}
+                        className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500 w-full"
+                    >
+                        Export Config
+                    </button>
+                    <label className=" block px-4 py-2 bg-green-400 text-white rounded hover:bg-green-500 cursor-pointer w-full text-center">
+                        Import Config
+                        <input
+                            type="file"
+                            accept=".json"
+                            onChange={() => {
+                                createConfirmDialog("Import Config？", "This will override all current styles.", handleImportConfig, () => { }, "Import")
+                            }}
+                            className="hidden"
+                        />
+                    </label>
+                    <StyleSelector handleReset={handleReset}></StyleSelector>
 
-            <div className="mt-4 space-y-2">
-                <button
-                    onClick={handleExportConfig}
-                    className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500 w-full"
-                >
-                    Export Config
-                </button>
-                <label className=" block px-4 py-2 bg-green-400 text-white rounded hover:bg-green-500 cursor-pointer w-full text-center">
-                    Import Config
-                    <input
-                        type="file"
-                        accept=".json"
-                        onChange={handleImportConfig}
-                        className="hidden"
-                    />
-                </label>
-                <button
-                    onClick={handleReset}
-                    className="w-full px-4 py-2 bg-red-400 text-white rounded hover:bg-red-500"
-                >
-                    Reset to Default
-                </button>
-            </div>
+                </div>
+            </Section>
+            <div className=' h-24'></div>
         </div >
     );
 };

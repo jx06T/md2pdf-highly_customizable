@@ -189,7 +189,7 @@ function PreviewArea({ width, displayId, expandLevel, initMdValue = '', only = f
                     style={{
                         scale: width / 850
                     }}
-                    className="border-2 page markdown-content"
+                    className={`border-2 page markdown-content ${only ? " only " : ""}`}
                 >
                     <Markdown
                         components={components}
