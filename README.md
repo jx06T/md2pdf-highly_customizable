@@ -1,7 +1,7 @@
 # md2pdf - highly customizable
 ###### *version-V1.2.2* 
 ---
-![logo](https://md2pdf-jx.vercel.app/logo192.png)
+![logo](/public/logo192.png)
 
 ## 簡介&功能
 - 工具網址 [https://md2pdf-jx.vercel.app/](https://md2pdf-jx.vercel.app/)
