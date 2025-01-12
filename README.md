@@ -1,5 +1,5 @@
 # md2pdf - highly customizable
-###### *version-V1.2.0* 
+###### *version-V1.2.2* 
 ---
 ## 簡介&功能
 - 工具網址 [https://md2pdf-jx.vercel.app/](https://md2pdf-jx.vercel.app/)
@@ -41,6 +41,14 @@
 
 ### 1.2
 ```
+1.2.1
+修復表格圓角
+新增標題置中選項
+修改待辦清單樣式與顏色
+增加預設樣式 "purple" 
+新增彈出確認框
+改善響應式布局
+
 1.2.1
 新增文檔與 README.md
 修復分頁標籤無法點擊之錯誤
