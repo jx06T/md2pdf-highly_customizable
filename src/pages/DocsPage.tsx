@@ -26,13 +26,17 @@ const LoadingSpinner: React.FC = () => (
 )
 
 const doc = `
+[root-path]:(https://raw.githubusercontent.com/jx06T/md2pdf-highly_customizable/refs/heads/main)
+
 # md2pdf - Docs 
 ###### *version-V1.2.2*
 
 ---
-  
+
+![logo](/public/logo192.png)
+
 > [!check]
-> 若此頁面排版出現問題，可以至編輯區重置樣式設定，重置前記得匯出當前設定。
+> 若此頁面出現排版問題，可以至樣式設定區重置設定，重置前記得匯出當前設定。
 >
 
 ## 上方導覽列
@@ -93,7 +97,8 @@ const doc = `
 | 依賴 Katex 的 LaTeX 語法| Ｖ|
 | 列印換頁符號 | *Ｖ**|
 | 圖片註解 | *Ｖ**|
-| 連續換行 | *Ｖ**
+| 連續換行 | *Ｖ**|
+| 圖片相對路徑 | *Ｖ**|
 
 << 標註*者為擴充語法
   
@@ -175,6 +180,20 @@ $$
   
   
 第二段
+
+  
+### 圖片相對路徑
+- 語法：
+\`\`\` md
+[root-path]:(圖片資源根目錄)
+[root-path]:(https://raw.githubusercontent.com/jx06T/md2pdf-highly_customizable/refs/heads/main)
+...
+其他內容
+\`\`\`
+
+- 說明：將 github 等網站中的文件貼上時，其圖片可能是使用相對路徑表示，利用此配置（寫於檔案上方）即可正確顯示相對路徑之圖片
+- 效果：如本文檔
+
   
 ## 列印設定
   
