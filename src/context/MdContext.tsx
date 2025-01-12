@@ -3,15 +3,23 @@ import { doc } from '../pages/DocsPage';
 interface MdContextType {
     mdValue: string,
     setMdValue: Function,
+    rootPath: string,
+    setRootPath: Function
 }
 
 const MdContext = createContext<MdContextType | undefined>(undefined);
 
 export const MdProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [mdValue, setMdValue] = useState(doc)
+    const [mdValue, setMdValue] = useState("")
+    const [rootPath, setRootPath] = useState("")
 
     useEffect(() => {
         const initialMdValue = localStorage.getItem('mdValue');
+        const notNew = localStorage.getItem('notNew');
+        if (!notNew) {
+            setMdValue(doc)
+            localStorage.setItem('notNew', 'true')
+        }
         if (initialMdValue) {
             // const parsedMdValue = JSON.parse(initialMdValue);
             setMdValue(initialMdValue)
@@ -28,7 +36,7 @@ export const MdProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }, [mdValue])
 
     return (
-        <MdContext.Provider value={{ mdValue, setMdValue }}>
+        <MdContext.Provider value={{ mdValue, setMdValue, rootPath, setRootPath }}>
             {children}
         </MdContext.Provider>
     );
