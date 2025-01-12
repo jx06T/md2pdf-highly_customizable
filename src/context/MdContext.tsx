@@ -12,6 +12,7 @@ const MdContext = createContext<MdContextType | undefined>(undefined);
 export const MdProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [mdValue, setMdValue] = useState("")
     const [rootPath, setRootPath] = useState("")
+    const regex = /\[root-path\]:\((.*?)\)/;
 
     useEffect(() => {
         const initialMdValue = localStorage.getItem('mdValue');
@@ -20,13 +21,32 @@ export const MdProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
             setMdValue(doc)
             localStorage.setItem('notNew', 'true')
         }
+        
         if (initialMdValue) {
-            // const parsedMdValue = JSON.parse(initialMdValue);
+            const match = initialMdValue.match(regex);
+            if (match) {
+                setRootPath(match[1]);
+                console.log("!!@@@",match[1])
+            }
+
             setMdValue(initialMdValue)
         } else {
             localStorage.setItem('mdValue', "")
         }
     }, [])
+
+    useEffect(() => {
+        if (mdValue == '') {
+            return
+        }
+        if (regex.test(mdValue)) {
+            const newMdValue = mdValue.replace(regex, `[root-path]:(${rootPath})`);
+            setMdValue(newMdValue);
+        } else {
+            const newMdValue = `[root-path]:(${rootPath})\n\n${mdValue}`;
+            setMdValue(newMdValue);
+        }
+    }, [rootPath])
 
     useEffect(() => {
         if (mdValue == "") {

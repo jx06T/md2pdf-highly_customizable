@@ -405,7 +405,7 @@ const Section: React.FC<SectionProps> = ({
 const StyleConfigPanel: React.FC = () => {
     const [config, setConfig] = useState(defaultStyleConfig);
     const [headingToConfigure, setHeadingToConfigure] = useState<string>('H1');
-    const { setRootPath } = useMdContext()
+    const { rootPath, setRootPath } = useMdContext()
 
     const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     });
@@ -1001,7 +1001,7 @@ const StyleConfigPanel: React.FC = () => {
                 <StringInput
                     path={['rootPath']}
                     label="Root Path"
-                    config={config}
+                    config={{ ...config, rootPath: rootPath }}
                     updateConfig={updateConfig}
                     long
                 />
