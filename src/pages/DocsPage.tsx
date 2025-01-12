@@ -27,7 +27,7 @@ const LoadingSpinner: React.FC = () => (
 
 const doc = `
 # md2pdf - Docs 
-###### *version-V1.2.0*
+###### *version-V1.2.2*
 
 ---
   
@@ -234,3 +234,4 @@ function DocsPage({ maxW }: { maxW: number }) {
 }
 
 export default DocsPage;
+export { doc };

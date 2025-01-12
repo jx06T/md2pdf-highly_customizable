@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useCallback, ReactNode, useRef, useEffect } from 'react';
-
+import { doc } from '../pages/DocsPage';
 interface MdContextType {
     mdValue: string,
     setMdValue: Function,
@@ -8,7 +8,7 @@ interface MdContextType {
 const MdContext = createContext<MdContextType | undefined>(undefined);
 
 export const MdProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [mdValue, setMdValue] = useState("")
+    const [mdValue, setMdValue] = useState(doc)
 
     useEffect(() => {
         const initialMdValue = localStorage.getItem('mdValue');
