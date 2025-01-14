@@ -576,3 +576,13 @@ select {
 /* .preview-area table td:empty {
   background-color: #f4f4f4; 
 } */
+
+.preview-area .katex-mathml math{
+  margin-top:0.4em;
+  margin-bottom: 0.4em;
+}
+
+.preview-area hr{
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+}
