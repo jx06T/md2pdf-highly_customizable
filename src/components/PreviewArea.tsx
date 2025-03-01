@@ -119,6 +119,7 @@ function PreviewArea({ width, displayId, expandLevel, initMdValue = '', only = f
                     lineNumberStyle={{ color: '#888', paddingRight: '10px' }}
 
                     codeTagProps={{
+                        className:"codeeeee",
                         style: {
                             whiteSpace: 'pre-wrap',
                             wordBreak: 'break-word',

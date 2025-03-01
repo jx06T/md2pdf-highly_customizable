@@ -333,6 +333,7 @@ function StyleSelector({ handleReset }: { handleReset: (newStyleConfig: StyleCon
     const options = [
         { name: "default", value: "default" },
         { name: "purple", value: "purple" },
+        { name: "iPad 1", value: "ipad1" },
     ]
 
     const handleChange = async () => {

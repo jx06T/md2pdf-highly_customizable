@@ -476,10 +476,10 @@ select {
   display: none;
 }
 
-.preview-area pre code span,
+.preview-area pre code.codeeeee span,
 .preview-area pre > div,
-.preview-area pre,
-.preview-area pre code {
+.preview-area pre:has(.codeeeee),
+.preview-area pre code.codeeeee {
   background-color: var(--code-bgColor, #1e1e1e) !important;
 }
 
