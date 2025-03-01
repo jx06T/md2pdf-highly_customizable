@@ -39,7 +39,7 @@
     "H2": {
       "size": 24,
       "weight": "bold",
-      "tMargin": 9,
+      "tMargin": 11,
       "bMargin": 7,
       "decorativeSymbol": "",
       "scaling": 0,
