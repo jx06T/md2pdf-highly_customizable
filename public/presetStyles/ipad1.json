@@ -39,7 +39,7 @@
     "H2": {
       "size": 24,
       "weight": "bold",
-      "tMargin": 11,
+      "tMargin": 14,
       "bMargin": 7,
       "decorativeSymbol": "",
       "scaling": 0,
@@ -51,7 +51,7 @@
     "H3": {
       "size": 18,
       "weight": "bold",
-      "tMargin": 7,
+      "tMargin": 6,
       "bMargin": -2,
       "decorativeSymbol": "",
       "scaling": 0,
@@ -63,7 +63,7 @@
     "H4": {
       "size": 18,
       "weight": "normal",
-      "tMargin": 3,
+      "tMargin": 6,
       "bMargin": -2,
       "decorativeSymbol": "",
       "scaling": 15,
