@@ -490,7 +490,7 @@ select {
   border: none !important;
 }
 
-.preview-area p code.codeeeee {
+.preview-area p code {
   background-color: var(--code-inlineColor, #d1d5db);
   margin-left: 3px;
   margin-right: 3px;
@@ -499,7 +499,7 @@ select {
   border-radius: 3px;
 }
 
-.preview-area li code.codeeeee {
+.preview-area li code {
   background-color: var(--code-inlineColor, #d1d5db);
   margin-left: 3px;
   margin-right: 3px;
