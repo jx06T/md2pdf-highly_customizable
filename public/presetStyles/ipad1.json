@@ -2,11 +2,11 @@
   "init": false,
   "page": {
     "font": {
-      "size": 18,
+      "size": 16,
       "weight": "normal",
-      "familyC": "\"Microsoft JhengHei\", sans-serif",
-      "familyE": "\"Microsoft JhengHei\", sans-serif",
-      "height": 30,
+      "familyC": " \"Noto Sans HK\", serif",
+      "familyE": "\"Times New Roman\", serif",
+      "height": 27,
       "color": "#000000",
       "Dcolor": "#9470d7"
     },
@@ -39,7 +39,7 @@
     "H2": {
       "size": 24,
       "weight": "bold",
-      "tMargin": 9,
+      "tMargin": 14,
       "bMargin": 7,
       "decorativeSymbol": "",
       "scaling": 0,
@@ -49,10 +49,10 @@
       "alignment": "left"
     },
     "H3": {
-      "size": 20,
+      "size": 18,
       "weight": "bold",
-      "tMargin": 7,
-      "bMargin": -4,
+      "tMargin": 6,
+      "bMargin": -2,
       "decorativeSymbol": "",
       "scaling": 0,
       "underline": "none",
@@ -61,12 +61,12 @@
       "alignment": ""
     },
     "H4": {
-      "size": 20,
+      "size": 18,
       "weight": "normal",
-      "tMargin": 3,
-      "bMargin": 0,
+      "tMargin": 6,
+      "bMargin": -2,
       "decorativeSymbol": "",
-      "scaling": 0,
+      "scaling": 15,
       "color": "#000000",
       "udlColor": "#5e5e5e"
     },
@@ -94,11 +94,11 @@
   },
   "list": {
     "orderedLists": {
-      "scaling1": 36,
-      "scaling2": 20,
-      "scaling3": 20,
-      "scaling4": 20,
-      "scaling5": 20,
+      "scaling1": 27.5,
+      "scaling2": 16,
+      "scaling3": 16,
+      "scaling4": 16,
+      "scaling5": 16,
       "decorativeSymbol1": "decimal",
       "decorativeSymbol2": "decimal",
       "decorativeSymbol3": "decimal",
@@ -106,11 +106,11 @@
       "decorativeSymbol5": "decimal"
     },
     "unorderedList": {
-      "scaling1": 35,
-      "scaling2": 20,
-      "scaling3": 20,
-      "scaling4": 20,
-      "scaling5": 20,
+      "scaling1": 26,
+      "scaling2": 16,
+      "scaling3": 16,
+      "scaling4": 16,
+      "scaling5": 16,
       "decorativeSymbol1": "disc",
       "decorativeSymbol2": "circle",
       "decorativeSymbol3": "circle",
@@ -118,7 +118,7 @@
       "decorativeSymbol5": "circle"
     },
     "task": {
-      "scaling": 12
+      "scaling": 6
     }
   },
   "image": {
@@ -135,14 +135,14 @@
     }
   },
   "blockquotes": {
-    "textScaling": 15,
-    "contentMargin": -10,
-    "titleMargin": 20,
-    "scaling": 20,
+    "textScaling": 12,
+    "contentMargin": 0,
+    "titleMargin": 16,
+    "scaling": 10,
     "color": "#b999f5",
     "bgColor": "#ffffff",
-    "tMargin": 20,
-    "bMargin": 20,
+    "tMargin": 10,
+    "bMargin": 10,
     "font": {
       "size": 16,
       "weight": "normal"
