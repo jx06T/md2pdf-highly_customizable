@@ -42,6 +42,44 @@ function getThemeStyle(th: string) {
     }
 }
 
+function processMarkdown(mdValue: string): string {
+    // Only identify and temporarily mark multi-line code blocks to skip them
+    const codeBlockPattern = /```[\s\S]*?```/g;
+    const codeBlocks: string[] = [];
+
+    // Replace code blocks with markers and store them
+    const textWithCodeBlocksMarked = mdValue.replace(codeBlockPattern, (match) => {
+        const marker = `__CODE_BLOCK_${codeBlocks.length}__`;
+        codeBlocks.push(match);
+        return marker;
+    });
+    // console.log(textWithCodeBlocksMarked)
+    // Apply the replacements to the text (excluding code blocks)
+    let processedText = textWithCodeBlocksMarked
+        // Replace <<text at the beginning of a line with <ma>text</ma> with HTML escaping
+        .replace(/^<<\s*(.+)$/gm, (match, group1) =>
+            `<ma>${group1
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/\\/g, '&#92;')
+                .replace(/\//g, '&#47;')}</ma>`
+        )
+        // Replace lines with exactly 3 dashes with ---, but longer dash lines with <bpf></bpf>
+        .replace(/^([-]{3,})$/gm, (match) =>
+            match.length === 3 ? '---' : '<bpf></bpf>'
+        )
+        // Replace lines with 2 or more spaces with a line break
+        .replace(/^ {2,}$/gm, '<br/>\n')
+        // Replace tab characters with &nbsp;
+        .replace(/^( {4})+(?![\*\-\d+\. ])/gm, match => '\n' + '&nbsp;'.repeat(match.length))
+
+    // Restore the code blocks
+    codeBlocks.forEach((block, index) => {
+        processedText = processedText.replace(`__CODE_BLOCK_${index}__`, block);
+    });
+
+    return processedText;
+}
 
 function PreviewArea({ width, displayId, expandLevel, initMdValue = '', only = false }: { width: number, displayId: number, expandLevel: number, initMdValue?: string, only?: boolean }) {
     let { mdValue, setMdValue } = useMdContext()
@@ -70,11 +108,11 @@ function PreviewArea({ width, displayId, expandLevel, initMdValue = '', only = f
         },
         bpf: () => {
             return (
-                <span className="bkp flex items-center justify-center">
-                    <span className="h-4 text-gray-300">{'>'}</span>
-                    <hr className="mt-7 flex-grow h-4" />
-                    <span className="h-4 text-gray-300">{'<'}</span>
-                </span>
+                <div className="bkp bg-transparent h-8 flex">
+                    <span className=" text-gray-300">{'>'}</span>
+                    <div className=" inline-block h-0.5 bg-gray-300 flex-grow mt-4"></div>
+                    <span className=" text-gray-300">{'<'}</span>
+                </div>
             );
         },
         table: ({ children }: { children: React.ReactNode }) => {
@@ -119,7 +157,7 @@ function PreviewArea({ width, displayId, expandLevel, initMdValue = '', only = f
                     lineNumberStyle={{ color: '#888', paddingRight: '10px' }}
 
                     codeTagProps={{
-                        className:"codeeeee",
+                        className: "code-block-jx",
                         style: {
                             whiteSpace: 'pre-wrap',
                             wordBreak: 'break-word',
@@ -163,20 +201,7 @@ function PreviewArea({ width, displayId, expandLevel, initMdValue = '', only = f
                         // @ts-ignore
                         remarkPlugins={[remarkGfm, [remarkExternalLinks, { target: '_blank', rel: 'noopener noreferrer' }]]}
                     >
-                        {mdValue.replace(
-                            /^<<\s*(.+)$/gm,
-                            (match, group1) => `<ma>${group1
-                                .replace(/</g, '&lt;')
-                                .replace(/>/g, '&gt;')
-                                .replace(/\\/g, '&#92;')
-                                .replace(/\//g, '&#47;')}</ma>`
-                        ).replace(
-                            /^([-]{3,})$/gm,
-                            (match) => match.length === 3 ? '---' : '<bpf></bpf>'
-                        ).replace(
-                            /^ {2,}$/gm,
-                            '<br/>\n'
-                        )}
+                        {processMarkdown(mdValue)}
                     </Markdown>
                 </div>
             </div>

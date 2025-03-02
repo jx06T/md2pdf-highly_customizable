@@ -371,8 +371,8 @@ select {
     overflow: visible !important;
   }
 
-  .preview-area pre code.codeeeee span,
-  .preview-area pre code.codeeeee {
+  .preview-area pre code.code-block-jx span,
+  .preview-area pre code.code-block-jx {
     background-color: var(--code-bgColor, #1e1e1e);
   }
 
@@ -461,13 +461,13 @@ select {
   pointer-events: none;
 }
 
-.preview-area pre:has(.codeeeee) {
+.preview-area pre:has(.code-block-jx) {
   border-radius: 5px;
   padding-left: 3px;
   padding-right: 3px;
 }
 
-.preview-area pre:has(.codeeeee) {
+.preview-area pre:has(.code-block-jx) {
   margin-top: var(--code-tMargin, 0px);
   margin-bottom: var(--code-bMargin, 0px);
 }
@@ -476,14 +476,14 @@ select {
   display: none;
 }
 
-.preview-area pre code.codeeeee span,
+.preview-area pre code.code-block-jx span,
 .preview-area pre > div,
-.preview-area pre:has(.codeeeee),
-.preview-area pre code.codeeeee {
+.preview-area pre:has(.code-block-jx),
+.preview-area pre code.code-block-jx {
   background-color: var(--code-bgColor, #1e1e1e) !important;
 }
 
-.preview-area pre:has(.codeeeee) > div {
+.preview-area pre:has(.code-block-jx) > div {
   margin-top: 7px;
   margin-bottom: 0px;
   /* padding-bottom: 5px !important; */
@@ -508,11 +508,11 @@ select {
   border-radius: 3px;
 }
 
-.preview-area pre:has(.codeeeee) > div {
+.preview-area pre:has(.code-block-jx) > div {
   border-radius: 5px;
   overflow-x: hidden !important;
 }
-.preview-area pre:has(.codeeeee) {
+.preview-area pre:has(.code-block-jx) {
   overflow-x: hidden !important;
   padding-left: 40px;
   position: relative;
